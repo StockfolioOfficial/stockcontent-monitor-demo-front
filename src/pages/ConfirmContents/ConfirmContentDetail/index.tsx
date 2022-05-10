@@ -1,22 +1,18 @@
-import {useParams} from "react-router-dom";
-
-
+import { useParams } from 'react-router-dom';
 
 type Params = {
-    contentId: string;
-}
+  contentId: string;
+};
 
 function useContentId() {
-    const { contentId } = useParams<Params>();
-    if (contentId === undefined) return null;
+  const { contentId } = useParams<Params>();
+  if (contentId === undefined) return null;
 
-    return parseInt(contentId);
+  return parseInt(contentId);
 }
 
 export default function ConfirmContentDetailPage() {
-    const contentId = useContentId();
+  const contentId = useContentId();
 
-    return <h1>
-        Detail Page {contentId}
-    </h1>;
+  return <h1>Detail Page {contentId}</h1>;
 }

@@ -1,7 +1,6 @@
-import BaseProps from "./BaseProps";
-import * as React from "react";
-
+import BaseProps from './BaseProps';
+import * as React from 'react';
 
 export default interface BaseLayoutProps extends BaseProps {
-    children?: React.ReactNode;
+  children?: React.ReactNode;
 }

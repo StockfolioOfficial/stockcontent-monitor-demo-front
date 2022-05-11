@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
+import GlobalStyle from './styles/globlaStyles';
 import {
   BrowserRouter,
   Navigate,
@@ -10,22 +11,6 @@ import {
 } from 'react-router-dom';
 import ConfirmContentsPage from './pages/ConfirmContents';
 import ConfirmContentDetailPage from './pages/ConfirmContents/ConfirmContentDetail';
-
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  html, body, #root {
-    height: 100%;
-    overflow-y: hidden;
-  } 
-`;
 
 export default function App() {
   return (

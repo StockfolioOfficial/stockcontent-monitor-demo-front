@@ -58,9 +58,10 @@
 
     tag를 한번만 쓰는 경우: tag (ex. checkbox)
 
-  - molecules : 1개 기능 (ex. checkbox + list )
-  - organisms : 페이지 + UI (ex. mainFooter)
-  - templates : 페이지 + templates
+  - molecules : page + component name
+
+  - organisms : UI + Section
+  - templates : 페이지 + Layout
   - props 네이밍 : (search 필요)
 
 - 페이지
@@ -96,6 +97,7 @@
 7.  가상 선택자
 
 - Props 표기 순서
+
   - 1. basic props
        1. id
        2. key

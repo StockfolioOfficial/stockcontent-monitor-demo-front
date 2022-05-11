@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import theme from './styles/theme';
 import {
   BrowserRouter,
   Navigate,
@@ -29,7 +30,7 @@ const GlobalStyle = createGlobalStyle`
 
 export default function App() {
   return (
-    <ThemeProvider theme={{}}>
+    <ThemeProvider theme={{ theme }}>
       <BrowserRouter>
         <Routes>
           <Route

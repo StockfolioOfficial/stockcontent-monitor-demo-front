@@ -1,3 +1,5 @@
+import { DefaultTheme } from 'styled-components';
+
 const fonts = {
   size: {
     xxl: '40pt',
@@ -46,5 +48,7 @@ const colors = {
 };
 
 const theme = { colors, fonts };
+
+export type Theme = typeof theme;
 
 export default theme;

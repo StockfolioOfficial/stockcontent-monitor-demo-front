@@ -30,7 +30,7 @@ const GlobalStyle = createGlobalStyle`
 
 export default function App() {
   return (
-    <ThemeProvider theme={{ theme }}>
+    <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
           <Route

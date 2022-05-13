@@ -12,6 +12,7 @@ import ConfirmContentsPage from './pages/ConfirmContents';
 import ConfirmContentDetailPage from './pages/ConfirmContents/ConfirmContentDetail';
 import theme from './styles/theme';
 import GlobalStyle from './styles/globlaStyles';
+import GlobalFont from './styles/globaFonts';
 
 export default function App() {
   return (
@@ -33,6 +34,7 @@ export default function App() {
         </Routes>
       </BrowserRouter>
       <GlobalStyle />
+      <GlobalFont />
     </ThemeProvider>
   );
 }

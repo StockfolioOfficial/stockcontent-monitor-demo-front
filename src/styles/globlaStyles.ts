@@ -22,26 +22,27 @@ const GlobalStyle = createGlobalStyle`
   }
 
   button {
+    border: none;
     cursor: pointer;
   }
 
   input, textarea, select, button {
-        outline: none;
-        font-size: inherit;
-        font-family: inherit;
+    outline: none;
+    font-size: inherit;
+    font-family: inherit;
   }
   
   input:focus, textarea:focus, select:focus {
-        outline: none;
+    outline: none;
   }
   
   a{
-        color: inherit;
-        text-decoration: none;
+    color: inherit;
+    text-decoration: none;
   }
   
   ol, ul, li {
-        list-style: none;
+    list-style: none;
   }
 
   textarea {

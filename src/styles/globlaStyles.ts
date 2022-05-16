@@ -16,32 +16,31 @@ const GlobalStyle = createGlobalStyle`
   } 
 
   body {
-    margin: 0;
     font-family: 'Pretendard';
-    border: none;
+    font-weight: ${({ theme }) => theme.fonts.weight.light};
   }
 
   button {
+    border: none;
+    background-color: transparent;
     cursor: pointer;
   }
 
   input, textarea, select, button {
-        outline: none;
-        font-size: inherit;
-        font-family: inherit;
+    outline: none;
   }
   
   input:focus, textarea:focus, select:focus {
-        outline: none;
+    outline: none;
   }
   
-  a{
-        color: inherit;
-        text-decoration: none;
+  a {
+    color: inherit;
+    text-decoration: none;
   }
   
-  ol, ul, li {
-        list-style: none;
+  ul, li {
+    list-style: none;
   }
 
   textarea {

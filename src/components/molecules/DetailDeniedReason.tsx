@@ -117,7 +117,7 @@ export default function DetailDeniedReason(props: CheckBoxProps): JSX.Element {
 
   const changeCheck = (idx: number): void => {
     setIsCheckedArr(prev => {
-      const newArr = [...prev];
+      const newArr = prev;
       newArr[idx] = !newArr[idx];
       return newArr;
     });

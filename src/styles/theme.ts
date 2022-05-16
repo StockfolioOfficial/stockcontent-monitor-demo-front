@@ -1,6 +1,6 @@
 const fonts = {
   size: {
-    xxl: '40pt',
+    xxl: '40px',
     xl: '26px',
     lg: '20px',
     ml: '18px',

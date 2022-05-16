@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useRef } from 'react';
 import styled, { css } from 'styled-components';
-import arrow from '../../assets/images/Vector-1.png';
+import arrow from '../../assets/images/Arrow.svg';
 // png파일 타입 지정 해주지 않았는데 에러 발생 안함 why??
 
 // 디자이너분께 질문사항
@@ -13,8 +13,14 @@ export interface PagenationProps
   isActive?: boolean;
 }
 
+export interface ArrowImgProps
+  extends React.ImgHTMLAttributes<HTMLImageElement> {
+  isLeft?: boolean;
+}
+
 const PagenationBtn = styled.button<PagenationProps>`
   ${({ theme }) => css`
+    text-align: center;
     width: 32px;
     height: 32px;
     border-radius: 100%;
@@ -43,6 +49,12 @@ const PagenationNumber = styled.button<PagenationProps>`
       background-color: ${theme.colors.gray1};
     }
   `}
+`;
+
+const ArrowImg = styled.img<ArrowImgProps>`
+  display: block;
+  margin: 0 auto;
+  transform: ${({ isLeft }) => (isLeft ? 'scaleX(-1)' : '')};
 `;
 
 export default function Pagenation(props: PagenationProps): JSX.Element {
@@ -136,13 +148,13 @@ export default function Pagenation(props: PagenationProps): JSX.Element {
   return (
     <div style={{ display: 'flex', margin: '10px' }}>
       <PagenationBtn disabled={page.current === 1} onClick={goPrevPage}>
-        <img src={arrow} alt="arrow" style={{ transform: 'scaleX(-1)' }} />
+        <ArrowImg src={arrow} alt="arrow" isLeft />
       </PagenationBtn>
       {/* pageOffset값 부터 limit만큼 잘라서 map으로 뿌려준다 */}
       {pageList.slice(pageOffSet, pageOffSet + pageLimit).map(number => {
         if (clickedPage === number.id)
           return (
-            <PagenationNumber key={number.id} isActive={true}>
+            <PagenationNumber key={number.id} isActive>
               {number.id}
             </PagenationNumber>
           );
@@ -157,7 +169,7 @@ export default function Pagenation(props: PagenationProps): JSX.Element {
         );
       })}
       <PagenationBtn disabled={page.current === lastPage} onClick={goNextPage}>
-        <img src={arrow} alt="arrow" />
+        <ArrowImg src={arrow} alt="arrow" />
       </PagenationBtn>
     </div>
   );

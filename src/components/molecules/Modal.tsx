@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
+import TextBtn from '../atoms/textBtn';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 
 export interface ModalProps extends BaseLayoutProps {
@@ -19,19 +20,31 @@ export interface ModalTitleProps extends ModalProps {
 
 const selectTitle = ({ modalTitle }: ModalTitleProps) => {
   let title: JSX.Element;
-  let button;
+  let colorTheme: 'red' | 'blue' | 'purple';
+  let revColorTheme: 'pink' | 'sky' | 'violet';
+  let btnText1: string;
+  let btnText2: string | null;
   switch (modalTitle) {
     case 'Approving':
       title = <p>승인하시겠습니까?</p>;
-      button = 2;
+      colorTheme = 'blue';
+      revColorTheme = 'sky';
+      btnText1 = '취소';
+      btnText2 = '승인';
       break;
     case 'CancelDeniedReason':
       title = <p>작성하시던 내용은 저장되지 않습니다.</p>;
-      button = 2;
+      colorTheme = 'blue';
+      revColorTheme = 'sky';
+      btnText1 = '취소';
+      btnText2 = '확인';
       break;
     case 'NothingReason':
-      title = <p>반려 사유를 선택하거나 작성해주세요.?</p>;
-      button = 2;
+      title = <p>반려 사유를 선택하거나 작성해주세요?</p>;
+      colorTheme = 'purple';
+      revColorTheme = 'violet';
+      btnText1 = '';
+      btnText2 = '확인';
       break;
     case 'SomeoneConfirming':
       title = (
@@ -39,7 +52,10 @@ const selectTitle = ({ modalTitle }: ModalTitleProps) => {
           다른 관리자가 검수중입니다. <br /> 승인 및 반려를 하실 수 없습니다.
         </p>
       );
-      button = 2;
+      colorTheme = 'purple';
+      revColorTheme = 'violet';
+      btnText1 = '';
+      btnText2 = '확인';
       break;
     case 'SubmitDeniedReason':
       title = (
@@ -47,14 +63,26 @@ const selectTitle = ({ modalTitle }: ModalTitleProps) => {
           반려 후 취소가 불가능합니다. <br /> 반려 사유 작성을 완료합니다.
         </p>
       );
-      button = 2;
+      colorTheme = 'blue';
+      revColorTheme = 'sky';
+      btnText1 = '취소';
+      btnText2 = '완료';
       break;
     case 'WritingDeniedReason':
-      title = <p>'반려사유 작성할까요?'</p>;
-      button = 2;
+      title = <p>반려사유 작성할까요?</p>;
+      colorTheme = 'red';
+      revColorTheme = 'pink';
+      btnText1 = '아니오';
+      btnText2 = '네';
       break;
   }
-  let components = { title: title, button: button };
+  let components = {
+    title: title,
+    colorTheme: colorTheme,
+    revColorTheme: revColorTheme,
+    btnText1: btnText1,
+    btnText2: btnText2,
+  };
   return components;
 };
 
@@ -120,30 +148,34 @@ export default function Modal(props: ModalTitleProps) {
           <ModalTextStyeld {...props}>
             {selectTitle(props).title}
           </ModalTextStyeld>
-          <div style={{ height: '36px', backgroundColor: 'skyblue' }}>
-            <button
-              style={{
-                height: '100%',
-                width: '115px',
-                backgroundColor: 'blue',
-                marginRight: '10px',
-                borderRadius: '10px',
-              }}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
+          >
+            {selectTitle(props).btnText1 ? (
+              <TextBtn
+                width="115px"
+                fontColor={selectTitle(props).colorTheme}
+                btnType="lowBtn"
+                btnTheme={selectTitle(props).revColorTheme}
+                onClick={() => setModalState(() => !modalState)}
+              >
+                {selectTitle(props).btnText1}
+              </TextBtn>
+            ) : (
+              ''
+            )}
+            <TextBtn
+              width={selectTitle(props).btnText1 ? '115px' : '240px'}
+              fontColor={selectTitle(props).revColorTheme}
+              btnType="lowBtn"
+              btnTheme={selectTitle(props).colorTheme}
               onClick={() => setModalState(() => !modalState)}
             >
-              닫기버튼
-            </button>
-            <button
-              style={{
-                height: '100%',
-                width: '115px',
-                backgroundColor: 'gray',
-                borderRadius: '10px',
-              }}
-              onClick={() => setModalState(() => !modalState)}
-            >
-              닫기버튼
-            </button>
+              {selectTitle(props).btnText2}
+            </TextBtn>
           </div>
         </ModalWrapper>
       </ModalStyled>

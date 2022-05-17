@@ -8,13 +8,15 @@ export interface HeaderProps extends BaseLayoutProps {}
 const HeaderStyled = styled.header`
   ${({ theme }) => css`
     display: flex;
+    justify-content: center;
     background-color: ${theme.colors.purple};
-    justify-content: space-between;
-    div {
-      background-color: aliceblue;
-      border: 1px solid ${theme.colors.red};
-    }
   `}
+`;
+
+const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 1200px;
 `;
 
 const LogoWrapper = styled.img`
@@ -24,8 +26,10 @@ const LogoWrapper = styled.img`
 export default function HeaderSection() {
   return (
     <HeaderStyled>
-      <LogoWrapper alt="logo" src={logo} />
-      <div>메인으로 바로가기</div>
+      <HeaderWrapper>
+        <LogoWrapper alt="logo" src={logo} />
+        <div>메인으로 바로가기</div>
+      </HeaderWrapper>
     </HeaderStyled>
   );
 }

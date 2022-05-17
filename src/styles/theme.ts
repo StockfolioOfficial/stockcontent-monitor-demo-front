@@ -56,6 +56,7 @@ const hoverShadow = {
   pagenation: '1px 1px 2px rgba(0, 0, 0, 0.2)',
   item: '2px 2px 10px rgba(141, 141, 141, 0.25)',
   modal: '4px 4px 20px rgba(0, 0, 0, 0.25)',
+  white: '',
 } as const;
 
 const pressedShadow = {
@@ -66,6 +67,7 @@ const pressedShadow = {
   purple: 'inset 4px 4px 4px #4034AE',
   violet: 'inset 4px 4px 4px #C1BDE5',
   black: 'inset 4px 4px 4px rgba(0, 0, 0, 0.5)',
+  white: '',
 } as const;
 
 const theme = { colors, fonts, hoverShadow, pressedShadow };

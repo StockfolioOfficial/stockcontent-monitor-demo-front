@@ -4,15 +4,7 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   btnType: 'highBtn' | 'lowBtn';
   width: string;
-  btnTheme:
-    | 'red'
-    | 'pink'
-    | 'blue'
-    | 'sky'
-    | 'purple'
-    | 'violet'
-    | 'black'
-    | 'white';
+  btnTheme: keyof DefaultTheme['pressedShadow'];
   fontColor: keyof DefaultTheme['colors'];
 }
 
@@ -25,11 +17,11 @@ const Btn = styled.button<ButtonProps>`
     cursor: pointer;
 
     &:hover {
-      box-shadow: ${btnTheme === 'white' ? '' : theme.hoverShadow[btnTheme]};
+      box-shadow: ${theme.hoverShadow[btnTheme]};
     }
 
     &:active {
-      box-shadow: ${btnTheme === 'white' ? '' : theme.pressedShadow[btnTheme]};
+      box-shadow: ${theme.pressedShadow[btnTheme]};
     }
   `}
 `;

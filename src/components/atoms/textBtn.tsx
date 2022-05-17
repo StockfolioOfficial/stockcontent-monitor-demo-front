@@ -4,15 +4,7 @@ export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   btnType: 'highBtn' | 'lowBtn';
   width: string;
-  btnTheme:
-    | 'red'
-    | 'pink'
-    | 'blue'
-    | 'sky'
-    | 'purple'
-    | 'violet'
-    | 'black'
-    | 'white';
+  btnTheme: keyof DefaultTheme['pressedShadow'] | 'white';
   fontColor: keyof DefaultTheme['colors'];
 }
 

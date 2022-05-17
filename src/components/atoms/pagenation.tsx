@@ -49,7 +49,7 @@ const PagenationNumber = styled.button<PagenationProps>`
 const ArrowImg = styled.img<ArrowImgProps>`
   display: block;
   margin: 0 auto;
-  transform: ${({ isLeft }) => (isLeft ? 'scaleX(-1)' : '')};
+  transform: ${({ isLeft }) => (isLeft ? 'scaleX(-1)' : 'none')};
 `;
 
 export default function Pagenation(props: PagenationProps): JSX.Element {

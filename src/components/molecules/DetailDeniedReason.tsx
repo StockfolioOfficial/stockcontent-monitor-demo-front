@@ -77,7 +77,6 @@ const TextAreaStyled = styled.textarea`
     background-color: ${theme.colors.gray0};
 
     ::placeholder {
-      font-family: 'Pretendard';
       font-size: ${theme.fonts.size.ms};
       color: ${theme.colors.gray2};
     }

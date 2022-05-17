@@ -4,7 +4,6 @@ import useConfirmContentsParams, {
 } from '../../hooks/pathParams/useConfirmContentsParams';
 import HStackLayout from '../../components/atoms/layouts/HStackLayout';
 import MainTab from '../../components/molecules/MainTab';
-import DetailDeniedReason from '../../components/molecules/DetailDeniedReason';
 
 export default function ConfirmContentsPage() {
   const { type, setType } = useConfirmContentsParams();
@@ -28,7 +27,6 @@ export default function ConfirmContentsPage() {
     <VStackLayout>
       <HStackLayout>{mainTabType.map(renderTypeButton)}</HStackLayout>
       <h1>{type}</h1>
-      <DetailDeniedReason />
     </VStackLayout>
   );
 }

@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 import * as React from 'react';
 import logo from '../../assets/images/logo.svg';
+import TextBtn from '../atoms/textBtn';
 
 export interface HeaderProps extends BaseLayoutProps {}
 
@@ -16,6 +17,7 @@ const HeaderStyled = styled.header`
 const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 1200px;
 `;
 
@@ -28,7 +30,14 @@ export default function HeaderSection() {
     <HeaderStyled>
       <HeaderWrapper>
         <LogoWrapper alt="logo" src={logo} />
-        <div>메인으로 바로가기</div>
+        <TextBtn
+          btnTheme="violet"
+          btnType="lowBtn"
+          width="116px"
+          fontColor="purple"
+        >
+          마켓으로 바로가기
+        </TextBtn>
       </HeaderWrapper>
     </HeaderStyled>
   );

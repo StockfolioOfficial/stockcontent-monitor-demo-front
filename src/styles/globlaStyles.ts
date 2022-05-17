@@ -33,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
   }
   
-  a{
+  a {
     color: inherit;
     text-decoration: none;
   }

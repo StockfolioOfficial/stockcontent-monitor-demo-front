@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import TextBtn from '../atoms/textBtn';
 import BaseLayoutProps from '../types/BaseLayoutProps';
@@ -124,13 +123,13 @@ export default function DetailDeniedReason(props: CheckBoxProps): JSX.Element {
     },
   ];
 
-  const [isCheckedArr, setIsCheckedArr] = useState(
+  const [isCheckedArr, setIsCheckedArr] = useState<boolean[]>(
     Array(reasons.length).fill(false)
   );
 
   const changeCheck = (idx: number): void => {
     setIsCheckedArr(prev => {
-      const newArr = [...prev];
+      let newArr = [...prev];
       newArr[idx] = !newArr[idx];
       return newArr;
     });

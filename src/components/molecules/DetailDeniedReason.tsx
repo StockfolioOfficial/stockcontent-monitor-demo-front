@@ -1,16 +1,19 @@
 import * as React from 'react';
 import { useState } from 'react';
 import styled, { css } from 'styled-components';
+import TextBtn from '../atoms/textBtn';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 
 export interface CheckBoxProps extends BaseLayoutProps {
   isChecked?: boolean;
 }
+const DetailDeniendReasonStyled = styled.div`
+  width: 360px;
+`;
 
-const DetailDeniendReason = styled.div`
+const DetailDeniendReasonWrapper = styled.div`
   ${({ theme }) => css`
-    width: 360px;
-    height: 358px;
+    width: 100%;
     padding: 20px 25px;
     border: 1px solid ${theme.colors.gray1};
     border-radius: 10px;
@@ -65,18 +68,28 @@ const CheckBoxWrapper = styled.div<CheckBoxProps>`
 
 const TextAreaStyled = styled.textarea`
   ${({ theme }) => css`
-    width: 310px;
+    width: 100%;
     height: 145px;
     margin-top: 5px;
     padding: 10px;
     border: none;
     border-radius: 10px;
+
     background-color: ${theme.colors.gray0};
 
     ::placeholder {
+      font-family: 'Pretendard';
+      font-size: ${theme.fonts.size.ms};
       color: ${theme.colors.gray2};
     }
   `}
+`;
+
+const BtnAreaStyled = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
 `;
 
 export default function DetailDeniedReason(props: CheckBoxProps): JSX.Element {
@@ -117,30 +130,52 @@ export default function DetailDeniedReason(props: CheckBoxProps): JSX.Element {
 
   const changeCheck = (idx: number): void => {
     setIsCheckedArr(prev => {
-      const newArr = prev;
+      // 구조분해 할당 후, 스프레드 문법을 쓰지 않으면, 버튼 색이 변화하지 않는다.
+      // why??
+      const newArr = [...prev];
       newArr[idx] = !newArr[idx];
       return newArr;
     });
   };
 
   return (
-    <DetailDeniendReason>
-      <h1>반려사유</h1>
-      <CheckBoxStyled>
-        {reasons.map((el, idx) => (
-          <CheckBoxWrapper key={el.id} isChecked={isCheckedArr[idx]}>
-            <input
-              id={el.reason}
-              type="checkbox"
-              onChange={() => changeCheck(idx)}
-              checked={isCheckedArr[idx]}
-            />
-            <label htmlFor={el.reason}>{el.reason}</label>
-          </CheckBoxWrapper>
-        ))}
-      </CheckBoxStyled>
-      <h2>기타</h2>
-      <TextAreaStyled placeholder="추가적인 반려사유가 있다면 작성해주세요." />
-    </DetailDeniendReason>
+    <DetailDeniendReasonStyled>
+      <DetailDeniendReasonWrapper>
+        <h1>반려사유</h1>
+        <CheckBoxStyled>
+          {reasons.map((el, idx) => (
+            <CheckBoxWrapper key={el.id} isChecked={isCheckedArr[idx]}>
+              <input
+                id={el.reason}
+                type="checkbox"
+                onChange={() => changeCheck(idx)}
+                checked={isCheckedArr[idx]}
+              />
+              <label htmlFor={el.reason}>{el.reason}</label>
+            </CheckBoxWrapper>
+          ))}
+        </CheckBoxStyled>
+        <h2>기타</h2>
+        <TextAreaStyled placeholder="추가적인 반려사유가 있다면 작성해주세요." />
+      </DetailDeniendReasonWrapper>
+      <BtnAreaStyled>
+        <TextBtn
+          width="175px"
+          btnType="highBtn"
+          fontColor="blue"
+          btnTheme="sky"
+        >
+          취소
+        </TextBtn>
+        <TextBtn
+          width="175px"
+          btnType="highBtn"
+          fontColor="sky"
+          btnTheme="blue"
+        >
+          제출
+        </TextBtn>
+      </BtnAreaStyled>
+    </DetailDeniendReasonStyled>
   );
 }

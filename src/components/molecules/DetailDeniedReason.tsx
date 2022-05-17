@@ -130,8 +130,6 @@ export default function DetailDeniedReason(props: CheckBoxProps): JSX.Element {
 
   const changeCheck = (idx: number): void => {
     setIsCheckedArr(prev => {
-      // 구조분해 할당 후, 스프레드 문법을 쓰지 않으면, 버튼 색이 변화하지 않는다.
-      // why??
       const newArr = [...prev];
       newArr[idx] = !newArr[idx];
       return newArr;

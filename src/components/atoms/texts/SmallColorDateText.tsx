@@ -10,11 +10,11 @@ export interface SmallColorDateTextProps extends BaseLayoutProps {
 
 function formatDate(t: Date) {
   return `${t.getFullYear().toString()}.${(
-    '00' + (t.getMonth() + 1).toString()
-  ).slice(-2)}.${('00' + t.getDate().toString()).slice(-2)} ${(
-    '00' + t.getHours().toString()
-  ).slice(-2)}:${('00' + t.getMinutes().toString()).slice(-2)}:${(
-    '00' + t.getSeconds().toString()
+    '0' + (t.getMonth() + 1).toString()
+  ).slice(-2)}.${('0' + t.getDate().toString()).slice(-2)} ${(
+    '0' + t.getHours().toString()
+  ).slice(-2)}:${('0' + t.getMinutes().toString()).slice(-2)}:${(
+    '0' + t.getSeconds().toString()
   ).slice(-2)}`;
 }
 

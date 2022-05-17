@@ -29,7 +29,7 @@ export default function ConfirmContentsPage() {
     <VStackLayout>
       <HStackLayout>{test.map(renderTypeButton)}</HStackLayout>
       <h1>{type}</h1>
-      <Modal />
+      <Modal modalTitle="SomeoneConfirming" />
       <StyledBox />
     </VStackLayout>
   );

@@ -7,6 +7,57 @@ export interface ModalProps extends BaseLayoutProps {
   isModalActive?: boolean;
 }
 
+export interface ModalTitleProps extends ModalProps {
+  modalTitle:
+    | 'SomeoneConfirming'
+    | 'WritingDeniedReason'
+    | 'NothingReason'
+    | 'SubmitDeniedReason'
+    | 'CancelDeniedReason'
+    | 'Approving';
+}
+
+const selectTitle = ({ modalTitle }: ModalTitleProps) => {
+  let title: JSX.Element;
+  let button;
+  switch (modalTitle) {
+    case 'Approving':
+      title = <p>승인하시겠습니까?</p>;
+      button = 2;
+      break;
+    case 'CancelDeniedReason':
+      title = <p>작성하시던 내용은 저장되지 않습니다.</p>;
+      button = 2;
+      break;
+    case 'NothingReason':
+      title = <p>반려 사유를 선택하거나 작성해주세요.?</p>;
+      button = 2;
+      break;
+    case 'SomeoneConfirming':
+      title = (
+        <p>
+          다른 관리자가 검수중입니다. <br /> 승인 및 반려를 하실 수 없습니다.
+        </p>
+      );
+      button = 2;
+      break;
+    case 'SubmitDeniedReason':
+      title = (
+        <p>
+          반려 후 취소가 불가능합니다. <br /> 반려 사유 작성을 완료합니다.
+        </p>
+      );
+      button = 2;
+      break;
+    case 'WritingDeniedReason':
+      title = <p>'반려사유 작성할까요?'</p>;
+      button = 2;
+      break;
+  }
+  let components = { title: title, button: button };
+  return components;
+};
+
 const ModalStyled = styled.div<ModalProps>`
   ${({ theme, isModalActive }) => css`
     display: ${isModalActive ? 'block' : 'none'};
@@ -35,7 +86,7 @@ const ModalWrapper = styled.div<ModalProps>`
   `}
 `;
 
-const ModalTextStyeld = styled.p`
+const ModalTextStyeld = styled.p<ModalTitleProps>`
   ${({ theme }) => css`
     display: flex;
     align-items: center;
@@ -45,52 +96,60 @@ const ModalTextStyeld = styled.p`
     margin-bottom: 20px;
     font-size: ${theme.fonts.size.ms};
     line-height: ${theme.fonts.lineHeight.ms};
+    text-align: center;
   `}
 `;
 
-export default function Modal() {
+export default function Modal(props: ModalTitleProps) {
   const [modalState, setModalState] = useState(false);
-
-  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     if (modalState) {
       document.body.style.cssText = `
-        top: -${scrollY}px;
-        position: fixed; 
-        width: 100%;`;
+        overflow: hidden`;
     }
     return () => {
-      const scrollY = document.body.style.top;
       document.body.style.cssText = '';
-      window.scrollTo(0, parseInt(scrollY || '0') * -1);
     };
-  }, [modalState, scrollY]);
-
-  const openModal = () => {
-    setModalState(() => !modalState);
-    setScrollY(window.pageYOffset);
-  };
-
-  const closeModal = () => {
-    setModalState(() => !modalState);
-    setScrollY(0);
-  };
+  }, [modalState]);
 
   return (
     <>
       <ModalStyled isModalActive={modalState}>
         <ModalWrapper isModalActive={modalState}>
-          <ModalTextStyeld>반려사유 작성할까요?</ModalTextStyeld>
-          <div>button section</div>
-          <button style={{ width: '50px' }} onClick={closeModal}>
-            닫기버튼
-          </button>
+          <ModalTextStyeld {...props}>
+            {selectTitle(props).title}
+          </ModalTextStyeld>
+          <div style={{ height: '36px', backgroundColor: 'skyblue' }}>
+            <button
+              style={{
+                height: '100%',
+                width: '115px',
+                backgroundColor: 'blue',
+                marginRight: '10px',
+                borderRadius: '10px',
+              }}
+              onClick={() => setModalState(() => !modalState)}
+            >
+              닫기버튼
+            </button>
+            <button
+              style={{
+                height: '100%',
+                width: '115px',
+                backgroundColor: 'gray',
+                borderRadius: '10px',
+              }}
+              onClick={() => setModalState(() => !modalState)}
+            >
+              닫기버튼
+            </button>
+          </div>
         </ModalWrapper>
       </ModalStyled>
       <button
         style={{ width: '50px', height: '500px', border: '1px solid black' }}
-        onClick={openModal}
+        onClick={() => setModalState(() => !modalState)}
       >
         버튼
       </button>

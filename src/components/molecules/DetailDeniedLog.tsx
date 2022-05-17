@@ -14,6 +14,7 @@ export interface tag {
   tagName: string;
 }
 
+//Date formatting 함수
 function formatDate(t: Date) {
   return `${t.getFullYear().toString()}.${(
     '0' + (t.getMonth() + 1).toString()

@@ -13,6 +13,7 @@ import ConfirmContentDetailPage from './pages/ConfirmContents/ConfirmContentDeta
 import theme from './styles/theme';
 import GlobalStyle from './styles/globlaStyles';
 import GlobalFont from './styles/globaFonts';
+import HeaderSection from './components/organisms/HeaderSection';
 
 export default function App() {
   return (
@@ -43,7 +44,7 @@ export default function App() {
 function Layout() {
   return (
     <div>
-      <header style={{ backgroundColor: 'green' }}>Header Layout Test</header>
+      <HeaderSection />
       <Outlet />
     </div>
   );

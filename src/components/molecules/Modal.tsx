@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import TextBtn from '../atoms/textBtn';
+import TextBtn from '../atoms/TextBtn';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 
 export interface ModalProps extends BaseLayoutProps {
@@ -16,9 +16,10 @@ export interface ModalTitleProps extends ModalProps {
     | 'SubmitDeniedReason'
     | 'CancelDeniedReason'
     | 'Approving';
+  positiveBtn: VoidFunction;
 }
 
-const selectTitle = ({ modalTitle }: ModalTitleProps) => {
+const selectModalTheme = ({ modalTitle }: ModalTitleProps) => {
   let title: JSX.Element;
   let colorTheme: 'red' | 'blue' | 'purple';
   let revColorTheme: 'pink' | 'sky' | 'violet';
@@ -114,7 +115,7 @@ const ModalWrapper = styled.div<ModalProps>`
   `}
 `;
 
-const ModalTextStyeld = styled.p<ModalTitleProps>`
+const ModalTextStyeld = styled.p<ModalProps>`
   ${({ theme }) => css`
     display: flex;
     align-items: center;
@@ -128,7 +129,13 @@ const ModalTextStyeld = styled.p<ModalTitleProps>`
   `}
 `;
 
+const ModalBtnStyled = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 export default function Modal(props: ModalTitleProps) {
+  const { positiveBtn } = props;
   const [modalState, setModalState] = useState(false);
 
   useEffect(() => {
@@ -137,54 +144,40 @@ export default function Modal(props: ModalTitleProps) {
         overflow: hidden`;
     }
     return () => {
-      document.body.style.cssText = '';
+      document.body.style.cssText = `
+        overflow: auto`;
     };
   }, [modalState]);
 
   return (
-    <>
-      <ModalStyled isModalActive={modalState}>
-        <ModalWrapper isModalActive={modalState}>
-          <ModalTextStyeld {...props}>
-            {selectTitle(props).title}
-          </ModalTextStyeld>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-            }}
-          >
-            {selectTitle(props).btnText1 ? (
-              <TextBtn
-                width="115px"
-                fontColor={selectTitle(props).colorTheme}
-                btnType="lowBtn"
-                btnTheme={selectTitle(props).revColorTheme}
-                onClick={() => setModalState(() => !modalState)}
-              >
-                {selectTitle(props).btnText1}
-              </TextBtn>
-            ) : (
-              ''
-            )}
+    <ModalStyled isModalActive={modalState}>
+      <ModalWrapper isModalActive={modalState}>
+        <ModalTextStyeld>{selectModalTheme(props).title}</ModalTextStyeld>
+        <ModalBtnStyled>
+          {selectModalTheme(props).btnText1 ? (
             <TextBtn
-              width={selectTitle(props).btnText1 ? '115px' : '240px'}
-              fontColor={selectTitle(props).revColorTheme}
+              width="115px"
+              fontColor={selectModalTheme(props).colorTheme}
               btnType="lowBtn"
-              btnTheme={selectTitle(props).colorTheme}
+              btnTheme={selectModalTheme(props).revColorTheme}
               onClick={() => setModalState(() => !modalState)}
             >
-              {selectTitle(props).btnText2}
+              {selectModalTheme(props).btnText1}
             </TextBtn>
-          </div>
-        </ModalWrapper>
-      </ModalStyled>
-      <button
-        style={{ width: '50px', height: '500px', border: '1px solid black' }}
-        onClick={() => setModalState(() => !modalState)}
-      >
-        버튼
-      </button>
-    </>
+          ) : (
+            ''
+          )}
+          <TextBtn
+            width={selectModalTheme(props).btnText1 ? '115px' : '240px'}
+            fontColor={selectModalTheme(props).revColorTheme}
+            btnType="lowBtn"
+            btnTheme={selectModalTheme(props).colorTheme}
+            onClick={() => positiveBtn()}
+          >
+            {selectModalTheme(props).btnText2}
+          </TextBtn>
+        </ModalBtnStyled>
+      </ModalWrapper>
+    </ModalStyled>
   );
 }

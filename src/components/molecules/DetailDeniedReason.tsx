@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import TextBtn from '../atoms/textBtn';
+import TextBtn from '../atoms/TextBtn';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 
 export interface CheckBoxProps extends BaseLayoutProps {

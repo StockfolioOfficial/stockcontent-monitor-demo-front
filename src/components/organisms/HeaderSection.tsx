@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 import * as React from 'react';
 import logo from '../../assets/images/logo.svg';
-import TextBtn from '../atoms/textbtn';
+import TextBtn from '../atoms/TextBtn';
 
 export interface HeaderProps extends BaseLayoutProps {}
 

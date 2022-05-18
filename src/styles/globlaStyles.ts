@@ -26,6 +26,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   input, textarea, select, button {
+    font-size: inherit;
+    font-family: inherit;
     outline: none;
   }
   
@@ -33,7 +35,7 @@ const GlobalStyle = createGlobalStyle`
     outline: none;
   }
   
-  a{
+  a {
     color: inherit;
     text-decoration: none;
   }

@@ -2,7 +2,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const ConfirmContentsTypeQueryKey = 't';
 
-export type ConfirmContentsType = 'waiting' | 'denied' | 'approved';
+export type ConfirmContentsType = '대기중' | '반려됨' | '승인';
 
 export default function useConfirmContentsParams() {
   const [searchParams] = useSearchParams();
@@ -17,7 +17,7 @@ export default function useConfirmContentsParams() {
   // type
   const type =
     (searchParams.get(ConfirmContentsTypeQueryKey) as ConfirmContentsType) ??
-    'waiting';
+    '대기중';
   const setType = (t: ConfirmContentsType) => {
     searchParams.set(ConfirmContentsTypeQueryKey, t);
     updateNavigate();

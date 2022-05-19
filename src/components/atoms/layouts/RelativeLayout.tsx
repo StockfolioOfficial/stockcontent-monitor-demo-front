@@ -1,3 +1,4 @@
+/* eslint-disable react/destructuring-assignment */
 import { cloneElement, CSSProperties, ReactElement, ReactNode } from 'react';
 import styled from 'styled-components';
 import BaseLayoutProps from '../../types/BaseLayoutProps';

@@ -1,8 +1,9 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import * as React from 'react';
 import DetailVideoItem from '../molecules/DetailVideoItem';
-import DetailDeniedLog from '../molecules/DetailDeniedLog';
-import { DeniedLogLayoutProps } from '../types/DetailDataTypes';
+import DeniedLogSection from '../organisms/DeniedLogSection';
+
+import { DetailDeniedLayoutProps } from '../types/CommonDataProps';
 
 const DetailDeniedLogLayoutStyled = styled.div`
   display: flex;
@@ -13,58 +14,33 @@ const DetailDeniedLogWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 20px;
-
-  h1 {
-    ${({ theme }) => css`
-      padding-bottom: 10px;
-      font-size: ${theme.fonts.size.ml};
-      font-weight: ${theme.fonts.weight.bold};
-      line-height: ${theme.fonts.lineHeight.ml};
-    `}
-  }
 `;
 
-const DetailDeniedLogWrap = styled.div`
-  margin-bottom: 15px;
-`;
-
-export default function DeniedLogActiveLayout({ data }: DeniedLogLayoutProps) {
+export default function DeniedLogActiveLayout({
+  data,
+}: DetailDeniedLayoutProps) {
   const {
-    contentId,
-    stateLabel,
-    subject,
-    description,
-    uploadedAt,
-    tags,
-    denyLogs,
+    sampleContent: videoSrc,
+    stateLabel: stateType,
+    subject: title,
+    description: descript,
+    uploadedAt: uploadDate,
+    tags: tagArray,
+    denyLogs: deniedLogs,
   } = data;
-
-  console.log(denyLogs);
-
   return (
     <DetailDeniedLogLayoutStyled>
       <DetailVideoItem
-        videoSrc=""
-        videoType=""
-        title={subject}
-        stateType={stateLabel}
-        uploadDate={new Date(uploadedAt)}
-        descript={description}
-        tagArray={tags}
+        videoSrc={videoSrc}
+        videoType="video/mp4"
+        title={title}
+        stateType={stateType}
+        uploadDate={new Date(uploadDate)}
+        descript={descript}
+        tagArray={tagArray}
       />
       <DetailDeniedLogWrapper>
-        <h1>반려기록</h1>
-        {denyLogs.map(data => (
-          <DetailDeniedLogWrap key={data.logId}>
-            <DetailDeniedLog
-              date={new Date(data.deniedAt)}
-              tag={data.denyTags}
-              reason={data.reason}
-            >
-              {data.reason}
-            </DetailDeniedLog>
-          </DetailDeniedLogWrap>
-        ))}
+        <DeniedLogSection deniedLogs={deniedLogs} />
       </DetailDeniedLogWrapper>
     </DetailDeniedLogLayoutStyled>
   );

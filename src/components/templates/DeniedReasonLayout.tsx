@@ -1,12 +1,8 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
-import { DetailDataProps } from '../types/CommonDataProps';
 import DetailDeniedReason from '../molecules/DetailDeniedReason';
 import DetailVideoItem from '../molecules/DetailVideoItem';
-
-export interface DeniedReasonDataProps {
-  data: DetailDataProps;
-}
+import { DetailDeniedLayoutProps } from '../types/CommonDataProps';
 
 const DetailStyled = styled.section`
   display: flex;
@@ -28,7 +24,7 @@ const DeniedReasonTitle = styled.p`
 
 export default function DetailDeniedReasonLayout({
   data,
-}: DeniedReasonDataProps) {
+}: DetailDeniedLayoutProps) {
   const {
     sampleContent: videoSrc,
     subject: title,

@@ -1,9 +1,12 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
+import { DetailDataProps } from '../types/CommonDataProps';
 import DetailDeniedReason from '../molecules/DetailDeniedReason';
-import DetailVideoItem, {
-  DetailVideoItemProps,
-} from '../molecules/DetailVideoItem';
+import DetailVideoItem from '../molecules/DetailVideoItem';
+
+export interface DeniedReasonDataProps {
+  data: DetailDataProps;
+}
 
 const DetailStyled = styled.section`
   display: flex;
@@ -24,11 +27,28 @@ const DeniedReasonTitle = styled.p`
 `;
 
 export default function DetailDeniedReasonLayout({
-  ...props
-}: DetailVideoItemProps) {
+  data,
+}: DeniedReasonDataProps) {
+  const {
+    sampleContent: videoSrc,
+    subject: title,
+    stateLabel: stateType,
+    uploadedAt: uploadDate,
+    description: descript,
+    tags: tagArray,
+  } = data;
+
   return (
     <DetailStyled>
-      <DetailVideoItem {...props} />
+      <DetailVideoItem
+        videoSrc={videoSrc}
+        videoType="video/mp4"
+        title={title}
+        stateType={stateType}
+        uploadDate={new Date(uploadDate)}
+        descript={descript}
+        tagArray={tagArray}
+      />
       <DeniedReasonWrapper>
         <DeniedReasonTitle>반려 사유를 작성합니다.</DeniedReasonTitle>
         <DetailDeniedReason />

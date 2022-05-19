@@ -36,6 +36,7 @@ const TabBtn = styled.button<TabButtonProps>`
   ${({ click }) => click === 'clicked' && tabStyle}
 
   ${({ theme, click }) => css`
+    margin-right: 15px;
     padding: 7px 11px;
     border-radius: 10px;
     font-size: ${theme.fonts.size.ml};

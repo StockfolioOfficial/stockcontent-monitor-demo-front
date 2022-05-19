@@ -3,7 +3,7 @@ import * as React from 'react';
 import DetailVideoItem from '../molecules/DetailVideoItem';
 import DetailDeniedLog from '../molecules/DetailDeniedLog';
 import TextBtn from '../atoms/TextBtn';
-import { DetailDeniedLogLayoutProps } from '../types/DetailDataTypes';
+import { DeniedLogLayoutProps } from '../types/DetailDataTypes';
 
 const DetailDeniedLogLayoutStyled = styled.div`
   display: flex;
@@ -36,13 +36,28 @@ const DetailDeniedLogWrap = styled.div`
   margin-bottom: 15px;
 `;
 
-export default function DetailDeniedLogLayout({
-  deniedLog,
-  ...rest
-}: DetailDeniedLogLayoutProps) {
+export default function DeniedLogWaitingLayout({ data }: DeniedLogLayoutProps) {
+  const {
+    contentId,
+    stateLabel,
+    subject,
+    description,
+    uploadedAt,
+    tags,
+    denyLogs,
+  } = data;
+
   return (
     <DetailDeniedLogLayoutStyled>
-      <DetailVideoItem {...rest} />
+      <DetailVideoItem
+        videoSrc=""
+        videoType=""
+        title={subject}
+        stateType={stateLabel}
+        uploadDate={new Date(uploadedAt)}
+        descript={description}
+        tagArray={tags}
+      />
       <DetailDeniedLogWrapper>
         <TextButtonWrapper>
           <TextBtn
@@ -63,7 +78,7 @@ export default function DetailDeniedLogLayout({
           </TextBtn>
         </TextButtonWrapper>
         <h1>반려기록</h1>
-        {deniedLog.map(data => (
+        {denyLogs.map(data => (
           <DetailDeniedLogWrap key={data.logId}>
             <DetailDeniedLog
               date={new Date(data.deniedAt)}

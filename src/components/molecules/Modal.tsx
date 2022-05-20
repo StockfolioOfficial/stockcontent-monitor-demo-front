@@ -1,13 +1,15 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import TextBtn from '../atoms/TextBtn';
 import BaseLayoutProps from '../types/BaseLayoutProps';
+import UseStore from '../../stores/UseStores';
+import { observer } from 'mobx-react';
+import positiveBtns from './ModalPositiveBtns';
+import { useNavigate } from 'react-router-dom';
 
 export interface ModalProps extends BaseLayoutProps {
   isModalActive?: boolean;
 }
-
 export interface ModalTitleProps extends ModalProps {
   modalTitle:
     | 'SomeoneConfirming'
@@ -15,16 +17,18 @@ export interface ModalTitleProps extends ModalProps {
     | 'NothingReason'
     | 'SubmitDeniedReason'
     | 'CancelDeniedReason'
-    | 'Approving';
-  positiveBtn: VoidFunction;
+    | 'Approving'
+    | null;
 }
 
-const selectModalTheme = ({ modalTitle }: ModalTitleProps) => {
+const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
   let title: JSX.Element;
   let colorTheme: 'red' | 'blue' | 'purple';
   let revColorTheme: 'pink' | 'sky' | 'violet';
   let btnText1: string;
   let btnText2: string | null;
+  let positiveBtn: Function;
+  let btnState: 'void' | 'return';
   switch (modalTitle) {
     case 'Approving':
       title = <p>승인하시겠습니까?</p>;
@@ -32,6 +36,8 @@ const selectModalTheme = ({ modalTitle }: ModalTitleProps) => {
       revColorTheme = 'sky';
       btnText1 = '취소';
       btnText2 = '승인';
+      positiveBtn = positiveBtns.Approving;
+      btnState = 'void';
       break;
     case 'CancelDeniedReason':
       title = <p>작성하시던 내용은 저장되지 않습니다.</p>;
@@ -39,6 +45,8 @@ const selectModalTheme = ({ modalTitle }: ModalTitleProps) => {
       revColorTheme = 'sky';
       btnText1 = '취소';
       btnText2 = '확인';
+      positiveBtn = positiveBtns.CancelDeniendReason;
+      btnState = 'return';
       break;
     case 'NothingReason':
       title = <p>반려 사유를 선택하거나 작성해주세요?</p>;
@@ -46,6 +54,8 @@ const selectModalTheme = ({ modalTitle }: ModalTitleProps) => {
       revColorTheme = 'violet';
       btnText1 = '';
       btnText2 = '확인';
+      positiveBtn = positiveBtns.NothingReason;
+      btnState = 'void';
       break;
     case 'SomeoneConfirming':
       title = (
@@ -57,6 +67,8 @@ const selectModalTheme = ({ modalTitle }: ModalTitleProps) => {
       revColorTheme = 'violet';
       btnText1 = '';
       btnText2 = '확인';
+      positiveBtn = positiveBtns.SomeoneConfirming;
+      btnState = 'return';
       break;
     case 'SubmitDeniedReason':
       title = (
@@ -68,6 +80,8 @@ const selectModalTheme = ({ modalTitle }: ModalTitleProps) => {
       revColorTheme = 'sky';
       btnText1 = '취소';
       btnText2 = '완료';
+      positiveBtn = positiveBtns.SubmitDeniedReason;
+      btnState = 'return';
       break;
     case 'WritingDeniedReason':
       title = <p>반려사유 작성할까요?</p>;
@@ -75,14 +89,27 @@ const selectModalTheme = ({ modalTitle }: ModalTitleProps) => {
       revColorTheme = 'pink';
       btnText1 = '아니오';
       btnText2 = '네';
+      positiveBtn = positiveBtns.WritingDeniedReason;
+      btnState = 'return';
+      break;
+    case null:
+      title = <p />;
+      colorTheme = 'red';
+      revColorTheme = 'pink';
+      btnText1 = '아니오';
+      btnText2 = '네';
+      positiveBtn = () => null;
+      btnState = 'void';
       break;
   }
   let components = {
-    title: title,
-    colorTheme: colorTheme,
-    revColorTheme: revColorTheme,
-    btnText1: btnText1,
-    btnText2: btnText2,
+    title,
+    colorTheme,
+    revColorTheme,
+    btnText1,
+    btnText2,
+    positiveBtn,
+    btnState,
   };
   return components;
 };
@@ -111,7 +138,6 @@ const ModalWrapper = styled.div<ModalProps>`
     border-radius: 20px;
     background: ${theme.colors.white};
     box-shadow: ${theme.hoverShadow.modal};
-    z-index: 1;
   `}
 `;
 
@@ -134,12 +160,25 @@ const ModalBtnStyled = styled.div`
   justify-content: space-between;
 `;
 
-export default function Modal(props: ModalTitleProps) {
-  const { positiveBtn } = props;
-  const [modalState, setModalState] = useState(false);
+const Modal = () => {
+  const { ModalStore } = UseStore();
+
+  const { modalTitle, isOpen } = ModalStore;
+
+  const {
+    title,
+    btnText1,
+    btnText2,
+    colorTheme,
+    revColorTheme,
+    positiveBtn,
+    btnState,
+  } = selectModalTheme(modalTitle);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (modalState) {
+    if (isOpen) {
       document.body.style.cssText = `
         overflow: hidden`;
     }
@@ -147,37 +186,41 @@ export default function Modal(props: ModalTitleProps) {
       document.body.style.cssText = `
         overflow: auto`;
     };
-  }, [modalState]);
+  }, [isOpen]);
 
   return (
-    <ModalStyled isModalActive={modalState}>
-      <ModalWrapper isModalActive={modalState}>
-        <ModalTextStyeld>{selectModalTheme(props).title}</ModalTextStyeld>
+    <ModalStyled isModalActive={isOpen}>
+      <ModalWrapper isModalActive={isOpen}>
+        <ModalTextStyeld>{title}</ModalTextStyeld>
         <ModalBtnStyled>
-          {selectModalTheme(props).btnText1 ? (
+          {btnText1 ? (
             <TextBtn
               width="115px"
-              fontColor={selectModalTheme(props).colorTheme}
+              fontColor={colorTheme}
               btnType="lowBtn"
-              btnTheme={selectModalTheme(props).revColorTheme}
-              onClick={() => setModalState(() => !modalState)}
+              btnTheme={revColorTheme}
+              onClick={() => ModalStore.closeModal()}
             >
-              {selectModalTheme(props).btnText1}
+              {btnText1}
             </TextBtn>
           ) : (
             ''
           )}
           <TextBtn
-            width={selectModalTheme(props).btnText1 ? '115px' : '240px'}
-            fontColor={selectModalTheme(props).revColorTheme}
+            width={btnText1 ? '115px' : '240px'}
+            fontColor={revColorTheme}
             btnType="lowBtn"
-            btnTheme={selectModalTheme(props).colorTheme}
-            onClick={() => positiveBtn()}
+            btnTheme={colorTheme}
+            onClick={() =>
+              btnState === 'return' ? navigate(positiveBtn()) : positiveBtn()
+            }
           >
-            {selectModalTheme(props).btnText2}
+            {btnText2}
           </TextBtn>
         </ModalBtnStyled>
       </ModalWrapper>
     </ModalStyled>
   );
-}
+};
+
+export default observer(Modal);

@@ -26,17 +26,7 @@ const PagenationWrapper = styled.section`
 `;
 
 export default function MainLayout({ type }: MainItemLayoutProps) {
-  const [mainItemList, setMainItemList] = useState<MainDataProps[]>([
-    {
-      contentId: '',
-      stateLabel: undefined,
-      thumb: '',
-      subject: '',
-      uploadedAt: '',
-      latestDeniedAt: '',
-      tags: [],
-    },
-  ]);
+  const [mainItemList, setMainItemList] = useState<MainDataProps[]>([]);
 
   //mainItemList 데이터 fetch
   useEffect(() => {
@@ -60,22 +50,23 @@ export default function MainLayout({ type }: MainItemLayoutProps) {
   return (
     <>
       <MainItemStyled>
-        {mainItemList.map(data => (
-          <MainItem
-            key={data.contentId}
-            stateType={data.stateLabel}
-            imgSrc={data.thumb}
-            imgAlt={data.subject}
-            title={data.subject}
-            uploadDate={new Date(data.uploadedAt)}
-            tagArray={data.tags}
-            lastDeniedDate={
-              data.latestDeniedAt === undefined
-                ? undefined
-                : new Date(data.latestDeniedAt)
-            }
-          />
-        ))}
+        {mainItemList.length > 0 &&
+          mainItemList.map(data => (
+            <MainItem
+              key={data.contentId}
+              stateType={data.stateLabel}
+              imgSrc={data.thumb}
+              imgAlt={data.subject}
+              title={data.subject}
+              uploadDate={new Date(data.uploadedAt)}
+              tagArray={data.tags}
+              lastDeniedDate={
+                data.latestDeniedAt === undefined
+                  ? undefined
+                  : new Date(data.latestDeniedAt)
+              }
+            />
+          ))}
       </MainItemStyled>
       <PagenationWrapper>
         <Pagenation />

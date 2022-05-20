@@ -7,7 +7,7 @@ import {
   Route,
   Routes,
 } from 'react-router-dom';
-import ConfirmContentsPage from './pages/ConfirmContents';
+import ConfirmContentsPage from './pages/ConfirmContents/Main';
 import ConfirmContentDetailPage from './pages/ConfirmContents/ConfirmContentDetail';
 import theme from './styles/theme';
 import GlobalStyle from './styles/globlaStyles';

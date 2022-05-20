@@ -18,3 +18,13 @@ interface DenyLogsType {
   deniedAt: string;
   denyTags: string[];
 }
+
+export interface MainDataProps extends BaseLayoutProps {
+  contentId: string;
+  stateLabel?: Exclude<TagProps['tagType'], 'tag'>;
+  thumb: string;
+  subject: string;
+  uploadedAt: string;
+  latestDeniedAt?: string;
+  tags: string[];
+}

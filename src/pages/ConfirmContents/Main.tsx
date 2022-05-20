@@ -4,6 +4,12 @@ import useConfirmContentsParams, {
 } from '../../hooks/pathParams/useConfirmContentsParams';
 import HStackLayout from '../../components/atoms/layouts/HStackLayout';
 import MainTab from '../../components/molecules/MainTab';
+import styled from 'styled-components';
+import MainLayout from '../../components/templates/MainLayout';
+
+const MainTabWrapper = styled.section`
+  margin: 31px 0 0 100px;
+`;
 
 export default function ConfirmContentsPage() {
   const { type, setType } = useConfirmContentsParams();
@@ -25,8 +31,10 @@ export default function ConfirmContentsPage() {
 
   return (
     <VStackLayout>
-      <HStackLayout>{mainTabType.map(renderTypeButton)}</HStackLayout>
-      <h1>{type}</h1>
+      <HStackLayout>
+        <MainTabWrapper>{mainTabType.map(renderTypeButton)}</MainTabWrapper>
+      </HStackLayout>
+      <MainLayout type={type} />
     </VStackLayout>
   );
 }

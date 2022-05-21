@@ -1,10 +1,14 @@
 import styled, { css } from 'styled-components';
 import * as React from 'react';
 import DetailDeniedLog from '../molecules/DetailDeniedLog';
-import { DetailDataProps } from '../types/CommonDataProps';
 
 export interface DeniedLogSectionProps {
-  deniedLogs: Exclude<DetailDataProps['denyLogs'], []>;
+  deniedLogs: {
+    logId: number;
+    reason: string;
+    deniedAt: string;
+    denyTags: string[];
+  }[];
 }
 
 const DeniedLogStyled = styled.section`

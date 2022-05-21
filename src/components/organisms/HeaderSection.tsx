@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import BaseLayoutProps from '../types/BaseLayoutProps';
-import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import logo from '../../assets/images/logo.svg';
 import TextBtn from '../atoms/TextBtn';
 
@@ -26,10 +26,18 @@ const LogoWrapper = styled.img`
 `;
 
 export default function HeaderSection() {
+  const navigate = useNavigate();
+
   return (
     <HeaderStyled>
       <HeaderWrapper>
-        <LogoWrapper alt="logo" src={logo} />
+        <LogoWrapper
+          alt="logo"
+          src={logo}
+          onClick={() => {
+            navigate('/');
+          }}
+        />
         <TextBtn
           btnTheme="violet"
           btnType="lowBtn"

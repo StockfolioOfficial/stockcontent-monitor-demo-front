@@ -1,4 +1,4 @@
-import { useParams, useNavigate, Outlet } from 'react-router-dom';
+import { useParams, Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { DetailDataProps } from '../../../components/types/CommonDataProps';
@@ -42,7 +42,7 @@ export default function ConfirmContentDetailPage() {
         // }
         // console.log(error.config);
       });
-  }, []);
+  }, [contentId]);
 
   return (
     <>

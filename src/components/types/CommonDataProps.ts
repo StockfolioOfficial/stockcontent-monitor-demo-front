@@ -12,3 +12,13 @@ export interface DetailDataProps extends BaseLayoutProps {
   tags: DetailVideoItemProps['tagArray'];
   denyLogs: DeniedLogSectionProps['deniedLogs'];
 }
+
+export interface MainDataProps extends BaseLayoutProps {
+  contentId: string;
+  stateLabel?: Exclude<TagProps['tagType'], 'tag'>;
+  thumb: string;
+  subject: string;
+  uploadedAt: string;
+  latestDeniedAt?: string;
+  tags: string[];
+}

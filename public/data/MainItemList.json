@@ -1,0 +1,154 @@
+[
+  {
+    "contentId": "1",
+    "stateLabel": "processing",
+    "thumb": "",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "2",
+    "stateLabel": "approved",
+    "thumb": "",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "3",
+    "stateLabel": "processing",
+    "thumb": "",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "4",
+    "stateLabel": "processing",
+    "thumb": "",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "5",
+    "stateLabel": "denied",
+    "thumb": "",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "6",
+    "stateLabel": "processing",
+    "thumb": "",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "7",
+    "stateLabel": "processing",
+    "thumb": "",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "8",
+    "stateLabel": "processing",
+    "thumb": "",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "9",
+    "stateLabel": "processing",
+    "thumb": "",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "10",
+    "stateLabel": "processing",
+    "thumb": "",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "11",
+    "stateLabel": "processing",
+    "thumb": "",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "12",
+    "stateLabel": "processing",
+    "thumb": "",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "13",
+    "stateLabel": "processing",
+    "thumb": "",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "14",
+    "stateLabel": "processing",
+    "thumb": "",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "15",
+    "stateLabel": "processing",
+    "thumb": "",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "16",
+    "stateLabel": "denied",
+    "thumb": "",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "17",
+    "stateLabel": "processing",
+    "thumb": "",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  }
+]

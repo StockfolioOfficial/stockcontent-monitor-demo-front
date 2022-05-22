@@ -1,8 +1,9 @@
-import { useParams, Outlet } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { DetailDataProps } from '../../../components/types/CommonDataProps';
-import DetailLayout from '../../../components/templates/DetailLayout';
+import { DetailDataProps } from '../../components/types/CommonDataProps';
+import DetailLayout from '../../components/templates/DetailLayout';
+import NotFoundPage from '../notFound';
 
 type Params = {
   contentId: string;
@@ -44,10 +45,5 @@ export default function ConfirmContentDetailPage() {
       });
   }, [contentId]);
 
-  return (
-    <>
-      {data && <DetailLayout data={data} />}
-      <Outlet />
-    </>
-  );
+  return data ? <DetailLayout data={data} /> : <NotFoundPage />;
 }

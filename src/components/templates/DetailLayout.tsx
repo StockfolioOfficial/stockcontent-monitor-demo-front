@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Route, Routes, Outlet } from 'react-router-dom';
 import DetailVideoItem from '../molecules/DetailVideoItem';
 import {
   translateMainState,
@@ -16,8 +16,6 @@ const DetailDeniedLogLayoutStyled = styled.div`
 `;
 
 export default function DetailLayout({ data }: DetailDeniedLayoutProps) {
-  const { pathname } = useLocation();
-
   return (
     <DetailDeniedLogLayoutStyled>
       <DetailVideoItem
@@ -29,14 +27,18 @@ export default function DetailLayout({ data }: DetailDeniedLayoutProps) {
         descript={data.description}
         tagArray={data.tags}
       />
-      {pathname === '/confirm-contents/1' ? (
-        <DeniedLogLayout
-          state={translateMainState(data.stateLabel)}
-          data={data.denyLogs}
+      <Routes>
+        <Route
+          index
+          element={
+            <DeniedLogLayout
+              state={translateMainState(data.stateLabel)}
+              data={data.denyLogs}
+            />
+          }
         />
-      ) : (
-        <DetailDeniedReasonLayout />
-      )}
+        <Route path="/report" element={<DetailDeniedReasonLayout />} />
+      </Routes>
     </DetailDeniedLogLayoutStyled>
   );
 }

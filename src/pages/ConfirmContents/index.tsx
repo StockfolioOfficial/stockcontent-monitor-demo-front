@@ -4,10 +4,11 @@ import useConfirmContentsParams, {
 } from '../../hooks/pathParams/useConfirmContentsParams';
 import HStackLayout from '../../components/atoms/layouts/HStackLayout';
 import MainTab from '../../components/molecules/MainTab';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function ConfirmContentsPage() {
   const { type, setType } = useConfirmContentsParams();
+  const navigate = useNavigate();
 
   //todo refactor
   const mainTabType: ConfirmContentsType[] = ['대기중', '반려됨', '승인'];
@@ -27,7 +28,27 @@ export default function ConfirmContentsPage() {
     <VStackLayout>
       <HStackLayout>{mainTabType.map(renderTypeButton)}</HStackLayout>
       <h1>{type}</h1>
-      <Link to="/confirm-contents/1">1번 게시물(대기중)</Link>
+      <button
+        onClick={() => {
+          navigate('1');
+        }}
+      >
+        1번 게시물(검수 대기중)
+      </button>
+      <button
+        onClick={() => {
+          navigate('2');
+        }}
+      >
+        1번 게시물(없는 게시물)
+      </button>
+      <button
+        onClick={() => {
+          navigate('3');
+        }}
+      >
+        1번 게시물(다른 사람이 검수중)
+      </button>
     </VStackLayout>
   );
 }

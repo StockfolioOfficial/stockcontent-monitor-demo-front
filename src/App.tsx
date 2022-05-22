@@ -11,7 +11,7 @@ import ConfirmContentsPage from './pages/ConfirmContents';
 import theme from './styles/theme';
 import GlobalStyle from './styles/globlaStyles';
 import HeaderSection from './components/organisms/HeaderSection';
-import ConfirmContentDetailPage from './pages/ConfirmContents/ConfirmContentDetail';
+import ConfirmContentDetailPage from './pages/ConfirmContentDetail';
 
 export default function App() {
   return (
@@ -24,9 +24,8 @@ export default function App() {
           />
           <Route path="/confirm-contents" element={<Layout />}>
             <Route index element={<ConfirmContentsPage />} />
-            <Route path=":contentId" element={<ConfirmContentDetailPage />} />
             <Route
-              path=":contentId/report"
+              path="/confirm-contents/:contentId/*"
               element={<ConfirmContentDetailPage />}
             />
           </Route>

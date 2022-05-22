@@ -1,6 +1,7 @@
 import BaseLayoutProps from './BaseLayoutProps';
 import { DetailVideoItemProps } from '../molecules/DetailVideoItem';
 import { DeniedLogSectionProps } from '../organisms/DeniedLogSection';
+import { TagProps } from '../atoms/texts/Tag';
 
 export interface DetailDataProps extends BaseLayoutProps {
   contentId: string;

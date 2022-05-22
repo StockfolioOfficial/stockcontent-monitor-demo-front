@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useLocation, Route, Routes, Outlet } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import DetailVideoItem from '../molecules/DetailVideoItem';
 import {
   translateMainState,

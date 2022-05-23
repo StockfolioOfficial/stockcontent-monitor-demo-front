@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { DetailDataProps } from '../../components/types/CommonDataProps';
-import DetailLayout from '../../components/templates/DetailLayout';
-import NotFoundPage from '../notFound';
+import { DetailDataProps } from '../components/types/CommonDataProps';
+import DetailLayout from '../components/templates/DetailLayout';
+import NotFoundPage from './NotFound';
 
 type Params = {
   contentId: string;

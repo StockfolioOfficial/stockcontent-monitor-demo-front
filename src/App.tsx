@@ -7,11 +7,11 @@ import {
   Route,
   Routes,
 } from 'react-router-dom';
-import ConfirmContentsPage from './pages/ConfirmContents/Main';
+import ConfirmContentsPage from './pages/Main';
 import theme from './styles/theme';
 import GlobalStyle from './styles/globlaStyles';
 import HeaderSection from './components/organisms/HeaderSection';
-import ConfirmContentDetailPage from './pages/ConfirmContentDetail';
+import ConfirmContentDetailPage from './pages/Detail';
 
 export default function App() {
   return (

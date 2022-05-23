@@ -1,8 +1,7 @@
 [
   {
     "contentId": "1",
-    "stateLabel": "processing",
-    "thumb": "",
+    "thumb": "http://www.travelnbike.com/news/photo/201903/77604_141293_4837.png",
     "subject": "string",
     "uploadedAt": "2022-02-02 11:11:11",
     "latestDeniedAt": "2022-02-02 11:11:11",
@@ -11,7 +10,7 @@
   {
     "contentId": "2",
     "stateLabel": "approved",
-    "thumb": "",
+    "thumb": "http://m.pressian.com/_resources/10/2021/06/09/2021060911533184690_l.jpg",
     "subject": "string",
     "uploadedAt": "2022-02-02 11:11:11",
     "latestDeniedAt": "2022-02-02 11:11:11",
@@ -19,8 +18,7 @@
   },
   {
     "contentId": "3",
-    "stateLabel": "processing",
-    "thumb": "",
+    "thumb": "https://cdn.traveltimes.co.kr/news/photo/202109/113186_11481_3335.jpg",
     "subject": "string",
     "uploadedAt": "2022-02-02 11:11:11",
     "latestDeniedAt": "2022-02-02 11:11:11",
@@ -28,8 +26,7 @@
   },
   {
     "contentId": "4",
-    "stateLabel": "processing",
-    "thumb": "",
+    "thumb": "http://www.travelnbike.com/news/photo/202107/90429_177321_1539.jpg",
     "subject": "string",
     "uploadedAt": "2022-02-02 11:11:11",
     "latestDeniedAt": "2022-02-02 11:11:11",
@@ -38,7 +35,7 @@
   {
     "contentId": "5",
     "stateLabel": "denied",
-    "thumb": "",
+    "thumb": "https://img.hankyung.com/photo/201706/AA.14077862.1.jpg",
     "subject": "string",
     "uploadedAt": "2022-02-02 11:11:11",
     "latestDeniedAt": "2022-02-02 11:11:11",
@@ -47,7 +44,7 @@
   {
     "contentId": "6",
     "stateLabel": "processing",
-    "thumb": "",
+    "thumb": "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/oeE/image/p2fq2VFmYKfivvKUVcGh-l6xkXk",
     "subject": "string",
     "uploadedAt": "2022-02-02 11:11:11",
     "latestDeniedAt": "2022-02-02 11:11:11",
@@ -55,8 +52,8 @@
   },
   {
     "contentId": "7",
-    "stateLabel": "processing",
-    "thumb": "",
+    "stateLabel": "denied",
+    "thumb": "https://img.huffingtonpost.com/asset/5ac599f81e00003b137b0a12.jpeg?ops=scalefit_720_noupscale",
     "subject": "string",
     "uploadedAt": "2022-02-02 11:11:11",
     "latestDeniedAt": "2022-02-02 11:11:11",
@@ -65,15 +62,14 @@
   {
     "contentId": "8",
     "stateLabel": "processing",
-    "thumb": "",
+    "thumb": "https://t1.daumcdn.net/cfile/tistory/2107704854CB376813",
     "subject": "string",
     "uploadedAt": "2022-02-02 11:11:11",
     "tags": ["강아지", "동물", "귀여움", "자연"]
   },
   {
     "contentId": "9",
-    "stateLabel": "processing",
-    "thumb": "",
+    "thumb": "https://cdn.traveltimes.co.kr/news/photo/202010/110442_7271_928.jpg",
     "subject": "string",
     "uploadedAt": "2022-02-02 11:11:11",
     "latestDeniedAt": "2022-02-02 11:11:11",
@@ -82,7 +78,7 @@
   {
     "contentId": "10",
     "stateLabel": "processing",
-    "thumb": "",
+    "thumb": "http://www.travelnbike.com/news/photo/201903/77604_141293_4837.png",
     "subject": "string",
     "uploadedAt": "2022-02-02 11:11:11",
     "latestDeniedAt": "2022-02-02 11:11:11",
@@ -91,7 +87,7 @@
   {
     "contentId": "11",
     "stateLabel": "processing",
-    "thumb": "",
+    "thumb": "http://m.pressian.com/_resources/10/2021/06/09/2021060911533184690_l.jpg",
     "subject": "string",
     "uploadedAt": "2022-02-02 11:11:11",
     "latestDeniedAt": "2022-02-02 11:11:11",
@@ -100,7 +96,7 @@
   {
     "contentId": "12",
     "stateLabel": "processing",
-    "thumb": "",
+    "thumb": "https://cdn.traveltimes.co.kr/news/photo/202109/113186_11481_3335.jpg",
     "subject": "string",
     "uploadedAt": "2022-02-02 11:11:11",
     "latestDeniedAt": "2022-02-02 11:11:11",
@@ -109,7 +105,7 @@
   {
     "contentId": "13",
     "stateLabel": "processing",
-    "thumb": "",
+    "thumb": "http://www.travelnbike.com/news/photo/202107/90429_177321_1539.jpg",
     "subject": "string",
     "uploadedAt": "2022-02-02 11:11:11",
     "latestDeniedAt": "2022-02-02 11:11:11",
@@ -118,7 +114,7 @@
   {
     "contentId": "14",
     "stateLabel": "processing",
-    "thumb": "",
+    "thumb": "https://img.hankyung.com/photo/201706/AA.14077862.1.jpg",
     "subject": "string",
     "uploadedAt": "2022-02-02 11:11:11",
     "latestDeniedAt": "2022-02-02 11:11:11",
@@ -127,7 +123,7 @@
   {
     "contentId": "15",
     "stateLabel": "processing",
-    "thumb": "",
+    "thumb": "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/oeE/image/p2fq2VFmYKfivvKUVcGh-l6xkXk",
     "subject": "string",
     "uploadedAt": "2022-02-02 11:11:11",
     "latestDeniedAt": "2022-02-02 11:11:11",
@@ -135,8 +131,8 @@
   },
   {
     "contentId": "16",
-    "stateLabel": "denied",
-    "thumb": "",
+    "stateLabel": "processing",
+    "thumb": "https://img.huffingtonpost.com/asset/5ac599f81e00003b137b0a12.jpeg?ops=scalefit_720_noupscale",
     "subject": "string",
     "uploadedAt": "2022-02-02 11:11:11",
     "latestDeniedAt": "2022-02-02 11:11:11",
@@ -145,7 +141,34 @@
   {
     "contentId": "17",
     "stateLabel": "processing",
-    "thumb": "",
+    "thumb": "https://t1.daumcdn.net/cfile/tistory/2107704854CB376813",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "18",
+    "stateLabel": "processing",
+    "thumb": "https://cdn.traveltimes.co.kr/news/photo/202010/110442_7271_928.jpg",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "19",
+    "stateLabel": "processing",
+    "thumb": "http://www.travelnbike.com/news/photo/201903/77604_141293_4837.png",
+    "subject": "string",
+    "uploadedAt": "2022-02-02 11:11:11",
+    "latestDeniedAt": "2022-02-02 11:11:11",
+    "tags": ["강아지", "동물", "귀여움", "자연"]
+  },
+  {
+    "contentId": "20",
+    "stateLabel": "processing",
+    "thumb": "http://m.pressian.com/_resources/10/2021/06/09/2021060911533184690_l.jpg",
     "subject": "string",
     "uploadedAt": "2022-02-02 11:11:11",
     "latestDeniedAt": "2022-02-02 11:11:11",

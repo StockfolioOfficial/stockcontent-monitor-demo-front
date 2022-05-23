@@ -54,6 +54,7 @@ export default function MainLayout({ type }: MainItemLayoutProps) {
           mainItemList.map(data => (
             <MainItem
               key={data.contentId}
+              id={data.contentId}
               stateType={data.stateLabel}
               imgSrc={data.thumb}
               imgAlt={data.subject}

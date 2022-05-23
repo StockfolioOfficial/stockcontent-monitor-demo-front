@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import * as React from 'react';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 import Tag, { TagProps } from '../atoms/texts/Tag';
 import SmallColorDateText, {

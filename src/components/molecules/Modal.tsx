@@ -4,7 +4,7 @@ import TextBtn from '../atoms/TextBtn';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 import UseStore from '../../stores/UseStores';
 import { observer } from 'mobx-react';
-import positiveBtns from './ModalPositiveBtns';
+import positiveBtns from '../../utils/ModalPositiveBtns';
 import { useNavigate } from 'react-router-dom';
 
 export interface ModalProps extends BaseLayoutProps {
@@ -81,6 +81,7 @@ const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
       btnText1 = '취소';
       btnText2 = '완료';
       positiveBtn = positiveBtns.SubmitDeniedReason;
+
       btnState = 'return';
       break;
     case 'WritingDeniedReason':

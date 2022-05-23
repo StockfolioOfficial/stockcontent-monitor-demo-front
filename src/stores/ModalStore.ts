@@ -1,32 +1,29 @@
-import { makeObservable, action, observable } from 'mobx';
+import { makeAutoObservable } from 'mobx';
+import { ModalTitleProps } from '../components/molecules/Modal';
 
-interface ModalType {
+interface ModalType extends ModalTitleProps {
   isOpen: boolean;
-  modalTitle:
-    | 'SomeoneConfirming'
-    | 'WritingDeniedReason'
-    | 'NothingReason'
-    | 'SubmitDeniedReason'
-    | 'CancelDeniedReason'
-    | 'Approving'
-    | null;
 }
 
 class ModalStore {
   constructor() {
-    makeObservable(this, {
-      isOpen: observable,
-      modalTitle: observable,
-      openModal: action,
-      closeModal: action,
-    });
+    makeAutoObservable(this);
   }
 
   isOpen: ModalType['isOpen'] = false;
   modalTitle: ModalType['modalTitle'] = null;
+  deniedReason: string = '';
+  deniedCategories: number[] = [];
 
-  // 플럭스 패턴(flux?)
-  // 플럭스 패턴에서 update를 받아와서 세팅 할 수 있게끔
+  setReason(arr: number[], reason: string) {
+    this.deniedCategories = arr;
+    this.deniedReason = reason;
+  }
+
+  resetReason() {
+    this.deniedCategories = [];
+    this.deniedReason = '';
+  }
 
   openModal(title: ModalType['modalTitle']) {
     this.isOpen = true;

@@ -5,15 +5,9 @@ import DeniedTag from '../atoms/DeniedTag';
 
 export interface DeniedProps extends BaseLayoutProps {
   date: Date;
-  tag: tag[];
+  tag: string[];
   reason: string;
 }
-
-export interface tag {
-  tagId: number;
-  tagName: string;
-}
-
 //Date formatting 함수
 function formatDate(t: Date) {
   return `${t.getFullYear().toString()}.${(
@@ -79,8 +73,8 @@ export default function DetailDeniedLog({
     <DeniedLogStyled>
       <DeniedDate>{formatDate(date)}</DeniedDate>
       {tag.map(tagData => (
-        <DeniedTagWrapper key={tagData.tagId}>
-          <DeniedTag>{tagData.tagName}</DeniedTag>
+        <DeniedTagWrapper key={tagData}>
+          <DeniedTag>{tagData}</DeniedTag>
         </DeniedTagWrapper>
       ))}
       <DeniedReasonWrapper>

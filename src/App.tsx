@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import { ThemeProvider } from 'styled-components';
 import {
   BrowserRouter,
@@ -8,10 +7,11 @@ import {
   Route,
   Routes,
 } from 'react-router-dom';
-import ConfirmContentsPage from './pages/ConfirmContents';
-import ConfirmContentDetailPage from './pages/ConfirmContents/ConfirmContentDetail';
+import ConfirmContentsPage from './pages/Main';
 import theme from './styles/theme';
 import GlobalStyle from './styles/globlaStyles';
+import HeaderSection from './components/organisms/HeaderSection';
+import ConfirmContentDetailPage from './pages/Detail';
 
 export default function App() {
   return (
@@ -24,12 +24,18 @@ export default function App() {
           />
           <Route path="/confirm-contents" element={<Layout />}>
             <Route index element={<ConfirmContentsPage />} />
-            <Route path=":contentId" element={<ConfirmContentDetailPage />} />
-            <Route path=":contentId/report" element={<h1>report page</h1>} />
+            <Route
+              path="/confirm-contents/:contentId"
+              element={<ConfirmContentDetailPage />}
+            >
+              <Route
+                path="/confirm-contents/:contentId/report"
+                element={<ConfirmContentDetailPage />}
+              />
+            </Route>
           </Route>
 
           <Route path="*" element={<Navigate to="/not-found" />} />
-          <Route path="/not-found" element={<h1>NotFound Page</h1>} />
         </Routes>
       </BrowserRouter>
       <GlobalStyle />
@@ -41,7 +47,7 @@ export default function App() {
 function Layout() {
   return (
     <div>
-      <header style={{ backgroundColor: 'green' }}>Header Layout Test</header>
+      <HeaderSection />
       <Outlet />
     </div>
   );

@@ -25,13 +25,17 @@ export default function App() {
           <Route path="/confirm-contents" element={<Layout />}>
             <Route index element={<ConfirmContentsPage />} />
             <Route
-              path="/confirm-contents/:contentId/*"
+              path="/confirm-contents/:contentId"
               element={<ConfirmContentDetailPage />}
-            />
+            >
+              <Route
+                path="/confirm-contents/:contentId/report"
+                element={<ConfirmContentDetailPage />}
+              />
+            </Route>
           </Route>
 
           <Route path="*" element={<Navigate to="/not-found" />} />
-          <Route path="/not-found" element={<h1>NotFound Page</h1>} />
         </Routes>
       </BrowserRouter>
       <GlobalStyle />

@@ -16,6 +16,7 @@ export interface DetailDataProps extends BaseLayoutProps {
 
 export interface MainDataProps extends BaseLayoutProps {
   contentId: string;
+  // 여기 수정 필요??
   stateLabel?: Exclude<TagProps['tagType'], 'tag'>;
   thumb: string;
   subject: string;

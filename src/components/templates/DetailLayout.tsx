@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import DetailVideoItem from '../molecules/DetailVideoItem';
 import {
   translateMainState,
@@ -38,6 +38,7 @@ export default function DetailLayout({ data }: DetailDeniedLayoutProps) {
           }
         />
         <Route path="/report" element={<DetailDeniedReasonLayout />} />
+        <Route path="/report/*" element={<Navigate to="/not-found" />} />
       </Routes>
     </DetailDeniedLogLayoutStyled>
   );

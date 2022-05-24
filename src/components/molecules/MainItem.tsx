@@ -1,4 +1,3 @@
-import { Attributes } from 'react';
 import { useNavigate } from 'react-router';
 import styled, { css, keyframes } from 'styled-components';
 import BaseLayoutProps from '../types/BaseLayoutProps';
@@ -118,7 +117,7 @@ export default function MainItem(props: MainItemProps) {
   } = props;
 
   const goToDetail = () => {
-    navigate(`/confirm-contents/${Number(id)}`);
+    navigate(`/confirm-contents/${id}`);
   };
 
   return (

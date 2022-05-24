@@ -10,7 +10,7 @@ export interface MainItemLayoutProps extends BaseLayoutProps {
   type: ConfirmContentsType;
 }
 
-const MainItemStyled = styled.div`
+export const MainItemStyled = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 60px 8px;

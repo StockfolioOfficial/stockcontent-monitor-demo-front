@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { DetailDataProps } from '../components/types/CommonDataProps';
 import DetailLayout from '../components/templates/DetailLayout';
+import DetailSkeletonLayout from '../components/templates/DetailSkeletonLayout';
 import NotFoundPage from './NotFound';
 
 type Params = {
@@ -17,6 +18,7 @@ function useContentId() {
 }
 
 export default function ConfirmContentDetailPage() {
+  const [isSkeletonOpen, setIsSkeletonOpen] = useState(true);
   const contentId = useContentId();
   const [data, setData] = useState<DetailDataProps>();
 
@@ -42,8 +44,17 @@ export default function ConfirmContentDetailPage() {
         //   console.log('Error', error.message);
         // }
         // console.log(error.config);
+      })
+      .then(function () {
+        setIsSkeletonOpen(false);
       });
   }, [contentId]);
 
-  return data ? <DetailLayout data={data} /> : <NotFoundPage />;
+  return isSkeletonOpen ? (
+    <DetailSkeletonLayout />
+  ) : data ? (
+    <DetailLayout data={data} />
+  ) : (
+    <NotFoundPage />
+  );
 }

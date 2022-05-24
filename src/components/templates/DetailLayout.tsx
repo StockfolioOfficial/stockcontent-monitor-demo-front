@@ -9,7 +9,7 @@ import { DetailDeniedLayoutProps } from '../types/CommonLayoutProps';
 import DeniedLogLayout from './DeniedLogLayout';
 import DetailDeniedReasonLayout from './DeniedReasonLayout';
 
-const DetailDeniedLogLayoutStyled = styled.div`
+export const DetailDeniedLogLayoutStyled = styled.div`
   display: flex;
   justify-content: center;
   padding: 40px 0 120px 0;

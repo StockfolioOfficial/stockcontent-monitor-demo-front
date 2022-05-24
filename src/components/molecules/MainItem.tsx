@@ -31,6 +31,7 @@ const MainItemStyled = styled.div`
   width: 294px;
   padding: 6px 6px;
   background-color: ${({ theme }) => theme.colors.white};
+  cursor: pointer;
 
   :hover {
     animation: ${mainItemAnimation} 0.2s linear;

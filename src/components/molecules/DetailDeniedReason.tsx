@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
+import modalStore from '../../stores/ModalStore';
+import { TagProps } from '../atoms/DeniedTag';
 import TextBtn from '../atoms/TextBtn';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 
@@ -91,40 +94,18 @@ const BtnAreaStyled = styled.div`
 `;
 
 export default function DetailDeniedReason(props: CheckBoxProps): JSX.Element {
-  const reasons = [
-    {
-      id: 1,
-      reason: '흔들린영상',
-    },
-    {
-      id: 2,
-      reason: '타기업 로고 노출',
-    },
-    {
-      id: 3,
-      reason: '과도한 필터를 씌운 영상',
-    },
-    {
-      id: 4,
-      reason: '성인물 등급 제한',
-    },
-    {
-      id: 5,
-      reason: '적절하지 않은 태그',
-    },
-    {
-      id: 6,
-      reason: '비속어가 포함됨',
-    },
-    {
-      id: 7,
-      reason: '도용된 영상',
-    },
-  ];
-
+  const [deniedTagList, setDeniedTagList] = useState<TagProps[]>([]);
   const [isCheckedArr, setIsCheckedArr] = useState<boolean[]>(
-    Array(reasons.length).fill(false)
+    Array(deniedTagList.length).fill(false)
   );
+  const [reasonText, setReasonText] = useState('');
+
+  //반려사유 태그 fetch API
+  useEffect(() => {
+    axios.get('http://localhost:3000/data/DeniedTag.json').then(res => {
+      setDeniedTagList(res.data);
+    });
+  }, []);
 
   const changeCheck = (idx: number): void => {
     setIsCheckedArr(prev => {
@@ -134,32 +115,48 @@ export default function DetailDeniedReason(props: CheckBoxProps): JSX.Element {
     });
   };
 
+  let submitArr: number[] = [];
+
+  isCheckedArr.map((el, idx) => {
+    if (el === true) {
+      submitArr.push(idx + 1);
+    }
+    return submitArr;
+  });
+
   return (
     <DetailDeniendReasonStyled>
       <DetailDeniendReasonWrapper>
         <h1>반려사유</h1>
         <CheckBoxStyled>
-          {reasons.map((el, idx) => (
-            <CheckBoxWrapper key={el.id} isChecked={isCheckedArr[idx]}>
+          {deniedTagList.map((el, idx) => (
+            <CheckBoxWrapper key={el.TagId} isChecked={isCheckedArr[idx]}>
               <input
-                id={el.reason}
+                id={el.content}
                 type="checkbox"
                 onChange={() => changeCheck(idx)}
-                checked={isCheckedArr[idx]}
+                checked={isCheckedArr[idx] || false}
               />
-              <label htmlFor={el.reason}>{el.reason}</label>
+              <label htmlFor={el.content}>{el.content}</label>
             </CheckBoxWrapper>
           ))}
         </CheckBoxStyled>
         <h2>기타</h2>
-        <TextAreaStyled placeholder="추가적인 반려사유가 있다면 작성해주세요." />
+        <TextAreaStyled
+          placeholder="추가적인 반려사유가 있다면 작성해주세요."
+          onChange={e => setReasonText(e.target.value)}
+        />
       </DetailDeniendReasonWrapper>
+
       <BtnAreaStyled>
         <TextBtn
           width="175px"
           btnType="highBtn"
           fontColor="blue"
           btnTheme="sky"
+          onClick={() => {
+            modalStore.openModal('CancelDeniedReason');
+          }}
         >
           취소
         </TextBtn>
@@ -168,6 +165,12 @@ export default function DetailDeniedReason(props: CheckBoxProps): JSX.Element {
           btnType="highBtn"
           fontColor="sky"
           btnTheme="blue"
+          onClick={() => {
+            return isCheckedArr.includes(true)
+              ? (modalStore.openModal('SubmitDeniedReason'),
+                modalStore.setReason(submitArr, reasonText))
+              : modalStore.openModal('NothingReason');
+          }}
         >
           제출
         </TextBtn>

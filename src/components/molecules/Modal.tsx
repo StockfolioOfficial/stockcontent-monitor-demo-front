@@ -49,7 +49,7 @@ const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
       btnState = 'return';
       break;
     case 'NothingReason':
-      title = <p>반려 사유를 선택하거나 작성해주세요?</p>;
+      title = <p>반려 사유를 선택하거나 작성해주세요.</p>;
       colorTheme = 'purple';
       revColorTheme = 'violet';
       btnText1 = '';
@@ -116,7 +116,7 @@ const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
 };
 
 const ModalStyled = styled.div<ModalProps>`
-  ${({ theme, isModalActive }) => css`
+  ${({ isModalActive }) => css`
     display: ${isModalActive ? 'block' : 'none'};
     position: fixed;
     top: 0;
@@ -142,7 +142,7 @@ const ModalWrapper = styled.div<ModalProps>`
   `}
 `;
 
-const ModalTextStyeld = styled.p<ModalProps>`
+const ModalTextStyeld = styled.div<ModalProps>`
   ${({ theme }) => css`
     display: flex;
     align-items: center;

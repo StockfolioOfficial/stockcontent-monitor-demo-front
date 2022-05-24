@@ -4,7 +4,7 @@ import DetailVideoItem from '../molecules/DetailVideoItem';
 import {
   translateMainState,
   translateDetailState,
-} from '../../util/translatedata/translateStateLabel';
+} from '../../utils/translateStateLabel';
 import { DetailDeniedLayoutProps } from '../types/CommonLayoutProps';
 import DeniedLogLayout from './DeniedLogLayout';
 import DetailDeniedReasonLayout from './DeniedReasonLayout';

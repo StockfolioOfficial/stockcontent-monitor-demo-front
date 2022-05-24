@@ -15,12 +15,12 @@ const MainTabWrapper = styled.section`
 export default function ConfirmContentsPage() {
   const { type, setType } = useConfirmContentsParams();
 
-  //todo refactor
   const mainTabType: ConfirmContentsType[] = ['대기중', '반려됨', '승인'];
 
   const renderTypeButton = (t: ConfirmContentsType) => {
     return (
       <MainTab
+        key={t}
         click={t === type ? `clicked` : `unClicked`}
         tabType={t}
         onClick={() => setType(t)}

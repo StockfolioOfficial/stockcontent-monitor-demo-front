@@ -25,7 +25,7 @@ const TextButtonWrapper = styled.div`
 export default function DeniedLogLayout({ state, data }: DenyLogs) {
   return (
     <DetailDeniedLogWrapper>
-      {state && (
+      {!state && (
         <TextButtonWrapper>
           <TextBtn
             btnType="highBtn"

@@ -23,6 +23,7 @@ const HeaderWrapper = styled.div`
 
 const LogoWrapper = styled.img`
   padding: 10px 0;
+  cursor: pointer;
 `;
 
 export default function HeaderSection() {

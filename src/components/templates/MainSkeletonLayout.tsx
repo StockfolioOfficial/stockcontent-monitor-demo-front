@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import SkeletonBox from '../atoms/SkeletonBox';
 import BaseLayoutProps from '../types/BaseLayoutProps';
-import { MainItemStyled } from './MainLayout';
+import { MainItemListWrapper } from './MainLayout';
 
 export interface MainSkeletonLayoutProps extends BaseLayoutProps {}
 
@@ -36,7 +36,7 @@ function MainItemSkeleton() {
 
 export default function MainSkeletonLayout() {
   return (
-    <MainItemStyled>
+    <MainItemListWrapper>
       <MainItemSkeleton />
       <MainItemSkeleton />
       <MainItemSkeleton />
@@ -45,6 +45,6 @@ export default function MainSkeletonLayout() {
       <MainItemSkeleton />
       <MainItemSkeleton />
       <MainItemSkeleton />
-    </MainItemStyled>
+    </MainItemListWrapper>
   );
 }

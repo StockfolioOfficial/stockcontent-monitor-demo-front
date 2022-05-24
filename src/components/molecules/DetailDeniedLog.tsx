@@ -80,7 +80,7 @@ export default function DetailDeniedLog({
       <DeniedReasonWrapper>
         <DeniedEtc>기타</DeniedEtc>
         <DeniedReason {...props}>
-          {reason === '' ? `없음` : props.children}
+          {reason === undefined ? `없음` : props.children}
         </DeniedReason>
       </DeniedReasonWrapper>
     </DeniedLogStyled>

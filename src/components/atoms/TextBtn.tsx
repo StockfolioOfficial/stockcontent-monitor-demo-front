@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled, { css, DefaultTheme } from 'styled-components';
+
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   btnType: 'highBtn' | 'lowBtn';

@@ -1,6 +1,7 @@
-import { DetailDataProps } from '../../components/types/CommonDataProps';
-import { MainItemProps } from '../../components/molecules/MainItem';
-import { TagProps } from '../../components/atoms/texts/Tag';
+import { DetailDataProps } from '../components/types/CommonDataProps';
+import { MainItemProps } from '../components/molecules/MainItem';
+import { TagProps } from '../components/atoms/texts/Tag';
+import { ConfirmContentsType } from '../hooks/pathParams/useConfirmContentsParams';
 
 type stateLabelType = DetailDataProps['stateLabel'];
 
@@ -41,4 +42,20 @@ export function translateDetailState(stateLabel: stateLabelType) {
   }
 
   return stateType;
+}
+
+export function translateMainTabName(type: ConfirmContentsType) {
+  let newTypeName: 'NONE' | 'DENY' | 'APPROVE';
+  switch (type) {
+    case '대기중':
+      newTypeName = 'NONE';
+      break;
+    case '반려됨':
+      newTypeName = 'DENY';
+      break;
+    case '승인':
+      newTypeName = 'APPROVE';
+      break;
+  }
+  return newTypeName;
 }

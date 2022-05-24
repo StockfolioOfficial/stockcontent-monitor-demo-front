@@ -12,6 +12,7 @@ import theme from './styles/theme';
 import GlobalStyle from './styles/globlaStyles';
 import HeaderSection from './components/organisms/HeaderSection';
 import ConfirmContentDetailPage from './pages/Detail';
+import Modal from './components/molecules/Modal';
 
 export default function App() {
   return (
@@ -37,6 +38,7 @@ export default function App() {
 
           <Route path="*" element={<Navigate to="/not-found" />} />
         </Routes>
+        <Modal />
       </BrowserRouter>
       <GlobalStyle />
     </ThemeProvider>

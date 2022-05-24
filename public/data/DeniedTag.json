@@ -1,0 +1,30 @@
+[
+  {
+    "TagId": 1,
+    "content": "흔들린 영상"
+  },
+  {
+    "TagId": 2,
+    "content": "타기업 로고 노출"
+  },
+  {
+    "TagId": 3,
+    "content": "과도한 필터를 씌운 영상"
+  },
+  {
+    "TagId": 4,
+    "content": "성인물 등급 제한"
+  },
+  {
+    "TagId": 5,
+    "content": "적절하지 않은 태그"
+  },
+  {
+    "TagId": 6,
+    "content": "비속어가 포함됨"
+  },
+  {
+    "TagId": 7,
+    "content": "도용된 영상"
+  }
+]

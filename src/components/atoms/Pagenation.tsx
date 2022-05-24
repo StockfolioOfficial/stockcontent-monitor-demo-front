@@ -1,19 +1,24 @@
 import * as React from 'react';
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 import styled, { css } from 'styled-components';
 import arrow from '../../assets/images/Arrow.svg';
 
 export interface PagenationProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  pageNumber: number;
+  setPageNumber: React.Dispatch<React.SetStateAction<number>>;
+  totalPages: string;
+}
+
+interface PagenationBtnProp {
   isActive?: boolean;
 }
 
-export interface ArrowImgProps
-  extends React.ImgHTMLAttributes<HTMLImageElement> {
+interface ArrowImgProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   isLeft?: boolean;
 }
 
-const PagenationBtn = styled.button<PagenationProps>`
+const PagenationBtn = styled.button<PagenationBtnProp>`
   ${({ theme }) => css`
     text-align: center;
     width: 32px;
@@ -31,7 +36,7 @@ const PagenationBtn = styled.button<PagenationProps>`
   `}
 `;
 
-const PagenationNumber = styled.button<PagenationProps>`
+const PagenationNumber = styled.button<PagenationBtnProp>`
   ${({ theme, isActive }) => css`
     width: 25px;
     background-color: ${theme.colors.white};
@@ -52,82 +57,26 @@ const ArrowImg = styled.img<ArrowImgProps>`
   transform: ${({ isLeft }) => (isLeft ? 'scaleX(-1)' : 'none')};
 `;
 
-export default function Pagenation(props: PagenationProps): JSX.Element {
-  const pageList = [
-    {
-      id: 1,
-    },
-    {
-      id: 2,
-    },
-    {
-      id: 3,
-    },
-    {
-      id: 4,
-    },
-    {
-      id: 5,
-    },
-    {
-      id: 6,
-    },
-    {
-      id: 7,
-    },
-    {
-      id: 8,
-    },
-    {
-      id: 9,
-    },
-    {
-      id: 10,
-    },
-    {
-      id: 11,
-    },
-    {
-      id: 12,
-    },
-    {
-      id: 13,
-    },
-    {
-      id: 14,
-    },
-    {
-      id: 15,
-    },
-    {
-      id: 16,
-    },
-    {
-      id: 17,
-    },
-    {
-      id: 18,
-    },
-  ];
-
+export default function Pagenation({
+  pageNumber,
+  setPageNumber,
+  totalPages,
+}: PagenationProps): JSX.Element {
   const pageLimit = 10;
-
   const pageOffset = useRef(1);
+  const lastPageOffset = Math.ceil(Number(totalPages) / pageLimit);
 
-  const lastPage = Math.ceil(pageList.length / pageLimit);
-
-  const pageStartPoint = (pageOffset.current - 1) * pageLimit;
-
-  const [clickedPage, setClickedPage] = useState<number>(1);
+  const pageStartIndex = (pageOffset.current - 1) * pageLimit;
+  const pageEndIndex = pageOffset.current * pageLimit;
 
   const goNextPage = () => {
     pageOffset.current += 1;
-    setClickedPage(pageStartPoint + pageLimit + 1);
+    setPageNumber(pageStartIndex + pageLimit + 1);
   };
 
   const goPrevPage = () => {
     pageOffset.current -= 1;
-    setClickedPage(pageStartPoint);
+    setPageNumber(pageStartIndex);
   };
 
   return (
@@ -135,27 +84,29 @@ export default function Pagenation(props: PagenationProps): JSX.Element {
       <PagenationBtn disabled={pageOffset.current === 1} onClick={goPrevPage}>
         <ArrowImg src={arrow} alt="arrow" isLeft />
       </PagenationBtn>
-      {pageList
-        .slice(pageStartPoint, pageStartPoint + pageLimit)
+      {Array(Number(totalPages))
+        .fill(1)
+        .map((el, idx) => el + idx)
+        .slice(pageStartIndex, pageEndIndex)
         .map(number => {
-          if (clickedPage === number.id)
+          if (pageNumber === number)
             return (
-              <PagenationNumber key={number.id} isActive>
-                {number.id}
+              <PagenationNumber key={number} isActive>
+                {number}
               </PagenationNumber>
             );
 
           return (
             <PagenationNumber
-              key={number.id}
-              onClick={() => setClickedPage(number.id)}
+              key={number}
+              onClick={() => setPageNumber(number)}
             >
-              {number.id}
+              {number}
             </PagenationNumber>
           );
         })}
       <PagenationBtn
-        disabled={pageOffset.current === lastPage}
+        disabled={pageOffset.current === lastPageOffset}
         onClick={goNextPage}
       >
         <ArrowImg src={arrow} alt="arrow" />

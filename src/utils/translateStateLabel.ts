@@ -1,7 +1,7 @@
-import { DetailDataProps } from '../../components/types/CommonDataProps';
-import { MainItemProps } from '../../components/molecules/MainItem';
-import { TagProps } from '../../components/atoms/texts/Tag';
-import { ConfirmContentsType } from '../../hooks/pathParams/useConfirmContentsParams';
+import { DetailDataProps } from '../components/types/CommonDataProps';
+import { MainItemProps } from '../components/molecules/MainItem';
+import { TagProps } from '../components/atoms/texts/Tag';
+import { ConfirmContentsType } from '../hooks/pathParams/useConfirmContentsParams';
 
 type stateLabelType = DetailDataProps['stateLabel'];
 

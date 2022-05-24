@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import modalStore from '../../stores/ModalStore';
 import { TagProps } from '../atoms/DeniedTag';
@@ -105,6 +105,18 @@ export default function DetailDeniedReason(props: CheckBoxProps): JSX.Element {
     axios.get('http://localhost:3000/data/DeniedTag.json').then(res => {
       setDeniedTagList(res.data);
     });
+    // .catch(err => {
+    //   if (err.response) {
+    //     console.log(err.response.data);
+    //     console.log(err.response.status);
+    //     console.log(err.response.headers);
+    //   } else if (err.request) {
+    //     console.log(err.request);
+    //   } else {
+    //     console.log('Error', err.message);
+    //   }
+    //   console.log(err.config);
+    // }
   }, []);
 
   const changeCheck = (idx: number): void => {

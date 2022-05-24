@@ -6,8 +6,9 @@ import Pagenation from '../../components/atoms/Pagenation';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 import { MainDataProps } from '../types/CommonDataProps';
 import { ConfirmContentsType } from '../../hooks/pathParams/useConfirmContentsParams';
-import { translateMainState } from '../../util/translatedata/translateStateLabel';
-import { translateMainTabName } from '../../util/translatedata/translateStateLabel';
+import { translateMainState } from '../../utils/translateStateLabel';
+import { translateMainTabName } from '../../utils/translateStateLabel';
+import { NoData } from '../atoms/NoData';
 export interface MainItemLayoutProps extends BaseLayoutProps {
   type: ConfirmContentsType;
 }
@@ -47,29 +48,34 @@ export default function MainLayout({ type }: MainItemLayoutProps) {
             data = { ...res.data, itemList: res.data.itemList };
             break;
           case '반려됨':
-            data = { ...res.data, itemList: res.data.itemList.slice(1) };
+            data = { ...res.data, itemList: res.data.itemList.slice(2) };
             break;
           default:
-            data = { ...res.data, itemList: res.data.itemList.slice(2) };
+            data = { ...res.data, itemList: [] };
         }
         setMainItemList(data);
-        // setMainItemList({ ...data, itemList: [] });
-      })
-      .catch(err => {
-        if (err.response) {
-          console.log(err.response.data);
-          console.log(err.response.status);
-          console.log(err.response.headers);
-        } else if (err.request) {
-          console.log(err.request);
-        } else {
-          console.log('Error', err.message);
-        }
-        console.log(err.config);
       });
+    // setMainItemList({ ...data, itemList: [] });
+    // })
+    // .catch(err => {
+    //   if (err.response) {
+    //     console.log(err.response.data);
+    //     console.log(err.response.status);
+    //     console.log(err.response.headers);
+    //   } else if (err.request) {
+    //     console.log(err.request);
+    //   } else {
+    //     console.log('Error', err.message);
+    //   }
+    //   console.log(err.config);
+    // });
   }, [type, pageNumber]);
 
-  //mainItemList API fetch
+  useEffect(() => {
+    setPageNumber(1);
+  }, [type]);
+
+  //mainItemList API fetch 부분
   // const itemLimit = 20;
   // const [pageNumber, setPageNumber] = useState(1);
 
@@ -98,7 +104,9 @@ export default function MainLayout({ type }: MainItemLayoutProps) {
   return (
     <>
       <MainItemListWrapper>
-        {mainItemList.itemList.length > 0 &&
+        {mainItemList.itemList.length === 0 ? (
+          <NoData type={type} />
+        ) : (
           mainItemList.itemList.map(data => (
             <MainItem
               key={data.contentId}
@@ -113,15 +121,18 @@ export default function MainLayout({ type }: MainItemLayoutProps) {
                 data.latestDeniedAt ? new Date(data.latestDeniedAt) : undefined
               }
             />
-          ))}
+          ))
+        )}
       </MainItemListWrapper>
-      <PagenationWrapper>
-        <Pagenation
-          pageNumber={pageNumber}
-          setPageNumber={setPageNumber}
-          totalPages={mainItemList.totalPages}
-        />
-      </PagenationWrapper>
+      {mainItemList.itemList.length === 0 ? null : (
+        <PagenationWrapper>
+          <Pagenation
+            pageNumber={pageNumber}
+            setPageNumber={setPageNumber}
+            totalPages={mainItemList.totalPages}
+          />
+        </PagenationWrapper>
+      )}
     </>
   );
 }

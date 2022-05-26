@@ -1,12 +1,16 @@
 import { makeAutoObservable } from 'mobx';
 import { ModalTitleProps } from '../components/molecules/Modal';
+import RootStore from './RootStore';
+import DeniedStore from './DeniedStore';
 
 interface ModalType extends ModalTitleProps {
   isOpen: boolean;
 }
 
 class ModalStore {
-  constructor() {
+  deniedStore: DeniedStore;
+  constructor(rootStore: RootStore) {
+    this.deniedStore = rootStore.deniedStore;
     makeAutoObservable(this);
   }
 

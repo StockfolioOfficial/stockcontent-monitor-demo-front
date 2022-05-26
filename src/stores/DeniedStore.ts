@@ -1,7 +1,11 @@
 import { makeAutoObservable } from 'mobx';
+import ModalStore from './ModalStore';
+import RootStore from './RootStore';
 
 class DeniedStore {
-  constructor() {
+  modalStore: ModalStore;
+  constructor(rootStore: RootStore) {
+    this.modalStore = rootStore.modalStore;
     makeAutoObservable(this);
   }
 

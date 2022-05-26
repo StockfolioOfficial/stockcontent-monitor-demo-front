@@ -1,3 +1,4 @@
+import { makeAutoObservable } from 'mobx';
 import DeniedStore from './DeniedStore';
 import ModalStore from './ModalStore';
 
@@ -6,7 +7,8 @@ export default class RootStore {
   deniedStore: DeniedStore;
 
   constructor() {
-    this.modalStore = new ModalStore();
-    this.deniedStore = new DeniedStore();
+    makeAutoObservable(this);
+    this.modalStore = new ModalStore(this);
+    this.deniedStore = new DeniedStore(this);
   }
 }

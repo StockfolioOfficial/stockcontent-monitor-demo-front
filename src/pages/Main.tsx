@@ -21,21 +21,25 @@ const MainTabWrapper = styled.div``;
 
 export default function ConfirmContentsPage() {
   const { type, setType } = useConfirmContentsParams();
+  const { pageNum, setPageNum } = useConfirmContentsParams();
 
   const mainTabType: ConfirmContentsType[] = ['대기중', '반려됨', '승인'];
 
-  const renderTypeButton = (t: ConfirmContentsType) => {
+  const renderTypeButton = (tabType: ConfirmContentsType) => {
     return (
       <MainTab
-        key={t}
-        click={t === type ? `clicked` : `unClicked`}
-        tabType={t}
-        onClick={() => setType(t)}
+        key={tabType}
+        click={tabType === type ? `clicked` : `unClicked`}
+        tabType={tabType}
+        onClick={() => {
+          setType(tabType);
+        }}
       >
-        {t}
+        {tabType}
       </MainTab>
     );
   };
+
   return (
     <VStackLayout>
       <MainTabSlotStyled>
@@ -46,7 +50,7 @@ export default function ConfirmContentsPage() {
           unit="개"
         />
       </MainTabSlotStyled>
-      <MainLayout type={type} />
+      <MainLayout type={type} pageNum={pageNum} setPageNum={setPageNum} />
     </VStackLayout>
   );
 }

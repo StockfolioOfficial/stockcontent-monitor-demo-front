@@ -12,6 +12,8 @@ import { NoData } from '../atoms/NoData';
 import MainSkeletonLayout from './MainSkeletonLayout';
 export interface MainItemLayoutProps extends BaseLayoutProps {
   type: ConfirmContentsType;
+  pageNum: string;
+  setPageNum: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const MainItemListWrapper = styled.div`
@@ -19,7 +21,7 @@ export const MainItemListWrapper = styled.div`
   flex-wrap: wrap;
   gap: 60px 8px;
   width: 1200px;
-  margin: auto;
+  margin: 0 auto;
   padding: 45px 0 86px 0;
 `;
 
@@ -29,7 +31,12 @@ const PagenationWrapper = styled.div`
   padding-bottom: 120px;
 `;
 
-export default function MainLayout({ type, ...rest }: MainItemLayoutProps) {
+export default function MainLayout({
+  type,
+  pageNum,
+  setPageNum,
+  ...rest
+}: MainItemLayoutProps) {
   const [isSkeletonOpen, setisSkeletonOpen] = useState(true);
   const [mainItemList, setMainItemList] = useState<MainDataProps>({
     totalPages: '',
@@ -37,12 +44,11 @@ export default function MainLayout({ type, ...rest }: MainItemLayoutProps) {
   });
 
   //mainItemList 목데이터 fetch
-  const itemLimit = 20;
-  const [pageNumber, setPageNumber] = useState(1);
-
   useEffect(() => {
     axios
-      .get<MainDataProps>('http://localhost:3000/data/MainItemList.json')
+      .get<MainDataProps>(
+        `http://localhost:3000/data/MainItemList${pageNum}.json`
+      )
       .then(res => {
         let data: MainDataProps;
         switch (type) {
@@ -74,11 +80,7 @@ export default function MainLayout({ type, ...rest }: MainItemLayoutProps) {
     //   }
     //   console.log(err.config);
     // });
-  }, [type, pageNumber]);
-
-  useEffect(() => {
-    setPageNumber(1);
-  }, [type]);
+  }, [type, pageNum]);
 
   //mainItemList API fetch 부분
   // const itemLimit = 20;
@@ -89,7 +91,7 @@ export default function MainLayout({ type, ...rest }: MainItemLayoutProps) {
   //     .get(
   //       `http://localhost:3000/content?state=${translateMainTabName(
   //         type
-  //       )}&start=${pageNumber}&lim=${itemLimit}`
+  //       )}&start=${pageNum}&lim=${itemLimit}`
   //     )
   // .then(res => {
   //   setMainItemList(res.data);
@@ -132,14 +134,13 @@ export default function MainLayout({ type, ...rest }: MainItemLayoutProps) {
           />
         ))}
       </MainItemListWrapper>
-      {/* 충돌예방 
       <PagenationWrapper>
         <Pagenation
           pageNum={pageNum}
           setPageNum={setPageNum}
           totalPages={mainItemList.totalPages}
         />
-      </PagenationWrapper> */}
+      </PagenationWrapper>
     </>
   );
 }

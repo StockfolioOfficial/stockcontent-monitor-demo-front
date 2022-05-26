@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components';
 import { ConfirmContentsType } from '../../hooks/pathParams/useConfirmContentsParams';
-
 export interface TabButtonProps
   extends React.BaseHTMLAttributes<HTMLButtonElement> {
   tabType: ConfirmContentsType;

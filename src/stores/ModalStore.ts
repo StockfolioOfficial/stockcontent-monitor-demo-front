@@ -37,4 +37,3 @@ class ModalStore {
 }
 
 export default ModalStore;
-// 스토어 시점의 관측자 세팅

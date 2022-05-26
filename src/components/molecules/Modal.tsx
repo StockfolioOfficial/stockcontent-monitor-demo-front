@@ -2,10 +2,8 @@ import React, { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import TextBtn from '../atoms/TextBtn';
 import BaseLayoutProps from '../types/BaseLayoutProps';
-import UseStore from '../../stores/UseStores';
+import useStore from '../../stores/UseStores';
 import { observer } from 'mobx-react';
-import positiveBtns from '../../utils/ModalPositiveBtns';
-import { useNavigate } from 'react-router-dom';
 
 export interface ModalProps extends BaseLayoutProps {
   isModalActive?: boolean;
@@ -27,8 +25,6 @@ const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
   let revColorTheme: 'pink' | 'sky' | 'violet';
   let btnText1: string;
   let btnText2: string | null;
-  let positiveBtn: Function;
-  let btnState: 'void' | 'return';
   switch (modalTitle) {
     case 'Approving':
       title = <p>승인하시겠습니까?</p>;
@@ -36,8 +32,6 @@ const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
       revColorTheme = 'sky';
       btnText1 = '취소';
       btnText2 = '승인';
-      positiveBtn = positiveBtns.Approving;
-      btnState = 'void';
       break;
     case 'CancelDeniedReason':
       title = <p>작성하시던 내용은 저장되지 않습니다.</p>;
@@ -45,8 +39,6 @@ const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
       revColorTheme = 'sky';
       btnText1 = '취소';
       btnText2 = '확인';
-      positiveBtn = positiveBtns.CancelDeniendReason;
-      btnState = 'return';
       break;
     case 'NothingReason':
       title = <p>반려 사유를 선택하거나 작성해주세요.</p>;
@@ -54,8 +46,6 @@ const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
       revColorTheme = 'violet';
       btnText1 = '';
       btnText2 = '확인';
-      positiveBtn = positiveBtns.NothingReason;
-      btnState = 'void';
       break;
     case 'SomeoneConfirming':
       title = (
@@ -67,8 +57,6 @@ const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
       revColorTheme = 'violet';
       btnText1 = '';
       btnText2 = '확인';
-      positiveBtn = positiveBtns.SomeoneConfirming;
-      btnState = 'return';
       break;
     case 'SubmitDeniedReason':
       title = (
@@ -80,9 +68,6 @@ const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
       revColorTheme = 'sky';
       btnText1 = '취소';
       btnText2 = '완료';
-      positiveBtn = positiveBtns.SubmitDeniedReason;
-
-      btnState = 'return';
       break;
     case 'WritingDeniedReason':
       title = <p>반려사유 작성할까요?</p>;
@@ -90,8 +75,6 @@ const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
       revColorTheme = 'pink';
       btnText1 = '아니오';
       btnText2 = '네';
-      positiveBtn = positiveBtns.WritingDeniedReason;
-      btnState = 'return';
       break;
     case null:
       title = <p />;
@@ -99,8 +82,6 @@ const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
       revColorTheme = 'pink';
       btnText1 = '아니오';
       btnText2 = '네';
-      positiveBtn = () => null;
-      btnState = 'void';
       break;
   }
   let components = {
@@ -109,8 +90,6 @@ const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
     revColorTheme,
     btnText1,
     btnText2,
-    positiveBtn,
-    btnState,
   };
   return components;
 };
@@ -162,21 +141,20 @@ const ModalBtnStyled = styled.div`
 `;
 
 const Modal = () => {
-  const { ModalStore } = UseStore();
+  const { modalStore } = useStore();
 
-  const { modalTitle, isOpen } = ModalStore;
+  const { modalTitle, isOpen } = modalStore;
 
-  const {
-    title,
-    btnText1,
-    btnText2,
-    colorTheme,
-    revColorTheme,
-    positiveBtn,
-    btnState,
-  } = selectModalTheme(modalTitle);
+  const { title, btnText1, btnText2, colorTheme, revColorTheme } =
+    selectModalTheme(modalTitle);
 
-  const navigate = useNavigate();
+  const positiveBtn = async (modalTitle: ModalTitleProps['modalTitle']) => {
+    if ((modalTitle = 'SubmitDeniedReason')) {
+      // 추가적인 로직 구현
+    }
+    modalStore.closeModal();
+    return true;
+  };
 
   useEffect(() => {
     if (isOpen) {
@@ -200,7 +178,7 @@ const Modal = () => {
               fontColor={colorTheme}
               btnType="lowBtn"
               btnTheme={revColorTheme}
-              onClick={() => ModalStore.closeModal()}
+              onClick={() => modalStore.closeModal()}
             >
               {btnText1}
             </TextBtn>
@@ -212,9 +190,7 @@ const Modal = () => {
             fontColor={revColorTheme}
             btnType="lowBtn"
             btnTheme={colorTheme}
-            onClick={() =>
-              btnState === 'return' ? navigate(positiveBtn()) : positiveBtn()
-            }
+            onClick={() => positiveBtn(modalTitle)}
           >
             {btnText2}
           </TextBtn>

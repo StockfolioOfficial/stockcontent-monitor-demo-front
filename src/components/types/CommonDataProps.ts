@@ -1,7 +1,6 @@
 import BaseLayoutProps from './BaseLayoutProps';
 import { DetailVideoItemProps } from '../molecules/DetailVideoItem';
 import { DeniedLogSectionProps } from '../organisms/DeniedLogSection';
-import { TagProps } from '../atoms/texts/Tag';
 
 export interface DetailDataProps extends BaseLayoutProps {
   contentId: string;
@@ -15,12 +14,17 @@ export interface DetailDataProps extends BaseLayoutProps {
 }
 
 export interface MainDataProps extends BaseLayoutProps {
+  totalPages: string;
+  itemList: MainItemList[];
+}
+
+interface MainItemList {
   contentId: string;
-  // 여기 수정 필요??
-  stateLabel?: Exclude<TagProps['tagType'], 'tag'>;
+  stateLabel: 'WAIT' | 'DENY' | 'APPROVE' | 'CHECK';
   thumb: string;
   subject: string;
   uploadedAt: string;
   latestDeniedAt?: string;
   tags: string[];
+  totalPages: string;
 }

@@ -2,7 +2,10 @@ import * as React from 'react';
 import styled, { css } from 'styled-components';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 
-export interface TagProps extends BaseLayoutProps {}
+export interface TagProps extends BaseLayoutProps {
+  TagId?: number;
+  content?: string;
+}
 
 const DeniedTagStyled = styled.div`
   ${({ theme }) => css`

@@ -7,20 +7,27 @@ import MainTab from '../components/molecules/MainTab';
 
 import styled from 'styled-components';
 import MainLayout from '../components/templates/MainLayout';
+import TotalPostCounter from '../components/molecules/TotalPostCounter';
+import { translateTotalPostTitle } from '../utils/SwitchStringToString';
 
-const MainTabWrapper = styled.section`
-  margin: 31px 0 0 100px;
+const MainTabSlotStyled = styled(HStackLayout)`
+  justify-content: space-between;
+  align-self: center;
+  width: 1200px;
+  margin-top: 31px;
 `;
+
+const MainTabWrapper = styled.div``;
 
 export default function ConfirmContentsPage() {
   const { type, setType } = useConfirmContentsParams();
 
-  //todo refactor
   const mainTabType: ConfirmContentsType[] = ['대기중', '반려됨', '승인'];
 
   const renderTypeButton = (t: ConfirmContentsType) => {
     return (
       <MainTab
+        key={t}
         click={t === type ? `clicked` : `unClicked`}
         tabType={t}
         onClick={() => setType(t)}
@@ -31,9 +38,14 @@ export default function ConfirmContentsPage() {
   };
   return (
     <VStackLayout>
-      <HStackLayout>
+      <MainTabSlotStyled>
         <MainTabWrapper>{mainTabType.map(renderTypeButton)}</MainTabWrapper>
-      </HStackLayout>
+        <TotalPostCounter
+          title={translateTotalPostTitle(type)}
+          totalPost={777}
+          unit="개"
+        />
+      </MainTabSlotStyled>
       <MainLayout type={type} />
     </VStackLayout>
   );

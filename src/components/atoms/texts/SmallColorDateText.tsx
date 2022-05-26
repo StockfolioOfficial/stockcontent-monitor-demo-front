@@ -28,7 +28,7 @@ const SmallColorDateStyled = styled.div`
   `}
 `;
 
-const UploadDateWrapper = styled.span<SmallColorDateTextProps>`
+const UploadDateWrapper = styled.span<Pick<SmallColorDateTextProps, 'color'>>`
   ${({ theme, color }) => css`
     color: ${theme.colors[color]};
   `}
@@ -39,12 +39,15 @@ const LastDeniedDateWrapper = styled.span`
   color: ${({ theme }) => theme.colors.red};
 `;
 
-export default function SmallColorDateText(props: SmallColorDateTextProps) {
-  const { uploadDate, lastDeniedDate, color, ...rest } = props;
-
+export default function SmallColorDateText({
+  uploadDate,
+  lastDeniedDate,
+  color,
+  ...rest
+}: SmallColorDateTextProps) {
   return (
     <SmallColorDateStyled {...rest}>
-      <UploadDateWrapper {...props}>{`업로드일자: ${formatDate(
+      <UploadDateWrapper color={color}>{`업로드일자: ${formatDate(
         uploadDate
       )}`}</UploadDateWrapper>
       <LastDeniedDateWrapper>

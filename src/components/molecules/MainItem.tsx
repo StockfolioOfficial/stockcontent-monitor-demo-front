@@ -1,12 +1,12 @@
+import { useNavigate } from 'react-router';
 import styled, { css, keyframes } from 'styled-components';
-import * as React from 'react';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 import Tag, { TagProps } from '../atoms/texts/Tag';
 import SmallColorDateText, {
   SmallColorDateTextProps,
 } from '../atoms/texts/SmallColorDateText';
-
 export interface MainItemProps extends BaseLayoutProps {
+  id: string;
   imgSrc: HTMLImageElement['src'];
   imgAlt: HTMLImageElement['alt'];
   stateType?: Exclude<TagProps['tagType'], 'tag'>;
@@ -14,6 +14,7 @@ export interface MainItemProps extends BaseLayoutProps {
   uploadDate: SmallColorDateTextProps['uploadDate'];
   lastDeniedDate?: SmallColorDateTextProps['lastDeniedDate'];
   tagArray: Array<string>;
+  onClick?: React.MouseEventHandler<'div'> | undefined;
 }
 
 const mainItemAnimation = keyframes`
@@ -31,6 +32,7 @@ const MainItemStyled = styled.div`
   width: 294px;
   padding: 6px 6px;
   background-color: ${({ theme }) => theme.colors.white};
+  cursor: pointer;
 
   :hover {
     animation: ${mainItemAnimation} 0.2s linear;
@@ -103,7 +105,9 @@ function PurpleImgCover() {
 }
 
 export default function MainItem(props: MainItemProps) {
+  const navigate = useNavigate();
   const {
+    id,
     imgSrc,
     imgAlt,
     stateType,
@@ -111,11 +115,17 @@ export default function MainItem(props: MainItemProps) {
     uploadDate,
     lastDeniedDate,
     tagArray,
+    onClick,
     ...rest
   } = props;
 
   return (
-    <MainItemStyled {...rest}>
+    <MainItemStyled
+      {...rest}
+      onClick={() => {
+        navigate(`/confirm-contents/${id}`);
+      }}
+    >
       <ImgWrapper>
         {stateType === 'processing' && <PurpleImgCover />}
         <img src={imgSrc} alt={imgAlt} />

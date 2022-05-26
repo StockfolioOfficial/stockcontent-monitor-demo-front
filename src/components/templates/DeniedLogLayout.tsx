@@ -1,16 +1,16 @@
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 
 import DeniedLogSection from '../organisms/DeniedLogSection';
 import TextBtn from '../atoms/TextBtn';
 import { DeniedLogSectionProps } from '../organisms/DeniedLogSection';
 
+import modalStore from '../../stores/ModalStore';
 export interface DenyLogs {
   state?: 'denied' | 'processing' | 'approved';
   data: DeniedLogSectionProps['deniedLogs'];
 }
 
-const DetailDeniedLogWrapper = styled.div`
+export const DetailDeniedLogWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-left: 20px;
@@ -23,22 +23,18 @@ const TextButtonWrapper = styled.div`
 `;
 
 export default function DeniedLogLayout({ state, data }: DenyLogs) {
-  const navigate = useNavigate();
-
-  //임시 네비게이트
-  const goto = () => {
-    navigate('report');
-  };
-
   return (
     <DetailDeniedLogWrapper>
-      {state && (
+      {!state && (
         <TextButtonWrapper>
           <TextBtn
             btnType="highBtn"
             width="175px"
             btnTheme="sky"
             fontColor="blue"
+            onClick={() => {
+              modalStore.openModal('Approving');
+            }}
           >
             승인
           </TextBtn>
@@ -47,8 +43,9 @@ export default function DeniedLogLayout({ state, data }: DenyLogs) {
             width="175px"
             btnTheme="red"
             fontColor="pink"
-            //임시 이벤트
-            onClick={goto}
+            onClick={() => {
+              modalStore.openModal('WritingDeniedReason');
+            }}
           >
             반려사유 작성
           </TextBtn>

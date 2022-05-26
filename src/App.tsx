@@ -1,5 +1,4 @@
-import React from 'react';
-import { ThemeProvider } from 'styled-components';
+import * as React from 'react';
 import {
   BrowserRouter,
   Navigate,
@@ -7,12 +6,16 @@ import {
   Route,
   Routes,
 } from 'react-router-dom';
-import ConfirmContentsPage from './pages/Main';
+
+import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 import GlobalStyle from './styles/globlaStyles';
+
 import HeaderSection from './components/organisms/HeaderSection';
+import ConfirmContentsPage from './pages/Main';
 import ConfirmContentDetailPage from './pages/Detail';
 import { Provider } from 'mobx-react';
+import Modal from './components/molecules/Modal';
 import RootStore from './stores/RootStore';
 
 const rootStore = new RootStore();
@@ -42,6 +45,7 @@ export default function App() {
 
             <Route path="*" element={<Navigate to="/not-found" />} />
           </Routes>
+          <Modal />
         </BrowserRouter>
         <GlobalStyle />
       </Provider>
@@ -49,7 +53,6 @@ export default function App() {
   );
 }
 
-//Header Layout Test code
 function Layout() {
   return (
     <div>

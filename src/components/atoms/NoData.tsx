@@ -6,11 +6,11 @@ export interface NoDataProps extends BaseLayoutProps {
   type: ConfirmContentsType;
 }
 
-const NoDataStyled = styled.section`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+const NoDataStyled = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 10%;
+  flex-grow: 1;
   color: ${({ theme }) => theme.colors.purple};
   font-size: ${({ theme }) => theme.fonts.weight.bold};
 `;

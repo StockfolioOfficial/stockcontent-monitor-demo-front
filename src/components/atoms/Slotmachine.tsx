@@ -69,7 +69,7 @@ export default function SlotMachine({ number, ...rest }: SlotMachineProps) {
   return (
     <SlotMachineStyled {...rest}>
       {numArray.map((num, index) => (
-        <SlotMachineWrapper key={Math.random()} speed={index + 1}>
+        <SlotMachineWrapper key={`${Math.random()}`} speed={index + 1}>
           <li>{num}</li>
           <li>{calculateNumberDown(num, -1)}</li>
           <li>{calculateNumberDown(num, -2)}</li>

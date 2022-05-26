@@ -59,3 +59,20 @@ export function translateMainTabName(type: ConfirmContentsType) {
   }
   return newTypeName;
 }
+
+export function translateTotalPostTitle(type: ConfirmContentsType) {
+  let title: '승인된 컨텐츠' | '반려된 컨텐츠' | '대기중인 컨텐츠';
+  switch (type) {
+    case '승인':
+      title = '승인된 컨텐츠';
+      break;
+    case '반려됨':
+      title = '반려된 컨텐츠';
+      break;
+    case '대기중':
+      title = '대기중인 컨텐츠';
+      break;
+  }
+
+  return title;
+}

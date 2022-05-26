@@ -14,6 +14,7 @@ export interface MainItemProps extends BaseLayoutProps {
   uploadDate: SmallColorDateTextProps['uploadDate'];
   lastDeniedDate?: SmallColorDateTextProps['lastDeniedDate'];
   tagArray: Array<string>;
+  onClick?: React.MouseEventHandler<'div'> | undefined;
 }
 
 const mainItemAnimation = keyframes`
@@ -114,15 +115,17 @@ export default function MainItem(props: MainItemProps) {
     uploadDate,
     lastDeniedDate,
     tagArray,
+    onClick,
     ...rest
   } = props;
 
-  const goToDetail = () => {
-    navigate(`/confirm-contents/${id}`);
-  };
-
   return (
-    <MainItemStyled {...rest} onClick={goToDetail}>
+    <MainItemStyled
+      {...rest}
+      onClick={() => {
+        navigate(`/confirm-contents/${id}`);
+      }}
+    >
       <ImgWrapper>
         {stateType === 'processing' && <PurpleImgCover />}
         <img src={imgSrc} alt={imgAlt} />

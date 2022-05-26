@@ -2,12 +2,12 @@ import * as React from 'react';
 import styled, { css } from 'styled-components';
 import DetailDeniedReason from '../molecules/DetailDeniedReason';
 
-const DetailDeniedLogWrapper = styled.div`
+const DetailDeniedLogWrapper = styled.section`
   display: flex;
   flex-direction: column;
   margin-left: 20px;
 `;
-const DeniedReasonTitle = styled.p`
+const DeniedReasonTitle = styled.h3`
   ${({ theme }) => css`
     margin-bottom: 10px;
     font-weight: ${theme.fonts.weight.bold};

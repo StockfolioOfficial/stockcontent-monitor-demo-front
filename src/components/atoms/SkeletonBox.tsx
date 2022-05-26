@@ -1,5 +1,5 @@
-import styled, { keyframes } from 'styled-components';
 import * as React from 'react';
+import styled, { keyframes } from 'styled-components';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 
 export interface SkeletonBoxProps extends BaseLayoutProps {

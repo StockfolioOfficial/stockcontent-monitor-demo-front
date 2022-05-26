@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useRef } from 'react';
+import React, { useRef } from 'react';
 import styled, { css } from 'styled-components';
 import arrow from '../../assets/images/Arrow.svg';
 
@@ -18,6 +17,11 @@ interface ArrowImgProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   isLeft?: boolean;
 }
 
+const PagnationStyled = styled.div`
+  display: flex;
+  margin: 10px;
+`;
+
 const PagenationBtn = styled.button<PagenationBtnProp>`
   ${({ theme }) => css`
     text-align: center;
@@ -25,16 +29,17 @@ const PagenationBtn = styled.button<PagenationBtnProp>`
     height: 32px;
     border-radius: 100%;
     background-color: ${theme.colors.purple};
-
-    :hover {
+    :hover(:not(:disabled)) {
       box-shadow: ${theme.hoverShadow.pagenation};
     }
-
     :disabled {
       background-color: ${theme.colors.violet};
+      cursor: default;
     }
   `}
 `;
+
+const PagnationNumberWrapper = styled.div``;
 
 const PagenationNumber = styled.button<PagenationBtnProp>`
   ${({ theme, isActive }) => css`
@@ -44,7 +49,6 @@ const PagenationNumber = styled.button<PagenationBtnProp>`
     font-size: ${theme.fonts.size.s};
     font-weight: ${theme.fonts.weight.light};
     line-height: ${theme.fonts.lineHeight.s};
-
     :hover {
       background-color: ${theme.colors.gray1};
     }
@@ -61,7 +65,7 @@ export default function Pagenation({
   pageNumber,
   setPageNumber,
   totalPages,
-}: PagenationProps): JSX.Element {
+}: PagenationProps) {
   const pageLimit = 10;
   const pageOffset = useRef(1);
   const lastPageOffset = Math.ceil(Number(totalPages) / pageLimit);
@@ -80,37 +84,39 @@ export default function Pagenation({
   };
 
   return (
-    <div style={{ display: 'flex', margin: '10px' }}>
+    <PagnationStyled>
       <PagenationBtn disabled={pageOffset.current === 1} onClick={goPrevPage}>
         <ArrowImg src={arrow} alt="arrow" isLeft />
       </PagenationBtn>
-      {Array(Number(totalPages))
-        .fill(1)
-        .map((el, idx) => el + idx)
-        .slice(pageStartIndex, pageEndIndex)
-        .map(number => {
-          if (pageNumber === number)
+      <PagnationNumberWrapper>
+        {Array(Number(totalPages))
+          .fill(1)
+          .map((el, idx) => el + idx)
+          .slice(pageStartIndex, pageEndIndex)
+          .map(number => {
+            if (pageNumber === number)
+              return (
+                <PagenationNumber key={number} isActive>
+                  {number}
+                </PagenationNumber>
+              );
+
             return (
-              <PagenationNumber key={number} isActive>
+              <PagenationNumber
+                key={number}
+                onClick={() => setPageNumber(number)}
+              >
                 {number}
               </PagenationNumber>
             );
-
-          return (
-            <PagenationNumber
-              key={number}
-              onClick={() => setPageNumber(number)}
-            >
-              {number}
-            </PagenationNumber>
-          );
-        })}
+          })}
+      </PagnationNumberWrapper>
       <PagenationBtn
         disabled={pageOffset.current === lastPageOffset}
         onClick={goNextPage}
       >
         <ArrowImg src={arrow} alt="arrow" />
       </PagenationBtn>
-    </div>
+    </PagnationStyled>
   );
 }

@@ -11,12 +11,20 @@ export interface DeniedLogSectionProps {
   }[];
 }
 
-const DeniedLogStyled = styled.section`
-  width: 360px;
-  padding: 20px 25px;
-  border: 1px solid #eeeeee;
-  border-radius: 10px;
-  background-color: ${({ theme }) => theme.colors.white};
+export interface StyledProps {
+  noData: boolean;
+}
+
+const DeniedLogStyled = styled.div<StyledProps>`
+  ${({ theme, noData }) =>
+    noData &&
+    css`
+      width: 360px;
+      padding: 20px 25px;
+      border: 1px solid #eeeeee;
+      border-radius: 10px;
+      background-color: ${theme.colors.white};
+    `}
 `;
 
 const NonDenied = styled.div`
@@ -28,8 +36,8 @@ const NonDenied = styled.div`
   `}
 `;
 
-const DeniedLogSectionStyled = styled.div`
-  h1 {
+const DeniedLogSectionStyled = styled.section`
+  h3 {
     ${({ theme }) => css`
       padding-bottom: 10px;
       font-size: ${theme.fonts.size.ml};
@@ -43,17 +51,17 @@ const DetailDeniedLogWrap = styled.div`
   margin-bottom: 15px;
 `;
 
-function NoDeniedLogData() {
+function ChildrenNoData() {
   return (
-    <DeniedLogStyled>
+    <DeniedLogStyled noData={true}>
       <NonDenied>반려된 기록이 없습니다.</NonDenied>
     </DeniedLogStyled>
   );
 }
 
-function YesDeniedLogData({ deniedLogs }: DeniedLogSectionProps) {
+function ChildrenYesData({ deniedLogs }: DeniedLogSectionProps) {
   return (
-    <>
+    <DeniedLogStyled noData={false}>
       {deniedLogs.map(data => (
         <DetailDeniedLogWrap key={data.logId}>
           <DetailDeniedLog
@@ -65,7 +73,7 @@ function YesDeniedLogData({ deniedLogs }: DeniedLogSectionProps) {
           </DetailDeniedLog>
         </DetailDeniedLogWrap>
       ))}
-    </>
+    </DeniedLogStyled>
   );
 }
 
@@ -74,11 +82,11 @@ export default function DeniedLogSection({
 }: DeniedLogSectionProps) {
   return (
     <DeniedLogSectionStyled>
-      <h1>반려기록</h1>
+      <h3>반려기록</h3>
       {deniedLogs?.length === 0 ? (
-        <NoDeniedLogData />
+        <ChildrenNoData />
       ) : (
-        <YesDeniedLogData deniedLogs={deniedLogs} />
+        <ChildrenYesData deniedLogs={deniedLogs} />
       )}
     </DeniedLogSectionStyled>
   );

@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import DeniedLogSection from '../organisms/DeniedLogSection';
 import TextBtn from '../atoms/TextBtn';
 import { DeniedLogSectionProps } from '../organisms/DeniedLogSection';
+import useStore from '../../stores/UseStores';
 
-import modalStore from '../../stores/ModalStore';
 export interface DenyLogs {
   state?: 'denied' | 'processing' | 'approved';
   data: DeniedLogSectionProps['deniedLogs'];
@@ -23,6 +23,8 @@ const TextButtonWrapper = styled.div`
 `;
 
 export default function DeniedLogLayout({ state, data }: DenyLogs) {
+  const { modalStore } = useStore();
+
   return (
     <DetailDeniedLogWrapper>
       {!state && (

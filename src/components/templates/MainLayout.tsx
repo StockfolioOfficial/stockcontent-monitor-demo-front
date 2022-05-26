@@ -6,14 +6,15 @@ import Pagenation from '../../components/atoms/Pagenation';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 import { MainDataProps } from '../types/CommonDataProps';
 import { ConfirmContentsType } from '../../hooks/pathParams/useConfirmContentsParams';
-import { translateMainState } from '../../utils/translateStateLabel';
-import { translateMainTabName } from '../../utils/translateStateLabel';
+import { translateMainState } from '../../utils/SwitchStringToString';
+import { translateMainTabName } from '../../utils/SwitchStringToString';
 import { NoData } from '../atoms/NoData';
+import MainSkeletonLayout from './MainSkeletonLayout';
 export interface MainItemLayoutProps extends BaseLayoutProps {
   type: ConfirmContentsType;
 }
 
-const MainItemListWrapper = styled.div`
+export const MainItemListWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 60px 8px;
@@ -22,13 +23,14 @@ const MainItemListWrapper = styled.div`
   padding: 45px 0 86px 0;
 `;
 
-const PagenationWrapper = styled.section`
+const PagenationWrapper = styled.div`
   display: flex;
   justify-content: center;
   padding-bottom: 120px;
 `;
 
-export default function MainLayout({ type }: MainItemLayoutProps) {
+export default function MainLayout({ type, ...rest }: MainItemLayoutProps) {
+  const [isSkeletonOpen, setisSkeletonOpen] = useState(true);
   const [mainItemList, setMainItemList] = useState<MainDataProps>({
     totalPages: '',
     itemList: [],
@@ -53,8 +55,11 @@ export default function MainLayout({ type }: MainItemLayoutProps) {
           default:
             data = { ...res.data, itemList: [] };
         }
+
+        setisSkeletonOpen(false);
         setMainItemList(data);
       });
+
     // setMainItemList({ ...data, itemList: [] });
     // })
     // .catch(err => {
@@ -86,7 +91,10 @@ export default function MainLayout({ type }: MainItemLayoutProps) {
   //         type
   //       )}&start=${pageNumber}&lim=${itemLimit}`
   //     )
-  //     .then(res => setMainItemList(res.data))
+  // .then(res => {
+  //   setMainItemList(res.data);
+  //   setIsSkeletonOpen(false);
+  // }))
   //     .catch(err => {
   //       if (err.response) {
   //         console.log(err.response.data);
@@ -101,38 +109,37 @@ export default function MainLayout({ type }: MainItemLayoutProps) {
   //     });
   // }, [type, pageNumber]);
 
-  return (
+  return isSkeletonOpen ? (
+    <MainSkeletonLayout />
+  ) : mainItemList.itemList.length === 0 ? (
+    <NoData type={type} />
+  ) : (
     <>
       <MainItemListWrapper>
-        {mainItemList.itemList.length === 0 ? (
-          <NoData type={type} />
-        ) : (
-          mainItemList.itemList.map(data => (
-            <MainItem
-              key={data.contentId}
-              id={data.contentId}
-              stateType={translateMainState(data.stateLabel)}
-              imgSrc={data.thumb}
-              imgAlt={data.subject}
-              title={data.subject}
-              uploadDate={new Date(data.uploadedAt)}
-              tagArray={data.tags}
-              lastDeniedDate={
-                data.latestDeniedAt ? new Date(data.latestDeniedAt) : undefined
-              }
-            />
-          ))
-        )}
-      </MainItemListWrapper>
-      {mainItemList.itemList.length === 0 ? null : (
-        <PagenationWrapper>
-          <Pagenation
-            pageNumber={pageNumber}
-            setPageNumber={setPageNumber}
-            totalPages={mainItemList.totalPages}
+        {mainItemList.itemList.map(data => (
+          <MainItem
+            key={data.contentId}
+            id={data.contentId}
+            stateType={translateMainState(data.stateLabel)}
+            imgSrc={data.thumb}
+            imgAlt={data.subject}
+            title={data.subject}
+            uploadDate={new Date(data.uploadedAt)}
+            tagArray={data.tags}
+            lastDeniedDate={
+              data.latestDeniedAt ? new Date(data.latestDeniedAt) : undefined
+            }
           />
-        </PagenationWrapper>
-      )}
+        ))}
+      </MainItemListWrapper>
+      {/* 충돌예방 
+      <PagenationWrapper>
+        <Pagenation
+          pageNum={pageNum}
+          setPageNum={setPageNum}
+          totalPages={mainItemList.totalPages}
+        />
+      </PagenationWrapper> */}
     </>
   );
 }

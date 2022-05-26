@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
-import BaseLayoutProps from '../types/BaseLayoutProps';
 import DeniedTag from '../atoms/DeniedTag';
+import BaseLayoutProps from '../types/BaseLayoutProps';
 
 export interface DeniedProps extends BaseLayoutProps {
   date: Date;
@@ -19,7 +19,7 @@ function formatDate(t: Date) {
   ).slice(-2)}`;
 }
 
-const DeniedLogStyled = styled.section`
+const DeniedLogStyled = styled.div`
   width: 360px;
   padding: 20px 25px;
   border: 1px solid #eeeeee;
@@ -41,7 +41,7 @@ const DeniedTagWrapper = styled.div`
   margin: 10px 0;
 `;
 
-const DeniedReasonWrapper = styled.section`
+const DeniedReasonWrapper = styled.div`
   margin-top: 15px;
 `;
 

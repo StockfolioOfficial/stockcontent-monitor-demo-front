@@ -31,7 +31,7 @@ const StateWrapper = styled(Tag)`
   margin-bottom: 12px;
 `;
 
-const TitleWrapper = styled.h1`
+const TitleWrapper = styled.h2`
   margin-bottom: 2px;
   ${({ theme }) => css`
     margin-bottom: 2px;

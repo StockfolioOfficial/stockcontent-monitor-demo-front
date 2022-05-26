@@ -1,5 +1,4 @@
-import React from 'react';
-import { ThemeProvider } from 'styled-components';
+import * as React from 'react';
 import {
   BrowserRouter,
   Navigate,
@@ -7,10 +6,13 @@ import {
   Route,
   Routes,
 } from 'react-router-dom';
-import ConfirmContentsPage from './pages/Main';
+
+import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 import GlobalStyle from './styles/globlaStyles';
+
 import HeaderSection from './components/organisms/HeaderSection';
+import ConfirmContentsPage from './pages/Main';
 import ConfirmContentDetailPage from './pages/Detail';
 import Modal from './components/molecules/Modal';
 
@@ -45,7 +47,6 @@ export default function App() {
   );
 }
 
-//Header Layout Test code
 function Layout() {
   return (
     <div>

@@ -4,6 +4,7 @@ import TextBtn from '../atoms/TextBtn';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 import useStore from '../../stores/UseStores';
 import { observer } from 'mobx-react';
+import axios from 'axios';
 
 export interface ModalProps extends BaseLayoutProps {
   isModalActive?: boolean;
@@ -141,7 +142,7 @@ const ModalBtnStyled = styled.div`
 `;
 
 const Modal = () => {
-  const { modalStore } = useStore();
+  const { modalStore, deniedStore } = useStore();
 
   const { modalTitle, isOpen } = modalStore;
 
@@ -149,11 +150,26 @@ const Modal = () => {
     selectModalTheme(modalTitle);
 
   const positiveBtn = async (modalTitle: ModalTitleProps['modalTitle']) => {
-    if ((modalTitle = 'SubmitDeniedReason')) {
-      // 추가적인 로직 구현
+    try {
+      if (modalTitle === 'SubmitDeniedReason') {
+        await axios({
+          method: 'post',
+          url: 'http://192.168.35.101:8000/content/0b2428a4-909b-4a23-aff1-759a35e12974/deny',
+          data: {
+            tag: deniedStore.deniedCategoriesNumber,
+            reason: deniedStore.deniedReason,
+          },
+        });
+      }
+      console.log('before', deniedStore.deniedCategoriesNumber);
+      deniedStore.resetReason();
+      console.log('after', deniedStore.deniedCategoriesNumber);
+      modalStore.closeModal();
+      return true;
+    } catch (err) {
+      console.log(err);
+      return err;
     }
-    modalStore.closeModal();
-    return true;
   };
 
   useEffect(() => {

@@ -1,4 +1,8 @@
-import ModalStore from './ModalStore';
+import { useContext } from 'react';
+import { MobXProviderContext } from 'mobx-react';
 
-const useStore = () => ({ ModalStore });
+function useStore() {
+  return useContext(MobXProviderContext);
+}
+
 export default useStore;

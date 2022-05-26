@@ -36,7 +36,5 @@ class ModalStore {
   }
 }
 
-const modalStore = new ModalStore();
-
-export default modalStore;
+export default ModalStore;
 // 스토어 시점의 관측자 세팅

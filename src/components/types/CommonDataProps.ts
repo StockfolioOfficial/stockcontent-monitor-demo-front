@@ -13,18 +13,17 @@ export interface DetailDataProps extends BaseLayoutProps {
   denyLogs: DeniedLogSectionProps['deniedLogs'];
 }
 
-export interface MainDataProps extends BaseLayoutProps {
-  totalPages: string;
-  itemList: MainItemList[];
+export interface MainDataProps {
+  items: MainItemList[];
+  totalPages: number;
 }
-
 interface MainItemList {
   contentId: string;
   stateLabel: 'WAIT' | 'DENY' | 'APPROVE' | 'CHECK';
+  monitorExp: number;
   thumb: string;
   subject: string;
   uploadedAt: string;
   latestDeniedAt?: string;
   tags: string[];
-  totalPages: string;
 }

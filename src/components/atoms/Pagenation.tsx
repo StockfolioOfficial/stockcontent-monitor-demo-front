@@ -6,7 +6,7 @@ export interface PagenationProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   pageNum: string;
   setPageNum: React.Dispatch<React.SetStateAction<string>>;
-  totalPages: string;
+  totalPages: number;
 }
 
 interface PagenationBtnProp {

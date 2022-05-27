@@ -11,6 +11,7 @@ import DeniedLogLayout from './DeniedLogLayout';
 import DetailDeniedReasonLayout from './DeniedReasonLayout';
 import DetailSkeletonLayout from './DetailSkeletonLayout';
 import { DetailDataProps } from '../types/CommonDataProps';
+import apiClient from '../../libs/apis/apiClient';
 
 export interface DetailLayoutProps {
   contentId: number | null;
@@ -26,31 +27,19 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
   const [data, setData] = useState<DetailDataProps>();
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/mock/${contentId}.json`)
-      .then(function (res) {
-        setData(res.data);
-      })
-      .catch(function (error) {
-        // if (error.response) {
-        //   // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
-        //   console.log(error.response.data);
-        //   console.log(error.response.status);
-        //   console.log(error.response.headers);
-        // } else if (error.request) {
-        //   // 요청이 이루어 졌으나 응답을 받지 못했습니다.
-        //   // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
-        //   // Node.js의 http.ClientRequest 인스턴스입니다.
-        //   console.log(error.request);
-        // } else {
-        //   // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
-        //   console.log('Error', error.message);
-        // }
-        // console.log(error.config);
-      })
-      .then(function () {
-        setIsSkeletonOpen(false);
-      });
+    const getDetail = async () => {
+      try {
+        apiClient
+          .get(`/content/8a494149-9a75-456b-b4b4-0d116f6ca55a`)
+          .then(function (res) {
+            setData(res.data);
+            setIsSkeletonOpen(false);
+          });
+      } catch (err: any) {
+        throw new Error(err.message);
+      }
+    };
+    getDetail();
   }, [contentId]);
 
   return isSkeletonOpen ? (
@@ -80,6 +69,7 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
       </Routes>
     </DetailDeniedLogLayoutStyled>
   ) : (
-    <Navigate to="/not-found" />
+    // <Navigate to="/not-found" />
+    <div />
   );
 }

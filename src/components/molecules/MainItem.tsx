@@ -5,6 +5,9 @@ import Tag, { TagProps } from '../atoms/texts/Tag';
 import SmallColorDateText, {
   SmallColorDateTextProps,
 } from '../atoms/texts/SmallColorDateText';
+import apiClient from '../../libs/apis/apiClient';
+import { useState } from 'react';
+import modalStore from '../../stores/ModalStore';
 export interface MainItemProps extends BaseLayoutProps {
   id: string;
   imgSrc: HTMLImageElement['src'];
@@ -14,6 +17,7 @@ export interface MainItemProps extends BaseLayoutProps {
   uploadDate: SmallColorDateTextProps['uploadDate'];
   lastDeniedDate?: SmallColorDateTextProps['lastDeniedDate'];
   tagArray: Array<string>;
+  mainTabType: 'APPROVE' | 'DENY' | 'NONE';
   onClick?: React.MouseEventHandler<'div'> | undefined;
 }
 
@@ -115,14 +119,50 @@ export default function MainItem(props: MainItemProps) {
     uploadDate,
     lastDeniedDate,
     tagArray,
+    mainTabType,
     onClick,
     ...rest
   } = props;
+  const [checkState, setCheckState] = useState<
+    'CHECK' | 'APPROVE' | 'DENY' | 'WAIT' | ''
+  >('');
+
+  const knock = async () => {
+    try {
+      await apiClient
+        .get(`/content/${id}/monitoring`)
+        .then(res => setCheckState(res.data.stateLabel));
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  };
+
+  const monitoringMark = async () => {
+    try {
+      await apiClient
+        .put(`/content/${id}/monitoring`)
+        .then(res => console.log(res));
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  };
+
+  console.log('함수밖 라벨', checkState);
 
   return (
     <MainItemStyled
       {...rest}
-      onClick={() => {
+      onClick={async () => {
+        if (mainTabType === 'NONE') {
+          await knock();
+          console.log('너는 라벨', checkState);
+          if (checkState === 'CHECK') {
+            modalStore.openModal('SomeoneConfirming');
+          } else {
+            await monitoringMark();
+            navigate(`/confirm-contents/${id}`);
+          }
+        }
         navigate(`/confirm-contents/${id}`);
       }}
     >

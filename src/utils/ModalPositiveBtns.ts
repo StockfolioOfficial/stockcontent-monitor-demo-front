@@ -51,7 +51,7 @@ const WritingDeniedReason = () => {
 
   ModalStore.closeModal();
 
-  return '/confirm-contents/:contentId/report';
+  return 'report';
 };
 
 const positiveBtns = {

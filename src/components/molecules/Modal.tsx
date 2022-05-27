@@ -160,14 +160,11 @@ const Modal = () => {
             reason: deniedStore.deniedReason,
           },
         });
+        deniedStore.resetReason();
       }
-      console.log('before', deniedStore.deniedCategoriesNumber);
-      deniedStore.resetReason();
-      console.log('after', deniedStore.deniedCategoriesNumber);
       modalStore.closeModal();
       return true;
     } catch (err) {
-      console.log(err);
       return err;
     }
   };

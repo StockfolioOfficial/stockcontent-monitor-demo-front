@@ -7,7 +7,7 @@ import SmallColorDateText, {
 } from '../atoms/texts/SmallColorDateText';
 import apiClient from '../../libs/apis/apiClient';
 import { useState } from 'react';
-import modalStore from '../../stores/ModalStore';
+import useStore from '../../stores/UseStores';
 export interface MainItemProps extends BaseLayoutProps {
   id: string;
   imgSrc: HTMLImageElement['src'];
@@ -126,6 +126,7 @@ export default function MainItem(props: MainItemProps) {
   const [checkState, setCheckState] = useState<
     'CHECK' | 'APPROVE' | 'DENY' | 'WAIT' | ''
   >('');
+  const { modalStore } = useStore();
 
   const knock = async () => {
     try {

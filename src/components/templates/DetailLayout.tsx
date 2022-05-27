@@ -30,7 +30,7 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
     const getDetail = async () => {
       try {
         apiClient
-          .get(`/content/8a494149-9a75-456b-b4b4-0d116f6ca55a`)
+          .get(`/content/ca73220c-2132-4830-b367-d781d0ba1701`)
           .then(function (res) {
             setData(res.data);
             setIsSkeletonOpen(false);

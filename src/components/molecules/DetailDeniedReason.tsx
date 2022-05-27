@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import apiClient from '../../libs/apis/apiClient';
-import modalStore from '../../stores/ModalStore';
+import useStore from '../../stores/UseStores';
 import { TagProps } from '../atoms/DeniedTag';
 import TextBtn from '../atoms/TextBtn';
 import BaseLayoutProps from '../types/BaseLayoutProps';
@@ -100,6 +100,8 @@ export default function DetailDeniedReason(props: CheckBoxProps): JSX.Element {
   );
   const [reasonText, setReasonText] = useState('');
 
+  const { modalStore, deniedStore } = useStore();
+
   //반려사유 태그 fetch API
   useEffect(() => {
     const deneidTagFetch = async () => {
@@ -174,8 +176,8 @@ export default function DetailDeniedReason(props: CheckBoxProps): JSX.Element {
           btnTheme="blue"
           onClick={() => {
             return isCheckedArr.includes(true)
-              ? (modalStore.openModal('SubmitDeniedReason'),
-                modalStore.setReason(submitArr, reasonText))
+              ? (deniedStore.setReason(submitArr, reasonText),
+                modalStore.openModal('SubmitDeniedReason'))
               : modalStore.openModal('NothingReason');
           }}
         >

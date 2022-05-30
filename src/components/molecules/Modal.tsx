@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import TextBtn from '../atoms/TextBtn';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 import useStore from '../../stores/UseStores';
+import apiClient from '../../libs/apis/apiClient';
 import { observer } from 'mobx-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -142,17 +143,30 @@ const ModalBtnStyled = styled.div`
 
 const Modal = () => {
   const navigate = useNavigate();
-  const { modalStore } = useStore();
+  const { modalStore, deniedStore } = useStore();
 
   const { modalTitle, isOpen, contentId } = modalStore;
 
   const { title, btnText1, btnText2, colorTheme, revColorTheme } =
     selectModalTheme(modalTitle);
 
-  const positiveBtn = async (modalTitle: ModalTitleProps['modalTitle']) => {
-    if ((modalTitle = 'SubmitDeniedReason')) {
-      // 추가적인 로직 구현
+  const doPositiveBtn = async (modalTitle: ModalTitleProps['modalTitle']) => {
+    try {
+      if (modalTitle === 'SubmitDeniedReason') {
+        await apiClient.post(
+          'http://192.168.35.101:8000/content/0b2428a4-909b-4a23-aff1-759a35e12974/deny',
+          {
+            tag: deniedStore.deniedCategoriesNumber,
+            reason: deniedStore.deniedReason,
+          }
+        );
+        deniedStore.resetReason();
+      }
+      modalStore.closeModal();
+    } catch (err: any) {
+      throw new Error(err.message);
     }
+
     if ((modalTitle = 'WritingDeniedReason')) {
       navigate(`/confirm-contents/${contentId}/report`);
     }
@@ -162,11 +176,13 @@ const Modal = () => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.cssText = `
-        overflow: hidden`;
+        overflow: hidden;
+        `;
     }
     return () => {
       document.body.style.cssText = `
-        overflow: auto`;
+        overflow: auto;
+        `;
     };
   }, [isOpen]);
 
@@ -193,7 +209,7 @@ const Modal = () => {
             fontColor={revColorTheme}
             btnType="lowBtn"
             btnTheme={colorTheme}
-            onClick={() => positiveBtn(modalTitle)}
+            onClick={() => doPositiveBtn(modalTitle)}
           >
             {btnText2}
           </TextBtn>

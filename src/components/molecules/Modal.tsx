@@ -5,6 +5,7 @@ import BaseLayoutProps from '../types/BaseLayoutProps';
 import useStore from '../../stores/UseStores';
 import apiClient from '../../libs/apis/apiClient';
 import { observer } from 'mobx-react';
+import { useNavigate } from 'react-router-dom';
 
 export interface ModalProps extends BaseLayoutProps {
   isModalActive?: boolean;
@@ -19,7 +20,6 @@ export interface ModalTitleProps extends ModalProps {
     | 'Approving'
     | null;
 }
-
 const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
   let title: JSX.Element;
   let colorTheme: 'red' | 'blue' | 'purple';
@@ -142,9 +142,10 @@ const ModalBtnStyled = styled.div`
 `;
 
 const Modal = () => {
+  const navigate = useNavigate();
   const { modalStore, deniedStore } = useStore();
 
-  const { modalTitle, isOpen } = modalStore;
+  const { modalTitle, isOpen, contentId } = modalStore;
 
   const { title, btnText1, btnText2, colorTheme, revColorTheme } =
     selectModalTheme(modalTitle);
@@ -165,6 +166,11 @@ const Modal = () => {
     } catch (err: any) {
       throw new Error(err.message);
     }
+
+    if ((modalTitle = 'WritingDeniedReason')) {
+      navigate(`/confirm-contents/${contentId}/report`);
+    }
+    modalStore.closeModal();
   };
 
   useEffect(() => {

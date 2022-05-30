@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import axios from 'axios';
+
 import styled from 'styled-components';
 import {
   translateMainState,
@@ -11,6 +11,7 @@ import DeniedLogLayout from './DeniedLogLayout';
 import DetailDeniedReasonLayout from './DeniedReasonLayout';
 import DetailSkeletonLayout from './DetailSkeletonLayout';
 import { DetailDataProps } from '../types/CommonDataProps';
+import apiClient from '../../libs/apis/apiClient';
 
 export interface DetailLayoutProps {
   contentId: number | null;
@@ -26,12 +27,14 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
   const [data, setData] = useState<DetailDataProps>();
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:3000/mock/${contentId}.json`)
-      .then(function (res) {
-        setData(res.data);
-      })
-      .catch(function (error) {
+    const getDetail = async () => {
+      try {
+        apiClient.get(`/content/${contentId}`).then(function (res) {
+          setData(res.data);
+          setIsSkeletonOpen(false);
+        });
+      } catch (err: any) {
+        throw new Error(err.message);
         // if (error.response) {
         //   // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
         //   console.log(error.response.data);
@@ -47,10 +50,9 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
         //   console.log('Error', error.message);
         // }
         // console.log(error.config);
-      })
-      .then(function () {
-        setIsSkeletonOpen(false);
-      });
+      }
+    };
+    getDetail();
   }, [contentId]);
 
   return isSkeletonOpen ? (
@@ -73,6 +75,7 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
             <DeniedLogLayout
               state={translateMainState(data.stateLabel)}
               data={data.denyLogs}
+              contentId={data.contentId}
             />
           }
         />
@@ -80,6 +83,6 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
       </Routes>
     </DetailDeniedLogLayoutStyled>
   ) : (
-    <Navigate to="/not-found" />
+    <Navigate to="/not-found" replace={false} />
   );
 }

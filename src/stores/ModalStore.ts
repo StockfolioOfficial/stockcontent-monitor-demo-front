@@ -18,6 +18,7 @@ class ModalStore {
   modalTitle: ModalType['modalTitle'] = null;
   deniedReason: string = '';
   deniedCategories: number[] = [];
+  contentId: string | undefined;
 
   setReason(arr: number[], reason: string) {
     this.deniedCategories = arr;
@@ -29,9 +30,10 @@ class ModalStore {
     this.deniedReason = '';
   }
 
-  openModal(title: ModalType['modalTitle']) {
+  openModal(title: ModalType['modalTitle'], uuid: string) {
     this.isOpen = true;
     this.modalTitle = title;
+    this.contentId = uuid;
   }
 
   closeModal() {

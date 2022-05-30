@@ -5,6 +5,7 @@ import { DeniedLogSectionProps } from '../organisms/DeniedLogSection';
 export interface DetailDataProps extends BaseLayoutProps {
   contentId: string;
   stateLabel: 'WAIT' | 'DENY' | 'APPROVE' | 'CHECK';
+  monitorExp: number;
   subject: DetailVideoItemProps['title'];
   description: DetailVideoItemProps['descript'];
   uploadedAt: string;

@@ -1,7 +1,10 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
+
+import apiClient from '../../libs/apis/apiClient';
+
 import useStore from '../../stores/UseStores';
+
 import { TagProps } from '../atoms/DeniedTag';
 import TextBtn from '../atoms/TextBtn';
 import BaseLayoutProps from '../types/BaseLayoutProps';
@@ -104,21 +107,16 @@ export default function DetailDeniedReason(props: CheckBoxProps): JSX.Element {
 
   //반려사유 태그 fetch API
   useEffect(() => {
-    axios.get('http://localhost:3000/data/DeniedTag.json').then(res => {
-      setDeniedTagList(res.data);
-    });
-    // .catch(err => {
-    //   if (err.response) {
-    //     console.log(err.response.data);
-    //     console.log(err.response.status);
-    //     console.log(err.response.headers);
-    //   } else if (err.request) {
-    //     console.log(err.request);
-    //   } else {
-    //     console.log('Error', err.message);
-    //   }
-    //   console.log(err.config);
-    // }
+    const getDeniedTagList = async () => {
+      try {
+        apiClient.get(`/deny-tag`).then(res => {
+          setDeniedTagList(res.data);
+        });
+      } catch (err: any) {
+        throw new Error(err.message);
+      }
+    };
+    getDeniedTagList();
   }, []);
 
   const changeCheck = (idx: number): void => {

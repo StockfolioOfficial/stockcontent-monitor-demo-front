@@ -5,9 +5,9 @@ import DetailDeniedLog from '../molecules/DetailDeniedLog';
 export interface DeniedLogSectionProps {
   deniedLogs: {
     logId: number;
-    reason: string;
-    deniedAt: string;
-    denyTags: string[];
+    reason?: string;
+    denied_at: string;
+    deny_tag: string[];
   }[];
 }
 
@@ -65,9 +65,9 @@ function ChildrenYesData({ deniedLogs }: DeniedLogSectionProps) {
       {deniedLogs.map(data => (
         <DetailDeniedLogWrap key={data.logId}>
           <DetailDeniedLog
-            date={new Date(data.deniedAt)}
-            tag={data.denyTags}
-            reason={data.reason}
+            date={new Date(data.denied_at)}
+            tag={data.deny_tag}
+            reason={data.reason ? data.reason : '없음'}
           >
             {data.reason}
           </DetailDeniedLog>

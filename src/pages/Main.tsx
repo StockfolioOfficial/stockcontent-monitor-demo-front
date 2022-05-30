@@ -33,12 +33,14 @@ export default function ConfirmContentsPage() {
         tabType={tabType}
         onClick={() => {
           setType(tabType);
+          setPageNum('1');
         }}
       >
         {tabType}
       </MainTab>
     );
   };
+  console.log('메인 페이지', pageNum);
 
   return (
     <VStackLayout>

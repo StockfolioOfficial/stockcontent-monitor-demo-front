@@ -20,18 +20,21 @@ export default function useConfirmContentsParams() {
   //navigate 함수
   const updateNavigate = () => {
     navigate({
-      search: searchParams.toString(),
+      search: `?tab=${type}&page=${pageNum}`,
     });
   };
 
   //useEffect 렌더링
   useEffect(() => {
     searchParams.set('tab', type);
+    searchParams.set('page', '1');
+    console.log('쿼리파람 type', type);
     updateNavigate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type]);
 
   useEffect(() => {
+    console.log('페이지 넘버 바뀜?', pageNum);
     searchParams.set('page', pageNum);
     updateNavigate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,5 +45,6 @@ export default function useConfirmContentsParams() {
     setType,
     pageNum,
     setPageNum,
+    searchParams,
   };
 }

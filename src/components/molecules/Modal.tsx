@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import TextBtn from '../atoms/TextBtn';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 import useStore from '../../stores/UseStores';
+import apiClient from '../../libs/apis/apiClient';
 import { observer } from 'mobx-react';
-import axios from 'axios';
 
 export interface ModalProps extends BaseLayoutProps {
   isModalActive?: boolean;
@@ -149,34 +149,34 @@ const Modal = () => {
   const { title, btnText1, btnText2, colorTheme, revColorTheme } =
     selectModalTheme(modalTitle);
 
-  const positiveBtn = async (modalTitle: ModalTitleProps['modalTitle']) => {
+  const doPositiveBtn = async (modalTitle: ModalTitleProps['modalTitle']) => {
     try {
       if (modalTitle === 'SubmitDeniedReason') {
-        await axios({
-          method: 'post',
-          url: 'http://192.168.35.101:8000/content/0b2428a4-909b-4a23-aff1-759a35e12974/deny',
-          data: {
+        await apiClient.post(
+          'http://192.168.35.101:8000/content/0b2428a4-909b-4a23-aff1-759a35e12974/deny',
+          {
             tag: deniedStore.deniedCategoriesNumber,
             reason: deniedStore.deniedReason,
-          },
-        });
+          }
+        );
         deniedStore.resetReason();
       }
       modalStore.closeModal();
-      return true;
-    } catch (err) {
-      return err;
+    } catch (err: any) {
+      throw new Error(err.message);
     }
   };
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.cssText = `
-        overflow: hidden`;
+        overflow: hidden;
+        `;
     }
     return () => {
       document.body.style.cssText = `
-        overflow: auto`;
+        overflow: auto;
+        `;
     };
   }, [isOpen]);
 
@@ -203,7 +203,7 @@ const Modal = () => {
             fontColor={revColorTheme}
             btnType="lowBtn"
             btnTheme={colorTheme}
-            onClick={() => positiveBtn(modalTitle)}
+            onClick={() => doPositiveBtn(modalTitle)}
           >
             {btnText2}
           </TextBtn>

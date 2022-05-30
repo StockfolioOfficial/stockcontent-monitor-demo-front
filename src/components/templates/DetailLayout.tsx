@@ -29,12 +29,10 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
   useEffect(() => {
     const getDetail = async () => {
       try {
-        apiClient
-          .get(`/content/6498cc85-529d-46d3-913e-6b32aed0e1c8`)
-          .then(function (res) {
-            setData(res.data);
-            setIsSkeletonOpen(false);
-          });
+        apiClient.get(`/content/${contentId}`).then(function (res) {
+          setData(res.data);
+          setIsSkeletonOpen(false);
+        });
       } catch (err: any) {
         throw new Error(err.message);
         // if (error.response) {
@@ -77,6 +75,7 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
             <DeniedLogLayout
               state={translateMainState(data.stateLabel)}
               data={data.denyLogs}
+              contentId={data.contentId}
             />
           }
         />

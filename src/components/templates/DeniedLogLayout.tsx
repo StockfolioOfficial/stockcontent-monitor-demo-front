@@ -5,9 +5,10 @@ import TextBtn from '../atoms/TextBtn';
 import { DeniedLogSectionProps } from '../organisms/DeniedLogSection';
 import useStore from '../../stores/UseStores';
 
-export interface DenyLogs {
+export interface DenyLogsProps {
   state?: 'denied' | 'processing' | 'approved';
   data: DeniedLogSectionProps['deniedLogs'];
+  contentId: string;
 }
 
 export const DetailDeniedLogWrapper = styled.div`
@@ -22,12 +23,16 @@ const TextButtonWrapper = styled.div`
   padding-bottom: 30px;
 `;
 
-export default function DeniedLogLayout({ state, data }: DenyLogs) {
+export default function DeniedLogLayout({
+  state,
+  data,
+  contentId,
+}: DenyLogsProps) {
   const { modalStore } = useStore();
-
+  // TODO: undefined 에서 state로 변경
   return (
     <DetailDeniedLogWrapper>
-      {!state && (
+      {!undefined && (
         <TextButtonWrapper>
           <TextBtn
             btnType="highBtn"
@@ -46,7 +51,7 @@ export default function DeniedLogLayout({ state, data }: DenyLogs) {
             btnTheme="red"
             fontColor="pink"
             onClick={() => {
-              modalStore.openModal('WritingDeniedReason');
+              modalStore.openModal('WritingDeniedReason', contentId);
             }}
           >
             반려사유 작성

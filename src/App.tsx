@@ -43,7 +43,10 @@ export default function App() {
               </Route>
             </Route>
 
-            {/* <Route path="*" element={<Navigate to="/not-found" />} /> */}
+            <Route
+              path="*"
+              element={<Navigate to="/not-found" replace={true} />}
+            />
           </Routes>
           <Modal />
         </BrowserRouter>

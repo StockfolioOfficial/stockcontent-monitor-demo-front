@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
-import axios from 'axios';
+import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import {
   translateMainState,
@@ -29,12 +28,10 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
   useEffect(() => {
     const getDetail = async () => {
       try {
-        apiClient
-          .get(`/content/ca73220c-2132-4830-b367-d781d0ba1701`)
-          .then(function (res) {
-            setData(res.data);
-            setIsSkeletonOpen(false);
-          });
+        apiClient.get(`/content/${contentId}`).then(function (res) {
+          setData(res.data);
+          setIsSkeletonOpen(false);
+        });
       } catch (err: any) {
         throw new Error(err.message);
       }

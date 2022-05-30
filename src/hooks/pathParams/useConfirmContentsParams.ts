@@ -28,11 +28,13 @@ export default function useConfirmContentsParams() {
   useEffect(() => {
     searchParams.set('tab', type);
     updateNavigate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type]);
 
   useEffect(() => {
     searchParams.set('page', pageNum);
     updateNavigate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageNum]);
 
   return {

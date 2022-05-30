@@ -8,6 +8,7 @@ import SmallColorDateText, {
 import apiClient from '../../libs/apis/apiClient';
 import { useState } from 'react';
 import useStore from '../../stores/UseStores';
+import { useEffect } from 'react';
 export interface MainItemProps extends BaseLayoutProps {
   id: string;
   imgSrc: HTMLImageElement['src'];
@@ -110,6 +111,7 @@ function PurpleImgCover() {
 
 export default function MainItem(props: MainItemProps) {
   const navigate = useNavigate();
+  const { modalStore } = useStore();
   const {
     id,
     imgSrc,
@@ -124,11 +126,11 @@ export default function MainItem(props: MainItemProps) {
     ...rest
   } = props;
   const [checkState, setCheckState] = useState<
-    'CHECK' | 'APPROVE' | 'DENY' | 'WAIT' | ''
-  >('');
-  const { modalStore } = useStore();
+    'CHECK' | 'APPROVE' | 'DENY' | 'WAIT'
+  >();
 
-  const knock = async () => {
+  //검수중인지 아닌지 체크하는 API
+  const monitoringKnock = async () => {
     try {
       await apiClient
         .get(`/content/${id}/monitoring`)
@@ -138,35 +140,38 @@ export default function MainItem(props: MainItemProps) {
     }
   };
 
+  //대기중인 아이템을 검수중으로 변경하는 API
   const monitoringMark = async () => {
     try {
-      await apiClient
-        .put(`/content/${id}/monitoring`)
-        .then(res => console.log(res));
+      await apiClient.put(`/content/${id}/monitoring`);
     } catch (err: any) {
       throw new Error(err.message);
     }
   };
 
-  console.log('함수밖 라벨', checkState);
+  //검수중인 상태일때는 모달을 띄우고, 아닐때는 검수중으로 바꾸는 로직
+  useEffect(() => {
+    if (!checkState) {
+    } else if (checkState === 'CHECK') {
+      modalStore.openModal('SomeoneConfirming', id);
+    } else {
+      monitoringMark();
+      navigate(`/confirm-contents/${id}`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checkState]);
+
+  //아이템 클릭시 콜백 함수 (대기중 상태와 나머지 상태 구분)
+  const mainItemClick = async () => {
+    if (mainTabType === 'NONE') {
+      await monitoringKnock();
+    } else {
+      navigate(`/confirm-contents/${id}`);
+    }
+  };
 
   return (
-    <MainItemStyled
-      {...rest}
-      onClick={async () => {
-        if (mainTabType === 'NONE') {
-          await knock();
-          console.log('너는 라벨', checkState);
-          if (checkState === 'CHECK') {
-            modalStore.openModal('SomeoneConfirming');
-          } else {
-            await monitoringMark();
-            navigate(`/confirm-contents/${id}`);
-          }
-        }
-        navigate(`/confirm-contents/${id}`);
-      }}
-    >
+    <MainItemStyled {...rest} onClick={mainItemClick}>
       <ImgWrapper>
         {stateType === 'processing' && <PurpleImgCover />}
         <img src={imgSrc} alt={imgAlt} />

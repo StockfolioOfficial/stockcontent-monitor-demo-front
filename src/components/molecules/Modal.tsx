@@ -4,6 +4,7 @@ import TextBtn from '../atoms/TextBtn';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 import useStore from '../../stores/UseStores';
 import { observer } from 'mobx-react';
+import { useNavigate } from 'react-router';
 
 export interface ModalProps extends BaseLayoutProps {
   isModalActive?: boolean;
@@ -141,9 +142,10 @@ const ModalBtnStyled = styled.div`
 `;
 
 const Modal = () => {
+  const navigate = useNavigate();
   const { modalStore } = useStore();
 
-  const { modalTitle, isOpen } = modalStore;
+  const { modalTitle, isOpen, contentId } = modalStore;
 
   const { title, btnText1, btnText2, colorTheme, revColorTheme } =
     selectModalTheme(modalTitle);
@@ -151,6 +153,9 @@ const Modal = () => {
   const positiveBtn = async (modalTitle: ModalTitleProps['modalTitle']) => {
     if ((modalTitle = 'SubmitDeniedReason')) {
       // 추가적인 로직 구현
+    }
+    if ((modalTitle = 'SomeoneConfirming')) {
+      navigate(`/confirm-contents/${contentId}`);
     }
     modalStore.closeModal();
     return true;

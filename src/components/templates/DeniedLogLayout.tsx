@@ -4,7 +4,7 @@ import DeniedLogSection from '../organisms/DeniedLogSection';
 import TextBtn from '../atoms/TextBtn';
 import { DeniedLogSectionProps } from '../organisms/DeniedLogSection';
 import useStore from '../../stores/UseStores';
-import apiClient from '../../libs/apis/apiClient';
+import { translateMainState } from '../../utils/SwitchStringToString';
 
 export interface DenyLogsProps {
   state?: 'denied' | 'processing' | 'approved';
@@ -24,16 +24,12 @@ const TextButtonWrapper = styled.div`
   padding-bottom: 30px;
 `;
 
-export default function DeniedLogLayout({
-  state,
-  data,
-  contentId,
-}: DenyLogsProps) {
-  const { modalStore } = useStore();
+export default function DeniedLogLayout({ data, contentId }: DenyLogsProps) {
+  const { modalStore, stateStore } = useStore();
 
   return (
     <DetailDeniedLogWrapper>
-      {!state && (
+      {!translateMainState(stateStore.state) && (
         <TextButtonWrapper>
           <TextBtn
             btnType="highBtn"

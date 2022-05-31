@@ -39,7 +39,10 @@ const PagenationBtn = styled.button<PagenationBtnProp>`
   `}
 `;
 
-const PagnationNumberWrapper = styled.div``;
+const PagnationNumberWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const PagenationNumber = styled.button<PagenationBtnProp>`
   ${({ theme, isActive }) => css`

@@ -143,7 +143,7 @@ const ModalBtnStyled = styled.div`
 
 const Modal = () => {
   const navigate = useNavigate();
-  const { modalStore, deniedStore } = useStore();
+  const { modalStore, deniedStore, stateStore } = useStore();
 
   const { modalTitle, isOpen, contentId } = modalStore;
 
@@ -159,17 +159,24 @@ const Modal = () => {
         navigate(`/confirm-contents/${contentId}/report`);
       }
       if (modalTitle === 'Approving') {
-        await apiClient.post(`/content/${contentId}/approve`);
+        await apiClient.post(`/content/${contentId}/approve`).then(res => {
+          if (res.status === 200) {
+            stateStore.setState('APPROVE');
+          }
+        });
         navigate(`/confirm-contents/${contentId}`);
       }
       if (modalTitle === 'SubmitDeniedReason') {
-        await apiClient.post(
-          `http://192.168.35.101:8000/content/${contentId}/deny`,
-          {
+        await apiClient
+          .post(`http://192.168.35.101:8000/content/${contentId}/deny`, {
             tag: deniedStore.deniedCategoriesNumber,
             reason: deniedStore.deniedReason,
-          }
-        );
+          })
+          .then(res => {
+            if (res.status === 200) {
+              stateStore.setState('DENY');
+            }
+          });
         deniedStore.resetReason();
         navigate(`/confirm-contents/${contentId}`);
       }

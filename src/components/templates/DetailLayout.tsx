@@ -12,7 +12,7 @@ import DetailDeniedReasonLayout from './DeniedReasonLayout';
 import DetailSkeletonLayout from './DetailSkeletonLayout';
 import { DetailDataProps } from '../types/CommonDataProps';
 import apiClient from '../../libs/apis/apiClient';
-
+import useStore from '../../stores/UseStores';
 export interface DetailLayoutProps {
   contentId: string | undefined;
 }
@@ -23,6 +23,7 @@ export const DetailDeniedLogLayoutStyled = styled.div`
   padding: 40px 0 120px 0;
 `;
 export default function DetailLayout({ contentId }: DetailLayoutProps) {
+  const { stateStore } = useStore();
   const [isSkeletonOpen, setIsSkeletonOpen] = useState(true);
   const [data, setData] = useState<DetailDataProps>();
 
@@ -35,13 +36,17 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
     }
   };
 
+  //Detail get API
   useEffect(() => {
     const getDetail = async () => {
       try {
         apiClient.get(`/content/${contentId}`).then(function (res) {
           setData(res.data);
           setIsSkeletonOpen(false);
-          monitoringMark();
+          stateStore.setState(res.data.stateLabel);
+          if (stateStore.state === 'WAIT' || stateStore.state === 'CHECK') {
+            monitoringMark();
+          }
         });
       } catch (err: any) {
         throw new Error(err.message);
@@ -54,9 +59,11 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
     const interval = setInterval(() => {
       monitoringMark();
     }, 800);
-    return () => {
-      clearInterval(interval);
-    };
+    if (!(stateStore.state === 'WAIT' && stateStore.state === 'CHECK')) {
+      return () => {
+        clearInterval(interval);
+      };
+    }
   }, []);
 
   return isSkeletonOpen ? (
@@ -67,7 +74,7 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
         videoSrc={data.sampleContent}
         videoType="video/mp4"
         title={data.subject}
-        stateType={translateDetailState(data.stateLabel)}
+        stateType={translateDetailState(stateStore.state)}
         uploadDate={new Date(data.uploadedAt)}
         descript={data.description}
         tagArray={data.tags}
@@ -83,7 +90,10 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
             />
           }
         />
-        <Route path="/report" element={<DetailDeniedReasonLayout />} />
+        <Route
+          path="/report"
+          element={<DetailDeniedReasonLayout contentId={data.contentId} />}
+        />
       </Routes>
     </DetailDeniedLogLayoutStyled>
   ) : (

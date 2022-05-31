@@ -42,6 +42,7 @@ const PagenationBtn = styled.button<PagenationBtnProp>`
 const PagnationNumberWrapper = styled.div`
   display: flex;
   align-items: center;
+  margin: 0 10px;
 `;
 
 const PagenationNumber = styled.button<PagenationBtnProp>`
@@ -50,9 +51,12 @@ const PagenationNumber = styled.button<PagenationBtnProp>`
     background-color: ${theme.colors.white};
     color: ${isActive ? theme.colors.black : theme.colors.gray2};
     font-size: ${theme.fonts.size.s};
-    font-weight: ${theme.fonts.weight.light};
+    font-weight: ${isActive
+      ? theme.fonts.weight.bold
+      : theme.fonts.weight.light};
     line-height: ${theme.fonts.lineHeight.s};
     :hover {
+      border-radius: 4px;
       background-color: ${theme.colors.gray1};
     }
   `}

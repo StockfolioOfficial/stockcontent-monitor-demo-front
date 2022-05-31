@@ -80,7 +80,11 @@ const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
       btnText2 = '네';
       break;
     case 'LimitText':
-      title = <p>반려 사유는 500자를 초과할 수 없습니다.</p>;
+      title = (
+        <p>
+          반려 사유는 500자를 <br /> 초과할 수 없습니다.
+        </p>
+      );
       colorTheme = 'purple';
       revColorTheme = 'violet';
       btnText1 = '';

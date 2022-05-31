@@ -53,6 +53,7 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
       }
     };
     getDetail();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -64,6 +65,7 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
         clearInterval(interval);
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return isSkeletonOpen ? (

@@ -44,7 +44,6 @@ export default function ConfirmContentsPage() {
   //useEffect 렌더링
   useEffect(() => {
     searchParams.set('tab', type);
-    searchParams.set('page', '1');
     updateNavigate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type]);

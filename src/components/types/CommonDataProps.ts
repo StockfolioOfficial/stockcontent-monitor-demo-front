@@ -16,7 +16,7 @@ export interface DetailDataProps extends BaseLayoutProps {
 
 export interface MainDataProps {
   items: MainItemList[];
-  totalPages: number;
+  totalItems: number;
 }
 interface MainItemList {
   contentId: string;

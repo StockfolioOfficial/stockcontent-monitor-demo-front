@@ -140,7 +140,7 @@ export default function MainItem(props: MainItemProps) {
     }
   };
 
-  //검수중인 상태일때는 모달을 띄우고, 아닐때는 검수중으로 바꾸는 로직
+  //검수중인 상태일때는 모달을 띄우고, 아닐때는 그냥 입장
   useEffect(() => {
     if (!checkState) {
     } else if (checkState === 'CHECK') {

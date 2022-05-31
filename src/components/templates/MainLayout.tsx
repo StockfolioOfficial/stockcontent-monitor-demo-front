@@ -40,7 +40,7 @@ export default function MainLayout({
   const [isSkeletonOpen, setIsSkeletonOpen] = useState(true);
   const [mainItemList, setMainItemList] = useState<MainDataProps>({
     items: [],
-    totalPages: 0,
+    totalItems: 0,
   });
 
   //mainItemList API fetch 부분
@@ -94,7 +94,7 @@ export default function MainLayout({
         <Pagenation
           pageNum={pageNum}
           setPageNum={setPageNum}
-          totalPages={mainItemList.totalPages}
+          totalItems={mainItemList.totalItems}
         />
       </PagenationWrapper>
     </>

@@ -6,7 +6,7 @@ export interface PagenationProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   pageNum: string;
   setPageNum: React.Dispatch<React.SetStateAction<string>>;
-  totalPages: number;
+  totalItems: number;
 }
 
 interface PagenationBtnProp {
@@ -67,11 +67,13 @@ const ArrowImg = styled.img<ArrowImgProps>`
 export default function Pagenation({
   pageNum,
   setPageNum,
-  totalPages,
+  totalItems,
 }: PagenationProps) {
   const pageLimit = 10;
   const pageOffset = useRef(1);
-  const lastPageOffset = Math.ceil(Number(totalPages) / pageLimit);
+  const lastPageOffset = Math.ceil(
+    Math.ceil(Number(totalItems) / 20) / pageLimit
+  );
 
   const pageStartIndex = (pageOffset.current - 1) * pageLimit;
   const pageEndIndex = pageOffset.current * pageLimit;
@@ -92,7 +94,7 @@ export default function Pagenation({
         <ArrowImg src={arrow} alt="arrow" isLeft />
       </PagenationBtn>
       <PagnationNumberWrapper>
-        {Array(Number(totalPages))
+        {Array(Math.ceil(Number(totalItems) / 20))
           .fill(1)
           .map((el, idx) => el + idx)
           .slice(pageStartIndex, pageEndIndex)

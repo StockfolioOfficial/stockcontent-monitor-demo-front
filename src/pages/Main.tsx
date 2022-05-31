@@ -23,6 +23,7 @@ const MainTabWrapper = styled.div``;
 export default function ConfirmContentsPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const [postCount, setPostCount] = useState(0);
 
   //searchParams get
   const tab = searchParams.get('tab');
@@ -78,11 +79,16 @@ export default function ConfirmContentsPage() {
         <MainTabWrapper>{mainTabType.map(renderTypeButton)}</MainTabWrapper>
         <TotalPostCounter
           title={translateTotalPostTitle(type)}
-          totalPost={777}
+          totalPost={postCount}
           unit="개"
         />
       </MainTabSlotStyled>
-      <MainLayout type={type} pageNum={pageNum} setPageNum={setPageNum} />
+      <MainLayout
+        type={type}
+        pageNum={pageNum}
+        setPageNum={setPageNum}
+        setPostCount={setPostCount}
+      />
     </VStackLayout>
   );
 }

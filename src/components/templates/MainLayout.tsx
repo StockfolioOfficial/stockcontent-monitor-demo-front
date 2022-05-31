@@ -14,6 +14,7 @@ export interface MainItemLayoutProps extends BaseLayoutProps {
   type: ConfirmContentsType;
   pageNum: string;
   setPageNum: React.Dispatch<React.SetStateAction<string>>;
+  setPostCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const MainItemListWrapper = styled.div`
@@ -35,6 +36,7 @@ export default function MainLayout({
   type,
   pageNum,
   setPageNum,
+  setPostCount,
   ...rest
 }: MainItemLayoutProps) {
   const [isSkeletonOpen, setIsSkeletonOpen] = useState(true);
@@ -57,6 +59,7 @@ export default function MainLayout({
           )
           .then(res => {
             setMainItemList(res.data);
+            setPostCount(res.data.totalItems);
             setIsSkeletonOpen(false);
           });
       } catch (err: any) {

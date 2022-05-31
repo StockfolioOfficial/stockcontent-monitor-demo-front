@@ -67,7 +67,7 @@ function ChildrenYesData({ deniedLogs }: DeniedLogSectionProps) {
           <DetailDeniedLog
             date={new Date(data.denied_at)}
             tag={data.deny_tag}
-            reason={data.reason ? data.reason : '없음'}
+            reason={data.reason ? data.reason : undefined}
           >
             {data.reason}
           </DetailDeniedLog>

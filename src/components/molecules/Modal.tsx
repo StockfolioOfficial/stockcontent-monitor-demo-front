@@ -143,7 +143,7 @@ const ModalBtnStyled = styled.div`
 
 const Modal = () => {
   const navigate = useNavigate();
-  const { modalStore, deniedStore, stateStore } = useStore();
+  const { modalStore, deniedStore, stateStore, deniedLogStore } = useStore();
 
   const { modalTitle, isOpen, contentId } = modalStore;
 
@@ -172,9 +172,12 @@ const Modal = () => {
             tag: deniedStore.deniedCategoriesNumber,
             reason: deniedStore.deniedReason,
           })
-          .then(res => {
+          .then(async res => {
             if (res.status === 200) {
               stateStore.setState('DENY');
+              await apiClient
+                .get(`/content/${contentId}`)
+                .then(res => deniedLogStore.setDeniedLog(res.data.denyLogs));
             }
           });
         deniedStore.resetReason();

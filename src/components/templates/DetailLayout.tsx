@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 import styled from 'styled-components';
-import {
-  translateMainState,
-  translateDetailState,
-} from '../../utils/SwitchStringToString';
+import { translateDetailState } from '../../utils/SwitchStringToString';
 import DetailVideoItem from '../molecules/DetailVideoItem';
 import DeniedLogLayout from './DeniedLogLayout';
 import DetailDeniedReasonLayout from './DeniedReasonLayout';
@@ -23,7 +20,7 @@ export const DetailDeniedLogLayoutStyled = styled.div`
   padding: 40px 0 120px 0;
 `;
 export default function DetailLayout({ contentId }: DetailLayoutProps) {
-  const { stateStore } = useStore();
+  const { stateStore, deniedLogStore } = useStore();
   const [isSkeletonOpen, setIsSkeletonOpen] = useState(true);
   const [data, setData] = useState<DetailDataProps>();
 
@@ -44,6 +41,7 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
           setData(res.data);
           setIsSkeletonOpen(false);
           stateStore.setState(res.data.stateLabel);
+          deniedLogStore.setDeniedLog(res.data.denyLogs);
           if (stateStore.state === 'WAIT' || stateStore.state === 'CHECK') {
             monitoringMark();
           }
@@ -86,8 +84,7 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
           index
           element={
             <DeniedLogLayout
-              state={translateMainState(data.stateLabel)}
-              data={data.denyLogs}
+              data={deniedLogStore.deniedLog}
               contentId={data.contentId}
             />
           }

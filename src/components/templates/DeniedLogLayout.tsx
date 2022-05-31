@@ -7,7 +7,6 @@ import useStore from '../../stores/UseStores';
 import { translateMainState } from '../../utils/SwitchStringToString';
 
 export interface DenyLogsProps {
-  state?: 'denied' | 'processing' | 'approved';
   data: DeniedLogSectionProps['deniedLogs'];
   contentId: string;
 }

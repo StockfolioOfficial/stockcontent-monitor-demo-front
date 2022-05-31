@@ -44,7 +44,8 @@ const TabBtn = styled.button<TabButtonProps>`
   `}
 
   &:hover {
-    ${tabStyle}
+    ${tabStyle};
+    transition: ease-in-out 0.15s;
   }
 `;
 

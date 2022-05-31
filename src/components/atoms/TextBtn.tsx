@@ -35,15 +35,15 @@ const Btn = styled.button<ButtonProps>`
       ${
         btnTheme === 'white'
           ? `color: ${theme.colors.gray2}`
-          : `box-shadow: ${theme.hoverShadow[btnTheme]}`
+          : `box-shadow: ${theme.hoverShadow[btnTheme]}; transition: ease-in-out 0.15s;`
       }
     }
-
+  
     &:active {
       ${
         btnTheme === 'white'
           ? `color: ${theme.colors.black}`
-          : `box-shadow: ${theme.pressedShadow[btnTheme]}`
+          : `box-shadow: ${theme.pressedShadow[btnTheme]}; transition: ease-in-out 0.15s;`
       }
   `}
 `;

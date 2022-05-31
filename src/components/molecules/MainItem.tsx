@@ -53,14 +53,15 @@ const MainItemStyled = styled.div`
 const ImgWrapper = styled.div`
   position: relative;
   align-self: center;
+  border-radius: 4px;
   width: 282px;
   height: 158px;
-  object-fit: cover;
-
+  background-color: black;
   img {
     border-radius: 4px;
     width: 100%;
     height: 100%;
+    object-fit: contain;
   }
 `;
 

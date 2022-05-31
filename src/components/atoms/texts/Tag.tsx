@@ -27,6 +27,7 @@ function handleMessage({ tagType, children }: TagProps) {
 function styling({ tagType }: TagProps) {
   let style: ReturnType<typeof css>;
   let commonFont: ReturnType<typeof css> = css`
+    border-radius: 5px;
     font-size: ${({ theme }) => theme.fonts.size.xxs};
     font-weight: ${({ theme }) => theme.fonts.weight.bold};
   `;
@@ -34,6 +35,7 @@ function styling({ tagType }: TagProps) {
   switch (tagType) {
     case 'tag':
       style = css`
+        border-radius: 10px;
         background-color: ${({ theme }) => theme.colors.sky};
         color: ${({ theme }) => theme.colors.blue};
         font-size: ${({ theme }) => theme.fonts.size.xs};
@@ -70,7 +72,7 @@ const TagStyled = styled.div`
   min-width: fit-content;
   width: max-content;
   padding: 2px 4px;
-  border-radius: 5px;
+
   line-height: ${({ theme }) => theme.fonts.lineHeight.xs};
 `;
 

@@ -6,7 +6,7 @@ import BaseLayoutProps from '../types/BaseLayoutProps';
 export interface DeniedProps extends BaseLayoutProps {
   date: Date;
   tag: string[];
-  reason: string;
+  reason?: string;
 }
 //Date formatting 함수
 function formatDate(t: Date) {

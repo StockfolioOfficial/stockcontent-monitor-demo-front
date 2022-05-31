@@ -188,7 +188,7 @@ export default function DetailDeniedReason({
           fontColor="blue"
           btnTheme="sky"
           onClick={() => {
-            modalStore.openModal('CancelDeniedReason');
+            modalStore.openModal('CancelDeniedReason', contentId);
           }}
         >
           취소

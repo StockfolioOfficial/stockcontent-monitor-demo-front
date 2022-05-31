@@ -164,6 +164,9 @@ const Modal = () => {
       if (modalTitle === 'SomeoneConfirming') {
         navigate(`/confirm-contents/${contentId}`);
       }
+      if (modalTitle === 'CancelDeniedReason') {
+        navigate(`/confirm-contents/${contentId}`);
+      }
       if (modalTitle === 'WritingDeniedReason') {
         navigate(`/confirm-contents/${contentId}/report`);
       }

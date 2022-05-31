@@ -149,6 +149,8 @@ export default function DetailDeniedReason({
     if (maxLength > 500) {
       modalStore.openModal('LimitText');
       setReasonText(() => reasonText.substring(0, maxLength));
+    } else {
+      setReasonText(value);
     }
   };
 
@@ -174,7 +176,6 @@ export default function DetailDeniedReason({
           placeholder="추가적인 반려사유가 있다면 작성해주세요."
           value={reasonText}
           onChange={e => {
-            setReasonText(e.target.value);
             limitText(e.target.value);
           }}
         />

@@ -30,12 +30,13 @@ const Btn = styled.button<ButtonProps>`
     };
     text-align: center;
     cursor: pointer;
+    transition: ease-in-out 0.15s;
 
     &:hover {
       ${
         btnTheme === 'white'
           ? `color: ${theme.colors.gray2}`
-          : `box-shadow: ${theme.hoverShadow[btnTheme]}; transition: ease-in-out 0.15s;`
+          : `box-shadow: ${theme.hoverShadow[btnTheme]}`
       }
     }
   
@@ -43,7 +44,7 @@ const Btn = styled.button<ButtonProps>`
       ${
         btnTheme === 'white'
           ? `color: ${theme.colors.black}`
-          : `box-shadow: ${theme.pressedShadow[btnTheme]}; transition: ease-in-out 0.15s;`
+          : `box-shadow: ${theme.pressedShadow[btnTheme]}`
       }
   `}
 `;

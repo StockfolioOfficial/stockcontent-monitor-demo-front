@@ -19,6 +19,7 @@ export interface ModalTitleProps extends ModalProps {
     | 'SubmitDeniedReason'
     | 'CancelDeniedReason'
     | 'Approving'
+    | 'LimitText'
     | null;
 }
 const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
@@ -77,6 +78,17 @@ const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
       revColorTheme = 'pink';
       btnText1 = '아니오';
       btnText2 = '네';
+      break;
+    case 'LimitText':
+      title = (
+        <p>
+          반려 사유는 500자를 <br /> 초과할 수 없습니다.
+        </p>
+      );
+      colorTheme = 'purple';
+      revColorTheme = 'violet';
+      btnText1 = '';
+      btnText2 = '확인';
       break;
     case null:
       title = <p />;

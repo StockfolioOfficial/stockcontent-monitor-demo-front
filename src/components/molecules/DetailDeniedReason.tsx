@@ -30,10 +30,14 @@ const DetailDeniendReasonWrapper = styled.div`
       font-weight: ${theme.fonts.weight.bold};
     }
 
-    h2 {
+    h2,
+    h3 {
       color: ${theme.colors.gray2};
       font-size: ${theme.fonts.size.xxs};
       line-height: ${theme.fonts.lineHeight.xs};
+    }
+    h3 {
+      text-align: right;
     }
   `}
 `;
@@ -140,6 +144,16 @@ export default function DetailDeniedReason({
     return submitArr;
   });
 
+  const limitText = (value: string) => {
+    const maxLength = value.length;
+    if (maxLength > 500) {
+      modalStore.openModal('LimitText');
+      setReasonText(() => reasonText.substring(0, maxLength));
+    } else {
+      setReasonText(value);
+    }
+  };
+
   return (
     <DetailDeniendReasonStyled {...rest}>
       <DetailDeniendReasonWrapper>
@@ -160,8 +174,12 @@ export default function DetailDeniedReason({
         <h2>기타</h2>
         <TextAreaStyled
           placeholder="추가적인 반려사유가 있다면 작성해주세요."
-          onChange={e => setReasonText(e.target.value)}
+          value={reasonText}
+          onChange={e => {
+            limitText(e.target.value);
+          }}
         />
+        <h3>&#40;{reasonText.length}/500&#41;</h3>
       </DetailDeniendReasonWrapper>
 
       <BtnAreaStyled>

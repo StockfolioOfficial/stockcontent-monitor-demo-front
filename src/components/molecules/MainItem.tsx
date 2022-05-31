@@ -77,7 +77,7 @@ const PurpleImgCoverStyled = styled.div`
 
 const TitleWrapper = styled.div<MainItemProps>`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 10px;
   margin-bottom: 5px;
   div {
@@ -140,22 +140,12 @@ export default function MainItem(props: MainItemProps) {
     }
   };
 
-  //대기중인 아이템을 검수중으로 변경하는 API
-  const monitoringMark = async () => {
-    try {
-      await apiClient.put(`/content/${id}/monitoring`);
-    } catch (err: any) {
-      throw new Error(err.message);
-    }
-  };
-
   //검수중인 상태일때는 모달을 띄우고, 아닐때는 검수중으로 바꾸는 로직
   useEffect(() => {
     if (!checkState) {
     } else if (checkState === 'CHECK') {
       modalStore.openModal('SomeoneConfirming', id);
     } else {
-      monitoringMark();
       navigate(`/confirm-contents/${id}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

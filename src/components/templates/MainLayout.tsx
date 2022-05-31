@@ -4,7 +4,7 @@ import MainItem from '../molecules/MainItem';
 import Pagenation from '../../components/atoms/Pagenation';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 import { MainDataProps } from '../types/CommonDataProps';
-import { ConfirmContentsType } from '../../hooks/pathParams/useConfirmContentsParams';
+import { ConfirmContentsType } from '../../pages/Main';
 import { translateMainState } from '../../utils/SwitchStringToString';
 import { translateMainTabName } from '../../utils/SwitchStringToString';
 import { NoData } from '../atoms/NoData';
@@ -53,7 +53,7 @@ export default function MainLayout({
           .get(
             `/content/?lim=${itemLimit}&state=${translateMainTabName(
               type
-            )}&start=${pageNum}`
+            )}&start=${(Number(pageNum) - 1) * itemLimit}`
           )
           .then(res => {
             setMainItemList(res.data);

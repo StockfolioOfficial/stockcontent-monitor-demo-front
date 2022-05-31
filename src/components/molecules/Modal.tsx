@@ -5,6 +5,7 @@ import BaseLayoutProps from '../types/BaseLayoutProps';
 import useStore from '../../stores/UseStores';
 import apiClient from '../../libs/apis/apiClient';
 import { observer } from 'mobx-react';
+import { useNavigate } from 'react-router-dom';
 
 export interface ModalProps extends BaseLayoutProps {
   isModalActive?: boolean;
@@ -19,7 +20,6 @@ export interface ModalTitleProps extends ModalProps {
     | 'Approving'
     | null;
 }
-
 const selectModalTheme = (modalTitle: ModalTitleProps['modalTitle']) => {
   let title: JSX.Element;
   let colorTheme: 'red' | 'blue' | 'purple';
@@ -142,6 +142,7 @@ const ModalBtnStyled = styled.div`
 `;
 
 const Modal = () => {
+  const navigate = useNavigate();
   const { modalStore, deniedStore } = useStore();
 
   const { modalTitle, isOpen, contentId } = modalStore;
@@ -151,15 +152,26 @@ const Modal = () => {
 
   const doPositiveBtn = async (modalTitle: ModalTitleProps['modalTitle']) => {
     try {
+      if (modalTitle === 'SomeoneConfirming') {
+        navigate(`/confirm-contents/${contentId}`);
+      }
+      if (modalTitle === 'WritingDeniedReason') {
+        navigate(`/confirm-contents/${contentId}/report`);
+      }
+      if (modalTitle === 'Approving') {
+        await apiClient.post(`/content/${contentId}/approve`);
+        navigate(`/confirm-contents/${contentId}`);
+      }
       if (modalTitle === 'SubmitDeniedReason') {
         await apiClient.post(
-          'http://192.168.35.101:8000/content/0b2428a4-909b-4a23-aff1-759a35e12974/deny',
+          `http://192.168.35.101:8000/content/${contentId}/deny`,
           {
             tag: deniedStore.deniedCategoriesNumber,
             reason: deniedStore.deniedReason,
           }
         );
         deniedStore.resetReason();
+        navigate(`/confirm-contents/${contentId}`);
       }
       modalStore.closeModal();
     } catch (err: any) {

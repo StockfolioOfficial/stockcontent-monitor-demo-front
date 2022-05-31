@@ -7,9 +7,7 @@ type Params = {
 
 function useContentId() {
   const { contentId } = useParams<Params>();
-  if (contentId === undefined) return null;
-
-  return parseInt(contentId);
+  return contentId;
 }
 
 export default function ConfirmContentDetailPage() {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
+
 import styled from 'styled-components';
 import {
   translateMainState,
@@ -13,7 +14,7 @@ import { DetailDataProps } from '../types/CommonDataProps';
 import apiClient from '../../libs/apis/apiClient';
 
 export interface DetailLayoutProps {
-  contentId: number | null;
+  contentId: string | undefined;
 }
 
 export const DetailDeniedLogLayoutStyled = styled.div`
@@ -25,19 +26,38 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
   const [isSkeletonOpen, setIsSkeletonOpen] = useState(true);
   const [data, setData] = useState<DetailDataProps>();
 
+  //대기중인 아이템을 검수중으로 변경하는 API
+  const monitoringMark = async () => {
+    try {
+      await apiClient.put(`/content/${contentId}/monitoring`);
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  };
+
   useEffect(() => {
     const getDetail = async () => {
       try {
         apiClient.get(`/content/${contentId}`).then(function (res) {
           setData(res.data);
           setIsSkeletonOpen(false);
+          monitoringMark();
         });
       } catch (err: any) {
         throw new Error(err.message);
       }
     };
     getDetail();
-  }, [contentId]);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      monitoringMark();
+    }, 800);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return isSkeletonOpen ? (
     <DetailSkeletonLayout />
@@ -59,6 +79,7 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
             <DeniedLogLayout
               state={translateMainState(data.stateLabel)}
               data={data.denyLogs}
+              contentId={data.contentId}
             />
           }
         />
@@ -66,7 +87,6 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
       </Routes>
     </DetailDeniedLogLayoutStyled>
   ) : (
-    // <Navigate to="/not-found" />
-    <div />
+    <Navigate to="/not-found" replace={false} />
   );
 }

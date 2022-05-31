@@ -9,6 +9,7 @@ import apiClient from '../../libs/apis/apiClient';
 import { useState } from 'react';
 import useStore from '../../stores/UseStores';
 import { useEffect } from 'react';
+import { MainItemList } from '../types/CommonDataProps';
 export interface MainItemProps extends BaseLayoutProps {
   id: string;
   imgSrc: HTMLImageElement['src'];
@@ -132,9 +133,12 @@ export default function MainItem(props: MainItemProps) {
   //검수중인지 아닌지 체크하는 API
   const monitoringKnock = async () => {
     try {
-      await apiClient
-        .get(`/content/${id}/monitoring`)
-        .then(res => setCheckState(res.data.stateLabel));
+      const res = await apiClient.get<Pick<MainItemList, 'stateLabel'>>(
+        `/content/${id}/monitoring`
+      );
+      if (!res.data) throw Error('ERROR: NO DATA');
+
+      setCheckState(res.data.stateLabel);
     } catch (err: any) {
       throw new Error(err.message);
     }

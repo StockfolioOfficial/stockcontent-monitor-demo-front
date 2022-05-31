@@ -4,6 +4,7 @@ import apiClient from '../../libs/apis/apiClient';
 import useStore from '../../stores/UseStores';
 import { TagProps } from '../atoms/DeniedTag';
 import TextBtn from '../atoms/TextBtn';
+
 import BaseLayoutProps from '../types/BaseLayoutProps';
 
 export interface DetailDeniedReasonProps extends BaseLayoutProps {
@@ -112,9 +113,9 @@ export default function DetailDeniedReason({
   useEffect(() => {
     const deneidTagFetch = async () => {
       try {
-        await apiClient.get('/deny-tag').then(res => {
-          setDeniedTagList(res.data);
-        });
+        const res = await apiClient.get<TagProps[]>('/deny-tag');
+        if (!res.data) throw Error('ERROR: NO DATA');
+        setDeniedTagList(res.data);
       } catch (err: any) {
         throw new Error(err.message);
       }

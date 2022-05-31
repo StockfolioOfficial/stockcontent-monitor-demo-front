@@ -27,7 +27,9 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
   //대기중인 아이템을 검수중으로 변경하는 API
   const monitoringMark = async () => {
     try {
-      await apiClient.put(`/content/${contentId}/monitoring`);
+      const res = await apiClient.put(`/content/${contentId}/monitoring`);
+
+      if (res.status !== 200) throw new Error('Monitoring Mark failed');
     } catch (err: any) {
       throw new Error(err.message);
     }
@@ -37,15 +39,20 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
   useEffect(() => {
     const getDetail = async () => {
       try {
-        apiClient.get(`/content/${contentId}`).then(function (res) {
-          setData(res.data);
-          setIsSkeletonOpen(false);
-          stateStore.setState(res.data.stateLabel);
-          deniedLogStore.setDeniedLog(res.data.denyLogs);
-          if (stateStore.state === 'WAIT' || stateStore.state === 'CHECK') {
-            monitoringMark();
-          }
-        });
+        const res = await apiClient.get<DetailDataProps>(
+          `/content/${contentId}`
+        );
+
+        if (!res.data) throw Error('ERROR: NO DATA');
+
+        setData(res.data);
+        stateStore.setState(res.data.stateLabel);
+        deniedLogStore.setDeniedLog(res.data.denyLogs);
+        if (stateStore.state === 'WAIT' || stateStore.state === 'CHECK') {
+          monitoringMark();
+        }
+
+        setIsSkeletonOpen(false);
       } catch (err: any) {
         throw new Error(err.message);
       }

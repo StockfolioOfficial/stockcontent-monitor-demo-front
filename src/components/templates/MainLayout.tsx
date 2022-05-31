@@ -51,17 +51,17 @@ export default function MainLayout({
   useEffect(() => {
     const mainItemFetch = async () => {
       try {
-        await apiClient
-          .get(
-            `/content/?lim=${itemLimit}&state=${translateMainTabName(
-              type
-            )}&start=${(Number(pageNum) - 1) * itemLimit}`
-          )
-          .then(res => {
-            setMainItemList(res.data);
-            setPostCount(res.data.totalItems);
-            setIsSkeletonOpen(false);
-          });
+        const res = await apiClient.get<MainDataProps>(
+          `/content/?lim=${itemLimit}&state=${translateMainTabName(
+            type
+          )}&start=${(Number(pageNum) - 1) * itemLimit}`
+        );
+
+        if (!res.data) throw Error('ERROR: NO DATA');
+
+        setMainItemList(res.data);
+        setPostCount(res.data.totalItems);
+        setIsSkeletonOpen(false);
       } catch (err: any) {
         throw new Error(err.message);
       }

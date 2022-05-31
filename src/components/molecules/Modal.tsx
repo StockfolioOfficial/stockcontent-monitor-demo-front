@@ -6,6 +6,7 @@ import useStore from '../../stores/UseStores';
 import apiClient from '../../libs/apis/apiClient';
 import { observer } from 'mobx-react';
 import { useNavigate } from 'react-router-dom';
+import { DetailDataProps } from '../types/CommonDataProps';
 
 export interface ModalProps extends BaseLayoutProps {
   isModalActive?: boolean;
@@ -159,27 +160,31 @@ const Modal = () => {
         navigate(`/confirm-contents/${contentId}/report`);
       }
       if (modalTitle === 'Approving') {
-        await apiClient.post(`/content/${contentId}/approve`).then(res => {
-          if (res.status === 200) {
-            stateStore.setState('APPROVE');
-          }
-        });
+        const res = await apiClient.post(`/content/${contentId}/approve`);
+
+        if (res.status === 200) {
+          stateStore.setState('APPROVE');
+        }
+
         navigate(`/confirm-contents/${contentId}`);
       }
       if (modalTitle === 'SubmitDeniedReason') {
-        await apiClient
-          .post(`http://192.168.35.101:8000/content/${contentId}/deny`, {
+        const res = await apiClient.post(
+          `http://192.168.35.101:8000/content/${contentId}/deny`,
+          {
             tag: deniedStore.deniedCategoriesNumber,
             reason: deniedStore.deniedReason,
-          })
-          .then(async res => {
-            if (res.status === 200) {
-              stateStore.setState('DENY');
-              await apiClient
-                .get(`/content/${contentId}`)
-                .then(res => deniedLogStore.setDeniedLog(res.data.denyLogs));
-            }
-          });
+          }
+        );
+
+        if (res.status === 200) {
+          stateStore.setState('DENY');
+          const res = await apiClient.get<DetailDataProps>(
+            `/content/${contentId}`
+          );
+          deniedLogStore.setDeniedLog(res.data.denyLogs);
+        }
+
         deniedStore.resetReason();
         navigate(`/confirm-contents/${contentId}`);
       }

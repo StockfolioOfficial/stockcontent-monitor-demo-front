@@ -18,7 +18,7 @@ export interface MainDataProps {
   items: MainItemList[];
   totalItems: number;
 }
-interface MainItemList {
+export interface MainItemList {
   contentId: string;
   stateLabel: 'WAIT' | 'DENY' | 'APPROVE' | 'CHECK';
   monitorExp: number;

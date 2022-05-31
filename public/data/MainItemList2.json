@@ -1,0 +1,31 @@
+{
+  "totalPages": "2",
+  "itemList": [
+    {
+      "contentId": "1",
+      "stateLabel": "APPROVE",
+      "thumb": "https://img.hankyung.com/photo/201706/AA.14077862.1.jpg",
+      "subject": "string",
+      "uploadedAt": "2022-02-02 11:11:11",
+      "tags": ["강아지", "동물", "귀여움", "자연"]
+    },
+    {
+      "contentId": "2",
+      "stateLabel": "CHECK",
+      "thumb": "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/oeE/image/p2fq2VFmYKfivvKUVcGh-l6xkXk",
+      "subject": "string",
+      "uploadedAt": "2022-02-02 11:11:11",
+      "latestDeniedAt": "2022-02-02 11:11:11",
+      "tags": ["강아지", "동물", "귀여움", "자연"]
+    },
+    {
+      "contentId": "3",
+      "stateLabel": "DENY",
+      "thumb": "https://img.huffingtonpost.com/asset/5ac599f81e00003b137b0a12.jpeg?ops=scalefit_720_noupscale",
+      "subject": "string",
+      "uploadedAt": "2022-02-02 11:11:11",
+      "latestDeniedAt": "2022-02-02 11:11:11",
+      "tags": ["강아지", "동물", "귀여움", "자연"]
+    }
+  ]
+}

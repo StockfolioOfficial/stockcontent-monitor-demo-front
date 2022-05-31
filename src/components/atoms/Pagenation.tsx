@@ -4,9 +4,9 @@ import arrow from '../../assets/images/Arrow.svg';
 
 export interface PagenationProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  pageNumber: number;
-  setPageNumber: React.Dispatch<React.SetStateAction<number>>;
-  totalPages: string;
+  pageNum: string;
+  setPageNum: React.Dispatch<React.SetStateAction<string>>;
+  totalPages: number;
 }
 
 interface PagenationBtnProp {
@@ -39,7 +39,10 @@ const PagenationBtn = styled.button<PagenationBtnProp>`
   `}
 `;
 
-const PagnationNumberWrapper = styled.div``;
+const PagnationNumberWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const PagenationNumber = styled.button<PagenationBtnProp>`
   ${({ theme, isActive }) => css`
@@ -62,8 +65,8 @@ const ArrowImg = styled.img<ArrowImgProps>`
 `;
 
 export default function Pagenation({
-  pageNumber,
-  setPageNumber,
+  pageNum,
+  setPageNum,
   totalPages,
 }: PagenationProps) {
   const pageLimit = 10;
@@ -75,12 +78,12 @@ export default function Pagenation({
 
   const goNextPage = () => {
     pageOffset.current += 1;
-    setPageNumber(pageStartIndex + pageLimit + 1);
+    setPageNum(`${pageStartIndex + pageLimit + 1}`);
   };
 
   const goPrevPage = () => {
     pageOffset.current -= 1;
-    setPageNumber(pageStartIndex);
+    setPageNum(`${pageStartIndex}`);
   };
 
   return (
@@ -94,7 +97,7 @@ export default function Pagenation({
           .map((el, idx) => el + idx)
           .slice(pageStartIndex, pageEndIndex)
           .map(number => {
-            if (pageNumber === number)
+            if (Number(pageNum) === number)
               return (
                 <PagenationNumber key={number} isActive>
                   {number}
@@ -102,10 +105,7 @@ export default function Pagenation({
               );
 
             return (
-              <PagenationNumber
-                key={number}
-                onClick={() => setPageNumber(number)}
-              >
+              <PagenationNumber key={number} onClick={() => setPageNum(number)}>
                 {number}
               </PagenationNumber>
             );

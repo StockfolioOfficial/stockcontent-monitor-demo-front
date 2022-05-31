@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import styled, { css } from 'styled-components';
-
 import apiClient from '../../libs/apis/apiClient';
-
 import useStore from '../../stores/UseStores';
-
 import { TagProps } from '../atoms/DeniedTag';
 import TextBtn from '../atoms/TextBtn';
 import BaseLayoutProps from '../types/BaseLayoutProps';
 
+export interface DetailDeniedReasonProps extends BaseLayoutProps {
+  contentId: string;
+}
 export interface CheckBoxProps extends BaseLayoutProps {
   isChecked?: boolean;
 }
@@ -96,7 +96,10 @@ const BtnAreaStyled = styled.div`
   margin-top: 20px;
 `;
 
-export default function DetailDeniedReason(props: CheckBoxProps): JSX.Element {
+export default function DetailDeniedReason({
+  contentId,
+  ...rest
+}: DetailDeniedReasonProps) {
   const [deniedTagList, setDeniedTagList] = useState<TagProps[]>([]);
   const [isCheckedArr, setIsCheckedArr] = useState<boolean[]>(
     Array(deniedTagList.length).fill(false)
@@ -107,16 +110,16 @@ export default function DetailDeniedReason(props: CheckBoxProps): JSX.Element {
 
   //반려사유 태그 fetch API
   useEffect(() => {
-    const getDeniedTagList = async () => {
+    const deneidTagFetch = async () => {
       try {
-        apiClient.get(`/deny-tag`).then(res => {
+        await apiClient.get('/deny-tag').then(res => {
           setDeniedTagList(res.data);
         });
       } catch (err: any) {
         throw new Error(err.message);
       }
     };
-    getDeniedTagList();
+    deneidTagFetch();
   }, []);
 
   const changeCheck = (idx: number): void => {
@@ -137,7 +140,7 @@ export default function DetailDeniedReason(props: CheckBoxProps): JSX.Element {
   });
 
   return (
-    <DetailDeniendReasonStyled>
+    <DetailDeniendReasonStyled {...rest}>
       <DetailDeniendReasonWrapper>
         <h1>반려사유</h1>
         <CheckBoxStyled>
@@ -180,7 +183,7 @@ export default function DetailDeniedReason(props: CheckBoxProps): JSX.Element {
           onClick={() => {
             return isCheckedArr.includes(true)
               ? (deniedStore.setReason(submitArr, reasonText),
-                modalStore.openModal('SubmitDeniedReason'))
+                modalStore.openModal('SubmitDeniedReason', contentId))
               : modalStore.openModal('NothingReason');
           }}
         >

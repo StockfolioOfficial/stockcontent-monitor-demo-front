@@ -12,9 +12,9 @@ import DetailDeniedReasonLayout from './DeniedReasonLayout';
 import DetailSkeletonLayout from './DetailSkeletonLayout';
 import { DetailDataProps } from '../types/CommonDataProps';
 import apiClient from '../../libs/apis/apiClient';
-
+import useStore from '../../stores/UseStores';
 export interface DetailLayoutProps {
-  contentId: number | null;
+  contentId: string | undefined;
 }
 
 export const DetailDeniedLogLayoutStyled = styled.div`
@@ -23,37 +23,48 @@ export const DetailDeniedLogLayoutStyled = styled.div`
   padding: 40px 0 120px 0;
 `;
 export default function DetailLayout({ contentId }: DetailLayoutProps) {
+  const { stateStore } = useStore();
   const [isSkeletonOpen, setIsSkeletonOpen] = useState(true);
   const [data, setData] = useState<DetailDataProps>();
 
+  //대기중인 아이템을 검수중으로 변경하는 API
+  const monitoringMark = async () => {
+    try {
+      await apiClient.put(`/content/${contentId}/monitoring`);
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  };
+
+  //Detail get API
   useEffect(() => {
     const getDetail = async () => {
       try {
         apiClient.get(`/content/${contentId}`).then(function (res) {
           setData(res.data);
           setIsSkeletonOpen(false);
+          stateStore.setState(res.data.stateLabel);
+          if (stateStore.state === 'WAIT' || stateStore.state === 'CHECK') {
+            monitoringMark();
+          }
         });
       } catch (err: any) {
         throw new Error(err.message);
-        // if (error.response) {
-        //   // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
-        //   console.log(error.response.data);
-        //   console.log(error.response.status);
-        //   console.log(error.response.headers);
-        // } else if (error.request) {
-        //   // 요청이 이루어 졌으나 응답을 받지 못했습니다.
-        //   // `error.request`는 브라우저의 XMLHttpRequest 인스턴스 또는
-        //   // Node.js의 http.ClientRequest 인스턴스입니다.
-        //   console.log(error.request);
-        // } else {
-        //   // 오류를 발생시킨 요청을 설정하는 중에 문제가 발생했습니다.
-        //   console.log('Error', error.message);
-        // }
-        // console.log(error.config);
       }
     };
     getDetail();
-  }, [contentId]);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      monitoringMark();
+    }, 800);
+    if (!(stateStore.state === 'WAIT' && stateStore.state === 'CHECK')) {
+      return () => {
+        clearInterval(interval);
+      };
+    }
+  }, []);
 
   return isSkeletonOpen ? (
     <DetailSkeletonLayout />
@@ -63,7 +74,7 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
         videoSrc={data.sampleContent}
         videoType="video/mp4"
         title={data.subject}
-        stateType={translateDetailState(data.stateLabel)}
+        stateType={translateDetailState(stateStore.state)}
         uploadDate={new Date(data.uploadedAt)}
         descript={data.description}
         tagArray={data.tags}
@@ -79,7 +90,10 @@ export default function DetailLayout({ contentId }: DetailLayoutProps) {
             />
           }
         />
-        <Route path="/report" element={<DetailDeniedReasonLayout />} />
+        <Route
+          path="/report"
+          element={<DetailDeniedReasonLayout contentId={data.contentId} />}
+        />
       </Routes>
     </DetailDeniedLogLayoutStyled>
   ) : (

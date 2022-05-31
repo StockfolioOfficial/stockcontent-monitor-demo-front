@@ -67,6 +67,7 @@ function styling({ tagType }: TagProps) {
 
 const TagStyled = styled.div`
   ${styling}
+  min-width: fit-content;
   width: max-content;
   padding: 2px 4px;
   border-radius: 5px;

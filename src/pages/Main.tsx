@@ -1,7 +1,4 @@
 import VStackLayout from '../components/atoms/layouts/VStackLayout';
-import useConfirmContentsParams, {
-  ConfirmContentsType,
-} from '../hooks/pathParams/useConfirmContentsParams';
 import HStackLayout from '../components/atoms/layouts/HStackLayout';
 import MainTab from '../components/molecules/MainTab';
 
@@ -9,6 +6,10 @@ import styled from 'styled-components';
 import MainLayout from '../components/templates/MainLayout';
 import TotalPostCounter from '../components/molecules/TotalPostCounter';
 import { translateTotalPostTitle } from '../utils/SwitchStringToString';
+import { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+
+export type ConfirmContentsType = '대기중' | '반려됨' | '승인';
 
 const MainTabSlotStyled = styled(HStackLayout)`
   justify-content: space-between;
@@ -20,22 +21,58 @@ const MainTabSlotStyled = styled(HStackLayout)`
 const MainTabWrapper = styled.div``;
 
 export default function ConfirmContentsPage() {
-  const { type, setType } = useConfirmContentsParams();
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  //searchParams get
+  const tab = searchParams.get('tab');
+  const page = searchParams.get('page');
+
+  //useState hook 사용
+  const [type, setType] = useState<ConfirmContentsType>(
+    (tab as ConfirmContentsType) ?? '대기중'
+  );
+  const [pageNum, setPageNum] = useState<string>((page as string) ?? '1');
+
+  //navigate 함수
+  const updateNavigate = () => {
+    navigate({
+      search: `?tab=${type}&page=${pageNum}`,
+    });
+  };
+
+  //useEffect 렌더링
+  useEffect(() => {
+    searchParams.set('tab', type);
+    searchParams.set('page', '1');
+    updateNavigate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [type]);
+
+  useEffect(() => {
+    searchParams.set('page', pageNum);
+    updateNavigate();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageNum]);
 
   const mainTabType: ConfirmContentsType[] = ['대기중', '반려됨', '승인'];
 
-  const renderTypeButton = (t: ConfirmContentsType) => {
+  const renderTypeButton = (tabType: ConfirmContentsType) => {
     return (
       <MainTab
-        key={t}
-        click={t === type ? `clicked` : `unClicked`}
-        tabType={t}
-        onClick={() => setType(t)}
+        key={tabType}
+        click={tabType === type ? `clicked` : `unClicked`}
+        tabType={tabType}
+        onClick={() => {
+          setType(tabType);
+          setPageNum('1');
+        }}
       >
-        {t}
+        {tabType}
       </MainTab>
     );
   };
+
   return (
     <VStackLayout>
       <MainTabSlotStyled>
@@ -46,7 +83,7 @@ export default function ConfirmContentsPage() {
           unit="개"
         />
       </MainTabSlotStyled>
-      <MainLayout type={type} />
+      <MainLayout type={type} pageNum={pageNum} setPageNum={setPageNum} />
     </VStackLayout>
   );
 }

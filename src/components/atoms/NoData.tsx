@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import BaseLayoutProps from '../types/BaseLayoutProps';
-import { ConfirmContentsType } from '../../hooks/pathParams/useConfirmContentsParams';
+import { ConfirmContentsType } from '../../pages/Main';
 
 export interface NoDataProps extends BaseLayoutProps {
   type: ConfirmContentsType;

@@ -5,6 +5,10 @@ import Tag, { TagProps } from '../atoms/texts/Tag';
 import SmallColorDateText, {
   SmallColorDateTextProps,
 } from '../atoms/texts/SmallColorDateText';
+import apiClient from '../../libs/apis/apiClient';
+import { useState } from 'react';
+import useStore from '../../stores/UseStores';
+import { useEffect } from 'react';
 export interface MainItemProps extends BaseLayoutProps {
   id: string;
   imgSrc: HTMLImageElement['src'];
@@ -14,6 +18,7 @@ export interface MainItemProps extends BaseLayoutProps {
   uploadDate: SmallColorDateTextProps['uploadDate'];
   lastDeniedDate?: SmallColorDateTextProps['lastDeniedDate'];
   tagArray: Array<string>;
+  mainTabType: 'APPROVE' | 'DENY' | 'NONE';
   onClick?: React.MouseEventHandler<'div'> | undefined;
 }
 
@@ -72,7 +77,7 @@ const PurpleImgCoverStyled = styled.div`
 
 const TitleWrapper = styled.div<MainItemProps>`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 10px;
   margin-bottom: 5px;
   div {
@@ -106,6 +111,7 @@ function PurpleImgCover() {
 
 export default function MainItem(props: MainItemProps) {
   const navigate = useNavigate();
+  const { modalStore } = useStore();
   const {
     id,
     imgSrc,
@@ -115,17 +121,47 @@ export default function MainItem(props: MainItemProps) {
     uploadDate,
     lastDeniedDate,
     tagArray,
+    mainTabType,
     onClick,
     ...rest
   } = props;
+  const [checkState, setCheckState] = useState<
+    'CHECK' | 'APPROVE' | 'DENY' | 'WAIT'
+  >();
+
+  //검수중인지 아닌지 체크하는 API
+  const monitoringKnock = async () => {
+    try {
+      await apiClient
+        .get(`/content/${id}/monitoring`)
+        .then(res => setCheckState(res.data.stateLabel));
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  };
+
+  //검수중인 상태일때는 모달을 띄우고, 아닐때는 검수중으로 바꾸는 로직
+  useEffect(() => {
+    if (!checkState) {
+    } else if (checkState === 'CHECK') {
+      modalStore.openModal('SomeoneConfirming', id);
+    } else {
+      navigate(`/confirm-contents/${id}`);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [checkState]);
+
+  //아이템 클릭시 콜백 함수 (대기중 상태와 나머지 상태 구분)
+  const mainItemClick = async () => {
+    if (mainTabType === 'NONE') {
+      await monitoringKnock();
+    } else {
+      navigate(`/confirm-contents/${id}`);
+    }
+  };
 
   return (
-    <MainItemStyled
-      {...rest}
-      onClick={() => {
-        navigate(`/confirm-contents/${id}`);
-      }}
-    >
+    <MainItemStyled {...rest} onClick={mainItemClick}>
       <ImgWrapper>
         {stateType === 'processing' && <PurpleImgCover />}
         <img src={imgSrc} alt={imgAlt} />

@@ -4,6 +4,7 @@ import DeniedLogSection from '../organisms/DeniedLogSection';
 import TextBtn from '../atoms/TextBtn';
 import { DeniedLogSectionProps } from '../organisms/DeniedLogSection';
 import useStore from '../../stores/UseStores';
+import { translateMainState } from '../../utils/SwitchStringToString';
 
 export interface DenyLogsProps {
   state?: 'denied' | 'processing' | 'approved';
@@ -23,16 +24,12 @@ const TextButtonWrapper = styled.div`
   padding-bottom: 30px;
 `;
 
-export default function DeniedLogLayout({
-  state,
-  data,
-  contentId,
-}: DenyLogsProps) {
-  const { modalStore } = useStore();
-  // TODO: undefined 에서 state로 변경
+export default function DeniedLogLayout({ data, contentId }: DenyLogsProps) {
+  const { modalStore, stateStore } = useStore();
+
   return (
     <DetailDeniedLogWrapper>
-      {!undefined && (
+      {!translateMainState(stateStore.state) && (
         <TextButtonWrapper>
           <TextBtn
             btnType="highBtn"
@@ -40,7 +37,7 @@ export default function DeniedLogLayout({
             btnTheme="sky"
             fontColor="blue"
             onClick={() => {
-              modalStore.openModal('Approving');
+              modalStore.openModal('Approving', contentId);
             }}
           >
             승인

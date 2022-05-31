@@ -9,26 +9,16 @@ interface ModalType extends ModalTitleProps {
 
 class ModalStore {
   deniedStore: DeniedStore;
+
   constructor(rootStore: RootStore) {
     this.deniedStore = rootStore.deniedStore;
+
     makeAutoObservable(this);
   }
 
   isOpen: ModalType['isOpen'] = false;
   modalTitle: ModalType['modalTitle'] = null;
-  deniedReason: string = '';
-  deniedCategories: number[] = [];
   contentId: string | undefined;
-
-  setReason(arr: number[], reason: string) {
-    this.deniedCategories = arr;
-    this.deniedReason = reason;
-  }
-
-  resetReason() {
-    this.deniedCategories = [];
-    this.deniedReason = '';
-  }
 
   openModal(title: ModalType['modalTitle'], uuid: string) {
     this.isOpen = true;

@@ -143,7 +143,7 @@ const ModalBtnStyled = styled.div`
 
 const Modal = () => {
   const navigate = useNavigate();
-  const { modalStore, deniedStore } = useStore();
+  const { modalStore, deniedStore, stateStore } = useStore();
 
   const { modalTitle, isOpen, contentId } = modalStore;
 
@@ -152,25 +152,38 @@ const Modal = () => {
 
   const doPositiveBtn = async (modalTitle: ModalTitleProps['modalTitle']) => {
     try {
+      if (modalTitle === 'SomeoneConfirming') {
+        navigate(`/confirm-contents/${contentId}`);
+      }
+      if (modalTitle === 'WritingDeniedReason') {
+        navigate(`/confirm-contents/${contentId}/report`);
+      }
+      if (modalTitle === 'Approving') {
+        await apiClient.post(`/content/${contentId}/approve`).then(res => {
+          if (res.status === 200) {
+            stateStore.setState('APPROVE');
+          }
+        });
+        navigate(`/confirm-contents/${contentId}`);
+      }
       if (modalTitle === 'SubmitDeniedReason') {
-        await apiClient.post(
-          'http://192.168.35.101:8000/content/0b2428a4-909b-4a23-aff1-759a35e12974/deny',
-          {
+        await apiClient
+          .post(`http://192.168.35.101:8000/content/${contentId}/deny`, {
             tag: deniedStore.deniedCategoriesNumber,
             reason: deniedStore.deniedReason,
-          }
-        );
+          })
+          .then(res => {
+            if (res.status === 200) {
+              stateStore.setState('DENY');
+            }
+          });
         deniedStore.resetReason();
+        navigate(`/confirm-contents/${contentId}`);
       }
       modalStore.closeModal();
     } catch (err: any) {
       throw new Error(err.message);
     }
-
-    if ((modalTitle = 'WritingDeniedReason')) {
-      navigate(`/confirm-contents/${contentId}/report`);
-    }
-    modalStore.closeModal();
   };
 
   useEffect(() => {

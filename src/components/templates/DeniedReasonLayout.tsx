@@ -1,6 +1,11 @@
 import * as React from 'react';
 import styled, { css } from 'styled-components';
 import DetailDeniedReason from '../molecules/DetailDeniedReason';
+import BaseLayoutProps from '../types/BaseLayoutProps';
+
+export interface DeniedReasonLayoutProps extends BaseLayoutProps {
+  contentId: string;
+}
 
 const DetailDeniedLogWrapper = styled.section`
   display: flex;
@@ -16,11 +21,14 @@ const DeniedReasonTitle = styled.h3`
   `}
 `;
 
-export default function DetailDeniedReasonLayout() {
+export default function DetailDeniedReasonLayout({
+  contentId,
+  ...rest
+}: DeniedReasonLayoutProps) {
   return (
-    <DetailDeniedLogWrapper>
+    <DetailDeniedLogWrapper {...rest}>
       <DeniedReasonTitle>반려 사유를 작성합니다.</DeniedReasonTitle>
-      <DetailDeniedReason />
+      <DetailDeniedReason contentId={contentId} />
     </DetailDeniedLogWrapper>
   );
 }

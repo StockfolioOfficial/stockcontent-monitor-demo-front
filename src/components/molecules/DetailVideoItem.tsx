@@ -21,6 +21,7 @@ const DetailVideoItemStyled = styled.div`
 
 const VideoWrapper = styled.video`
   border-radius: 4px;
+  background-color: black;
   source {
     border-radius: 4px;
   }

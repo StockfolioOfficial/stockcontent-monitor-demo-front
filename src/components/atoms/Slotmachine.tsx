@@ -37,10 +37,10 @@ function calculateNumberUp(number: number, calculateNumber: number) {
 
 const slotAnimate = keyframes`
 0%{
-  transform: translateY(-80px);
+  transform: translateY(-90px);
 }
 100%{
-  transform: translateY(80px);
+  transform: translateY(90px);
 }
 `;
 
@@ -56,9 +56,13 @@ const SlotMachineWrapper = styled.ul<AnimationProps>`
   width: 12px;
   align-items: center;
   justify-content: center;
-  transform: translateY(80px);
+  transform: translateY(90px);
   animation-name: ${slotAnimate};
   animation-duration: ${({ speed }) => speed / 1.5}s;
+
+  li {
+    padding: 1px 0;
+  }
 `;
 
 export default function SlotMachine({ number, ...rest }: SlotMachineProps) {

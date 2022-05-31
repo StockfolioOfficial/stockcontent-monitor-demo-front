@@ -11,6 +11,13 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export type ConfirmContentsType = '대기중' | '반려됨' | '승인';
 
+const ScrollTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'auto',
+  });
+};
+
 const MainTabSlotStyled = styled(HStackLayout)`
   justify-content: space-between;
   align-self: center;
@@ -44,12 +51,14 @@ export default function ConfirmContentsPage() {
 
   //useEffect 렌더링
   useEffect(() => {
+    ScrollTop();
     searchParams.set('tab', type);
     updateNavigate();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type]);
 
   useEffect(() => {
+    ScrollTop();
     searchParams.set('page', pageNum);
     updateNavigate();
     // eslint-disable-next-line react-hooks/exhaustive-deps

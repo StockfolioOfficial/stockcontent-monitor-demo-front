@@ -40,7 +40,7 @@
 
 <br/>
 
-<iframe width="1378" height="620" src="https://www.youtube.com/embed/dL2uvzAaWh8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![스톡폴리오 모니터링툴 데모 시연영상](https://user-images.githubusercontent.com/85507868/171592515-64d91128-a068-4cde-aa55-70982ed60839.png)](https://youtu.be/dL2uvzAaWh8)
 
 
 <br/>

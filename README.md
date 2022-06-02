@@ -86,16 +86,6 @@
 >   - UI 라이브러리 (웹 프레임워크) : `React`
 >   - CSS in JS 라이브러리 : `styled-componets`
 >   - 상태관리 : `mobx` , `mobx-react`
->
-> <br/>
->
-> - ### Back-End
->
->   - 개발언어 : `go`
->   - 웹 프레임워크 : `echo`
->   - DB : `MySQL`
->   - ORM : `gorm`
->
 > <br/>
 >
 > - ### Collaboration Tools

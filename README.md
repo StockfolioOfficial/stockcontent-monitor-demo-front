@@ -39,7 +39,32 @@
 ---
 
 <br/>
+
+> ### 대기중 메인 페이지
+<img width="720" alt="main-page" src="https://user-images.githubusercontent.com/85507868/171592515-64d91128-a068-4cde-aa55-70982ed60839.png">
+
 <br/>
+
+> ### 다른 사람이 검수중인 컨텐츠 입장시 모달 노출 
+<img width="720" alt="modal1" src="https://user-images.githubusercontent.com/85507868/171592549-6c3e48d4-b9c5-4c1f-85e0-26e2899e21bf.png">
+
+<br/>
+
+> ### 반려됨 메인 페이지
+<img width="720" alt="deniedMainTab-page" src="https://user-images.githubusercontent.com/85507868/171592545-f0b8ec91-e884-4fcf-afe7-732e3a341a80.png">
+
+
+<br/>
+
+> ### 상세 페이지
+<img width="720" alt="detail-page" src="https://user-images.githubusercontent.com/85507868/171592539-04801b0d-73c5-496c-8350-f39ab3161bc0.png">
+
+
+<br/>
+
+> ### 반려사유 작성 페이지
+<img width="720" alt="deniedReason-page" src="https://user-images.githubusercontent.com/85507868/171592554-7964c20d-e3a3-4be5-9ea7-96de7bf1a5ce.png">
+
 
 ## 4. 기술 스택
 

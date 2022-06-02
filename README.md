@@ -40,6 +40,13 @@
 
 <br/>
 
+<iframe width="1378" height="620" src="https://www.youtube.com/embed/dL2uvzAaWh8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+<br/>
+
+<br/>
+
 > ### 대기중 메인 페이지
 <img width="720" alt="main-page" src="https://user-images.githubusercontent.com/85507868/171592515-64d91128-a068-4cde-aa55-70982ed60839.png">
 
@@ -74,7 +81,7 @@
 >
 > - ### Front-End
 >
->   - 개발언어 : `TS`
+>   - 개발언어 : `Typescript`
 >   - UI 라이브러리 (웹 프레임워크) : `React`
 >   - CSS in JS 라이브러리 : `styled-componets`
 >   - 상태관리 : `mobx` , `mobx-react`

@@ -40,8 +40,9 @@
 
 <br/>
 
-[![스톡폴리오 모니터링툴 데모 시연영상](https://user-images.githubusercontent.com/85507868/171592515-64d91128-a068-4cde-aa55-70982ed60839.png)](https://youtu.be/dL2uvzAaWh8)
 
+> ### 시연 영상
+[스톡폴리오 모니터링 툴 시연 영상](https://www.youtube.com/watch?v=dL2uvzAaWh8)
 
 <br/>
 
